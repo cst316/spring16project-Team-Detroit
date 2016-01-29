@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -50,8 +51,10 @@ import net.sf.memoranda.util.Util;
 
 /*$Id: DailyItemsPanel.java,v 1.22 2005/02/13 03:06:10 rawsushi Exp $*/
 public class DailyItemsPanel extends JPanel {
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
+    JSplitPane splitPaneVert = new JSplitPane();
     JPanel controlPanel = new JPanel(); /* Contains the calendar */
     JPanel mainPanel = new JPanel();
     BorderLayout borderLayout2 = new BorderLayout();
@@ -117,10 +120,14 @@ public class DailyItemsPanel extends JPanel {
         this.setLayout(borderLayout1);
         splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setBorder(null);
-        splitPane.setDividerSize(2);
+        splitPane.setDividerSize(5);
+        splitPaneVert.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        splitPaneVert.setBorder(null);
+        splitPaneVert.setDividerSize(5);
         controlPanel.setLayout(borderLayout2);
         //calendar.setMinimumSize(new Dimension(200, 170));
         mainPanel.setLayout(borderLayout3);
+        mainPanel.setPreferredSize(new Dimension(screenSize.width / 2, screenSize.height / 2));
         editorsPanel.setLayout(cardLayout1);
         statusPanel.setBackground(Color.black);
         statusPanel.setForeground(Color.white);
@@ -134,7 +141,7 @@ public class DailyItemsPanel extends JPanel {
         controlPanel.setBackground(new Color(230, 230, 230));
         controlPanel.setBorder(border2);
         controlPanel.setMinimumSize(new Dimension(20, 170));
-        controlPanel.setPreferredSize(new Dimension(205, 170));
+        controlPanel.setPreferredSize(new Dimension(screenSize.width / 2, 200));
         //controlPanel.setMaximumSize(new Dimension(206, 170));
         //controlPanel.setSize(controlPanel.getMaximumSize());
         calendar.setFont(new java.awt.Font("Dialog", 0, 11));
@@ -144,7 +151,7 @@ public class DailyItemsPanel extends JPanel {
         toggleToolBar.setFloatable(false);
         cmainPanel.setLayout(borderLayout5);
         cmainPanel.setBackground(SystemColor.desktop);
-        cmainPanel.setMinimumSize(new Dimension(0, 168));
+        cmainPanel.setMinimumSize(new Dimension(0, 0));
         cmainPanel.setOpaque(false);
         toggleButton.setMaximumSize(new Dimension(32767, 32767));
         toggleButton.setMinimumSize(new Dimension(16, 16));
@@ -192,27 +199,36 @@ public class DailyItemsPanel extends JPanel {
         notesControlPane.setFont(new java.awt.Font("Dialog", 1, 10));
         mainTabsPanel.setLayout(cardLayout2);
         this.add(splitPane, BorderLayout.CENTER);
-
-        controlPanel.add(cmainPanel, BorderLayout.CENTER);
-        cmainPanel.add(calendar, BorderLayout.NORTH);
-
+        
+        /* THE FOLLOWING IS THE LAYOUT OF THE VARIOUS PANELS */
+        
+        //mainPanel.add(cmainPanel, BorderLayout.SOUTH);
         mainPanel.add(statusPanel, BorderLayout.NORTH);
+        mainPanel.add(editorsPanel, BorderLayout.CENTER);
+        
+        //Control Panel only contains the calendar
+        controlPanel.add(calendar, BorderLayout.CENTER);
+        //Toggle button allows the calendar to be minimized to the left
+        controlPanel.add(toggleToolBar, BorderLayout.SOUTH);
+        toggleToolBar.add(toggleButton, null);
+        
         statusPanel.add(currentDateLabel, BorderLayout.CENTER);
         statusPanel.add(indicatorsPanel, BorderLayout.EAST);
-
-        mainPanel.add(editorsPanel, BorderLayout.CENTER);
         
         editorsPanel.add(agendaPanel, "AGENDA");
         editorsPanel.add(eventsPanel, "EVENTS");
         editorsPanel.add(tasksPanel, "TASKS");
         editorsPanel.add(editorPanel, "NOTES");
         
-        splitPane.add(mainPanel, JSplitPane.RIGHT);
+        //function on the right, control (calendar) panel to the left.
+        splitPane.add(splitPaneVert, JSplitPane.RIGHT);
         splitPane.add(controlPanel, JSplitPane.LEFT);
-        controlPanel.add(toggleToolBar, BorderLayout.SOUTH);
-        toggleToolBar.add(toggleButton, null);
+        
+        splitPaneVert.add(mainPanel, JSplitPane.TOP);
+        splitPaneVert.add(cmainPanel, JSplitPane.BOTTOM);
 
         splitPane.setDividerLocation((int) controlPanel.getPreferredSize().getWidth());
+        splitPaneVert.setDividerLocation((int) mainPanel.getPreferredSize().getHeight());
         //splitPane.setResizeWeight(0.0);
 
         CurrentDate.addDateListener(new DateListener() {

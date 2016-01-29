@@ -123,20 +123,21 @@ public class AppFrame extends JFrame {
                 }
         };
         
-        public Action importNotesAction =
-                        new AbstractAction(Local.getString("Import multiple notes")) {
-
-                        public void actionPerformed(ActionEvent e) {
-                                ppImport_actionPerformed(e);
-                        }
-                };
-        public Action importOneNoteAction =
-                new AbstractAction(Local.getString("Import one note")) {
+    public Action importNotesAction =
+                new AbstractAction(Local.getString("Import multiple notes")) {
 
                 public void actionPerformed(ActionEvent e) {
-                        p1Import_actionPerformed(e);
+                        ppImport_actionPerformed(e);
                 }
-        };
+    };
+        
+    public Action importOneNoteAction =
+            new AbstractAction(Local.getString("Import one note")) {
+
+            public void actionPerformed(ActionEvent e) {
+                    p1Import_actionPerformed(e);
+            }
+    };
     
     JMenuItem jMenuFileNewPrj = new JMenuItem();
         JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
@@ -312,15 +313,15 @@ public class AppFrame extends JFrame {
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 
         splitPane.setContinuousLayout(true);
-        splitPane.setDividerSize(3);
+        splitPane.setDividerSize(5);
         //splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(28);
         //projectsPanel.setMaximumSize(new Dimension(2147483647, 200));
         projectsPanel.setMinimumSize(new Dimension(10, 28));
-        projectsPanel.setPreferredSize(new Dimension(10, 28));
+        projectsPanel.setPreferredSize(new Dimension(10, 150));
         /*workPanel.setMinimumSize(new Dimension(734, 300));
          workPanel.setPreferredSize(new Dimension(1073, 300));*/
-        splitPane.setDividerLocation(28);
+        splitPane.setDividerLocation(150);
 
         /* jMenuFileNewPrj.setText(Local.getString("New project") + "...");
          jMenuFileNewPrj.addActionListener(new ActionListener() {

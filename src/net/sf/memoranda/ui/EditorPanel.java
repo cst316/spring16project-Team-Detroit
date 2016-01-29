@@ -42,48 +42,27 @@ import net.sf.memoranda.util.Configuration;
 /*$Id: EditorPanel.java,v 1.21 2006/06/28 22:58:31 alexeya Exp $*/
 public class EditorPanel extends JPanel {
 	BorderLayout borderLayout1 = new BorderLayout();
-
 	JPanel jPanel1 = new JPanel();
-
 	public HTMLEditor editor = null;
-
 	JButton importB = new JButton();
-
 	JButton exportB = new JButton();
-
 	JButton redoB = new JButton();
-
 	JButton copyB = new JButton();
-
 	JButton historyBackB = new JButton();
-
 	JToolBar editorToolBar = new JToolBar();
-
 	JButton pasteB = new JButton();
-
 	JButton historyForwardB = new JButton();
-
 	JButton insDateB = new JButton();
-
 	JButton insTimeB = new JButton();
-
 	// JButton printB = new JButton();
 	JButton undoB = new JButton();
-
 	JButton cutB = new JButton();
-
 	BorderLayout borderLayout2 = new BorderLayout();
-
 	JToolBar titleBar = new JToolBar();
-
 	JLabel titleLabel = new JLabel();
-
 	public JTextField titleField = new JTextField();
-
 	JButton newB = new JButton();
-
 	JButton previewB = new JButton();
-
 	DailyItemsPanel parentPanel = null;
 
 	public EditorPanel(DailyItemsPanel parent) {
