@@ -14,6 +14,9 @@ Your first steps should be to get your team set up with this code, ensure you ca
 Enjoy!
 Dr. Gary
   
-Test pull and push for Casey Froke
+Test pull and push for Casey Froke - Trying again modified in eclipse.
 Test pull and push for Tom Norby
 Test pull and push for Ryan Schultz
+Test pull and push for Michael Sperber
+Retest push by Ryan Schultz
+Retest push #2 by Ryan Schultz using egit
