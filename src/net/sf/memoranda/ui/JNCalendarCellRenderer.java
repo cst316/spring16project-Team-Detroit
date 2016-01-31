@@ -10,6 +10,8 @@ package net.sf.memoranda.ui;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.Calendar;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -45,12 +47,14 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
         boolean hasFocus,
         int row,
         int column) {
-        
-    	table.setRowHeight(100);
+    	
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();	
     	
 		JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		String currentPanel = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.getCurrentPanel();
 
+    	table.setRowHeight((int) (screenSize.getHeight() / 10));
+		
 		if (d == null) {
             label.setEnabled(false);
 			label.setIcon(null);
