@@ -826,6 +826,7 @@ public class PreferencesDialog extends JDialog {
 		}
 		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 			this.browserPath.setText(chooser.getSelectedFile().getPath());
+		
 	}
 
 	void enableSoundCB_actionPerformed(ActionEvent e) {

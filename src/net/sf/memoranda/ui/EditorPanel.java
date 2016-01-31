@@ -124,13 +124,11 @@ public class EditorPanel extends JPanel {
 		}
 	};
 
-	public Action previewAction = new AbstractAction(Local
-			.getString("Preview note in browser"), new ImageIcon(
-			net.sf.memoranda.ui.AppFrame.class
-					.getResource("resources/icons/preview.png"))) {
+	public Action previewAction = new AbstractAction(Local.getString("Preview note in browser"), new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/preview.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			previewB_actionPerformed(e);
 		}
+		
 	};
 
 	void jbInit() throws Exception {
