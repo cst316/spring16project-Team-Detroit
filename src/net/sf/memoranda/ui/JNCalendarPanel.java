@@ -24,6 +24,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JScrollPane;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.NoteList;
@@ -60,6 +61,7 @@ public class JNCalendarPanel extends JPanel {
   BorderLayout borderLayout5 = new BorderLayout();
   JSpinner yearSpin = new JSpinner(new SpinnerNumberModel(jnCalendar.get().getYear(), 1980, 2999, 1));
   JSpinner.NumberEditor yearSpinner = new JSpinner.NumberEditor(yearSpin, "####");
+  JScrollPane scrollPane = new JScrollPane();
 
   boolean ignoreChange = false;
 
@@ -163,16 +165,20 @@ public class JNCalendarPanel extends JPanel {
     yearSpin.setPreferredSize(new Dimension(70, 20));
     yearSpin.setRequestFocusEnabled(false);
         yearSpin.setEditor(yearSpinner);
+        
     navbPanel.setMinimumSize(new Dimension(202, 30));
     navbPanel.setOpaque(false);
     navbPanel.setPreferredSize(new Dimension(155, 30));
+    
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
     jnCalendarPanel.setLayout(borderLayout5);
+    
     todayBPanel.setMinimumSize(new Dimension(68, 24));
     todayBPanel.setOpaque(false);
     todayBPanel.setPreferredSize(new Dimension(51, 24));
+    
     this.add(navigationBar, BorderLayout.NORTH);
     navigationBar.add(navbPanel, null);
     navbPanel.add(dayBackBPanel, BorderLayout.WEST);
@@ -186,8 +192,11 @@ public class JNCalendarPanel extends JPanel {
     mntyPanel.add(yearSpin,  BorderLayout.EAST);
     this.add(jnCalendarPanel,  BorderLayout.CENTER);
     jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 15));
-    jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
-    jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
+    //jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
+    //jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
+    jnCalendarPanel.add(scrollPane, BorderLayout.CENTER);
+    scrollPane.getViewport().add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
+    scrollPane.getViewport().add(jnCalendar, BorderLayout.CENTER);
     jnCalendar.addSelectionListener(new ActionListener()  {
       public void actionPerformed(ActionEvent e) {
         setCurrentDateDay(jnCalendar.get(), jnCalendar.get().getDay());

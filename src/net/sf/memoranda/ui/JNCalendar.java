@@ -29,7 +29,6 @@ import net.sf.memoranda.util.Configuration;
  */
 /*$Id: JNCalendar.java,v 1.8 2004/11/05 07:38:10 pbielen Exp $*/
 public class JNCalendar extends JTable {
-
 	private CalendarDate _date = null;
 	private boolean ignoreChange = false;
 	private Vector selectionListeners = new Vector();
