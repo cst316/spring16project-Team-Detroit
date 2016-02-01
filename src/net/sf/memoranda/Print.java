@@ -79,4 +79,3 @@ public class Print implements Printable {
         }
 	}
 }
->>>>>>> d4f8be649a209b91072afce72266e3960502617f
