@@ -33,7 +33,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
-
+import net.sf.memoranda.Print;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
@@ -102,7 +102,18 @@ public class AppFrame extends JFrame {
             doPrjUnPack();
         }
     };
-
+    
+    /**
+	 * eventsPrintAction handles printing event from file drop down menu
+	 * Added:  Ryan Schultz 1/31/2016
+	 */
+    public Action eventsPrintAction = new AbstractAction("Print Events") {
+    	//  Calls action event
+        public void actionPerformed(ActionEvent e) {
+            doPrintEvents();
+        }
+    };
+    
     public Action minimizeAction = new AbstractAction("Close the window") {
         public void actionPerformed(ActionEvent e) {
             doMinimize();
@@ -143,6 +154,8 @@ public class AppFrame extends JFrame {
         JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
     JMenuItem jMenuFilePackPrj = new JMenuItem(prjPackAction);
     JMenuItem jMenuFileUnpackPrj = new JMenuItem(prjUnpackAction);
+    // Print events menu file menu item Added:  Ryan Schultz 1/31/2016
+    JMenuItem jMenuFilePrintEvent = new JMenuItem(eventsPrintAction);
     JMenuItem jMenuFileExportPrj = new JMenuItem(exportNotesAction);
     JMenuItem jMenuFileImportPrj = new JMenuItem(importNotesAction);
     JMenuItem jMenuFileImportNote = new JMenuItem(importOneNoteAction);
@@ -333,6 +346,8 @@ public class AppFrame extends JFrame {
         jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
 
         jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
+        //  Set text of file menu print events Added:  Ryan Schultz 1/31/2016
+        jMenuFilePrintEvent.setText(Local.getString("Print Events"));
         jMenuFileExportNote.setText(Local.getString("Export current note")
                 + "...");
         jMenuFileImportNote.setText(Local.getString("Import one note")
@@ -452,6 +467,10 @@ public class AppFrame extends JFrame {
         jMenuFile.add(jMenuFilePackPrj);
         jMenuFile.add(jMenuFileUnpackPrj);
         jMenuFile.addSeparator();
+        // Add print event to file menu drop down Added:  Ryan Schultz 1/31/2016
+        jMenuFile.add(jMenuFilePrintEvent);
+        jMenuFile.addSeparator();
+        
         jMenuFile.add(jMenuFileExportPrj);
         jMenuFile.add(jMenuFileExportNote);
         jMenuFile.add(jMenuFileImportNote);
@@ -774,6 +793,16 @@ public class AppFrame extends JFrame {
         ProjectPackager.pack(CurrentProject.get(), f);
     }
 
+    /**
+	 * doPrintEvents invokes print class to print events list
+	 * Added:  Ryan Schultz 1/31/2016
+	 */
+    public void doPrintEvents() {
+    	Print printJob = new Print();
+    	printJob.printEvents();
+    }
+    
+    
     public void doPrjUnPack() {
         // Fix until Sun's JVM supports more locales...
         UIManager.put("FileChooser.lookInLabelText", Local
