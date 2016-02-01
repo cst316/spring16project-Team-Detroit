@@ -34,6 +34,8 @@ import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
+import net.sf.memoranda.Print;
+
 
 /*$Id: EventsPanel.java,v 1.25 2005/02/19 10:06:25 rawsushi Exp $*/
 public class EventsPanel extends JPanel {
@@ -43,7 +45,10 @@ public class EventsPanel extends JPanel {
     JButton historyForwardB = new JButton();
     JButton newEventB = new JButton();
     JButton editEventB = new JButton();
-    JButton removeEventB = new JButton();
+    JButton removeEventB = new JButton();   
+    //  Print button Added:  Ryan Schultz 1/31/2016
+    JButton printEventsB = new JButton();
+    
     JScrollPane scrollPane = new JScrollPane();
     EventsTable eventsTable = new EventsTable();
     JPopupMenu eventPPMenu = new JPopupMenu();
@@ -131,6 +136,23 @@ public class EventsPanel extends JPanel {
         removeEventB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/event_remove.png")));
 
+        // printEventsB set up Added:  Ryan Schultz 1/31/2016
+        printEventsB.setIcon(
+                new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/print.png")));
+        printEventsB.setEnabled(true);
+        printEventsB.setMaximumSize(new Dimension(24, 24));
+        printEventsB.setMinimumSize(new Dimension(24, 24));
+        printEventsB.setToolTipText(Local.getString("Print events"));
+        printEventsB.setRequestFocusEnabled(false);
+        printEventsB.setPreferredSize(new Dimension(24, 24));
+        printEventsB.setFocusable(false);
+        printEventsB.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		printEventsB_actionPerformed(e);
+            }
+        });
+        newEventB.setBorderPainted(false);
+
         this.setLayout(borderLayout1);
         scrollPane.getViewport().setBackground(Color.white);
         eventsTable.setMaximumSize(new Dimension(32767, 32767));
@@ -175,6 +197,10 @@ public class EventsPanel extends JPanel {
         eventsToolBar.add(removeEventB, null);
         eventsToolBar.addSeparator(new Dimension(8, 24));
         eventsToolBar.add(editEventB, null);
+        
+        //  Add printEventsB to toolbar Added:  Ryan Schultz 1/31/2016
+        eventsToolBar.addSeparator(new Dimension(8, 24));
+        eventsToolBar.add(printEventsB, null);
 
         this.add(eventsToolBar, BorderLayout.NORTH);
 
@@ -427,6 +453,15 @@ public class EventsPanel extends JPanel {
         parentPanel.updateIndicators();
 */ saveEvents();  
   }
+    /**
+	 * printEventsB_actionPerformed:  Action event handling to print events
+	 * @param e action event
+	 * Added:  Ryan Schultz 1/31/2016
+	 */
+    void printEventsB_actionPerformed(ActionEvent e) {
+    	Print printJob = new Print();
+    	printJob.printEvents();
+    }
 
     class PopupListener extends MouseAdapter {
 
