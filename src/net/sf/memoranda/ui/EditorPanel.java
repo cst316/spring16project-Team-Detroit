@@ -38,6 +38,7 @@ import net.sf.memoranda.util.HTMLFileExport;
 import net.sf.memoranda.util.HTMLFileImport;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.OpenBrowser;
 
 /*$Id: EditorPanel.java,v 1.21 2006/06/28 22:58:31 alexeya Exp $*/
 public class EditorPanel extends JPanel {
@@ -559,7 +560,7 @@ public class EditorPanel extends JPanel {
 			f = Util.getTempFile();
 			new HTMLFileExport(f, editor.document, CurrentNote.get(), "UTF-8",
 					false, null, false);
-			Util.runBrowser("file:" + f.getAbsolutePath());
+			OpenBrowser.openBrowser("file:" + f.getAbsolutePath());
 		} catch (IOException ioe) {
 			new ExceptionDialog(ioe, "Cannot create temporary file", null);
 		}
