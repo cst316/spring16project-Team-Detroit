@@ -21,3 +21,4 @@ Test pull and push for Michael Sperber
 Retest push by Ryan Schultz
 Retest push #2 by Ryan Schultz using egit
 TEST AGAIN
+Test again after new clone as java project
