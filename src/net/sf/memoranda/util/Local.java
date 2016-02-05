@@ -19,22 +19,29 @@ public class Local {
     static Locale currentLocale = Locale.getDefault();
     static LoadableProperties messages = new LoadableProperties();
     static boolean disabled = false;
+    static String fn = "";
 
     static {
     	if (!Configuration.get("DISABLE_L10N").equals("yes")) {
-	    	String fn = "messages_"
-	                    + currentLocale.getLanguage()
-	                    + ".properties";
+	    				setMessages(currentLocale.getLanguage());
 	        if (Configuration.get("LOCALES_DIR") != "") {
 	        	System.out.print("Look "+fn+" at: "+Configuration.get("LOCALES_DIR")+" ");
 	        	try {
-	        		messages.load(new FileInputStream(
-	        			Configuration.get("LOCALES_DIR")+File.separator+fn));
+	        		fn = "messages_"
+	        			+ Configuration.get("LOCALES_DIR")
+	        			+ ".properties";
+	        		
+	        		messages.load(Local.class.getResourceAsStream(
+		                    "localmessages/"+fn));
 	        		System.out.println(" - found");
+	        		
+	        		Local.setCurrentLocale(Locale.forLanguageTag(fn.substring(9, 11)));
 	        	}
 	        	catch (IOException ex) {
 	        		// Do nothing ...
 	        		System.out.println(" - not found");
+	        		Local.setCurrentLocale(Locale.forLanguageTag("en"));
+	        		
 	        		ex.printStackTrace();
 	        	}
 	        }
@@ -77,9 +84,28 @@ public class Local {
     public static Hashtable getMessages() {
         return messages;
     }
+    
+    public static void setMessages(String languageTag) {
+		fn = "messages_" + languageTag + ".properties";
+		
+		//System.out.println(fn);
+		
+        try {
+            messages.load(Local.class.getResourceAsStream("localmessages/" + fn));   
+            System.out.println("Translation File is now:" + fn);
+        }
+        catch (Exception e) {
+            System.out.println("Language Change Failed!");
+        }
+    }
+    
 
     public static Locale getCurrentLocale() {
         return currentLocale;
+    }
+    
+    public static void setCurrentLocale(Locale newLocale) {
+    	currentLocale = newLocale;
     }
 
     static String monthnames[] =
@@ -254,6 +280,16 @@ public class Local {
             return null;
         }
         return time;
+    }
+    
+    //StackOverflow user "Joop Eggan"
+    public static String toLanguageTag(String name) {
+        for (Locale locale : Locale.getAvailableLocales()) {
+            if (name.equals(locale.getDisplayLanguage())) {
+                return locale.getLanguage();
+            }
+        }
+        throw new IllegalArgumentException("No language found: " + name);
     }
 
 }

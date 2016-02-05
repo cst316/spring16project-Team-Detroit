@@ -19,6 +19,7 @@ import sun.util.locale.LocaleUtils;
 import java.awt.event.*;
 
 /*$Id: PreferencesDialog.java,v 1.16 2006/06/28 22:58:31 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class PreferencesDialog extends JDialog {
 	
 	JPanel topPanel = new JPanel(new BorderLayout());
@@ -81,10 +82,10 @@ public class PreferencesDialog extends JDialog {
 	
 	JPanel editorConfigPanel = new JPanel(new BorderLayout());
 	JPanel econfPanel = new JPanel(new GridLayout(5, 2));
-	Vector fontnames = getFontNames();
-	JComboBox normalFontCB = new JComboBox(fontnames);
-	JComboBox headerFontCB = new JComboBox(fontnames);
-	JComboBox monoFontCB = new JComboBox(fontnames);
+	Vector<String> fontnames = getFontNames();
+	JComboBox<String> normalFontCB = new JComboBox<String>(fontnames);
+	JComboBox<String> headerFontCB = new JComboBox<String>(fontnames);
+	JComboBox<String> monoFontCB = new JComboBox<String>(fontnames);
 	JSpinner baseFontSize = new JSpinner();
 	JCheckBox antialiasChB = new JCheckBox();
 	JLabel normalFontLabel = new JLabel();
@@ -94,8 +95,8 @@ public class PreferencesDialog extends JDialog {
 	
 	//Language Panel
 	JPanel languagesPanel = new JPanel(new BorderLayout());
-	Vector languagesList = getLanguages(); 
-	JComboBox languagesListCB = new JComboBox(languagesList);
+	Vector<String> languagesList = getLanguages(); 
+	JComboBox<String> languagesListCB = new JComboBox<String>(languagesList);
 
 	public PreferencesDialog(Frame frame) {
 		super(frame, Local.getString("Preferences"), true);
@@ -668,10 +669,17 @@ public class PreferencesDialog extends JDialog {
 		Configuration.put("HEADER_FONT", headerFontCB.getSelectedItem());
 		Configuration.put("MONO_FONT", monoFontCB.getSelectedItem());
 		Configuration.put("BASE_FONT_SIZE", baseFontSize.getValue());
-		Configuration.put("LOCALES_DIR", languagesListCB.getName());
+		Configuration.put("LOCALES_DIR", Local.toLanguageTag(
+				languagesListCB.getSelectedItem().toString()));
+		Local.setCurrentLocale(Locale.forLanguageTag(Local.toLanguageTag(
+				languagesListCB.getSelectedItem().toString())));
+		Local.setMessages(Local.toLanguageTag(languagesListCB.getSelectedItem().toString()));
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.editor.setAntiAlias(antialiasChB.isSelected());
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.initCSS();
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.repaint();
+		App.getFrame().repaint();
+		System.out.println(Local.getCurrentLocale().getDisplayLanguage());
+		System.out.println(Local.getMessages().get("ALIGNMENT"));
 		
 		Configuration.saveConfig();
 		
@@ -844,11 +852,11 @@ public class PreferencesDialog extends JDialog {
 		this.enableCustomSound(true);
 	}
 	
-	Vector getFontNames() {
+	Vector<String> getFontNames() {
 		GraphicsEnvironment gEnv = 
         	GraphicsEnvironment.getLocalGraphicsEnvironment();
         String envfonts[] = gEnv.getAvailableFontFamilyNames();
-        Vector fonts = new Vector();
+        Vector<String> fonts = new Vector<String>();
         fonts.add("serif");
         fonts.add("sans-serif");
         fonts.add("monospaced");
@@ -861,8 +869,6 @@ public class PreferencesDialog extends JDialog {
 		Vector<String> languages = new Vector<String>();
 		
 		File[] files = new File("./src/net/sf/memoranda/util/localmessages").listFiles();
-		
-		languages.add("English");
 		
 		for (File file : files) {
 			if (file.getName().substring(11, 12).equals(".")) {
