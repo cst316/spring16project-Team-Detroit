@@ -1,128 +1,82 @@
 package net.sf.memoranda.ui;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Vector;
 
 import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.MimeTypesList;
+
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
+
+import sun.util.locale.LocaleUtils;
+
 import java.awt.event.*;
 
 /*$Id: PreferencesDialog.java,v 1.16 2006/06/28 22:58:31 alexeya Exp $*/
 public class PreferencesDialog extends JDialog {
+	
 	JPanel topPanel = new JPanel(new BorderLayout());
-
 	JTabbedPane tabbedPanel = new JTabbedPane();
-
 	JPanel GeneralPanel = new JPanel(new GridBagLayout());
-
 	GridBagConstraints gbc;
-
 	JLabel jLabel1 = new JLabel();
-
 	ButtonGroup minGroup = new ButtonGroup();
-
 	JRadioButton minTaskbarRB = new JRadioButton();
-
 	JRadioButton minHideRB = new JRadioButton();
-
 	ButtonGroup closeGroup = new ButtonGroup();
-
 	JLabel jLabel2 = new JLabel();
-
 	JRadioButton closeExitRB = new JRadioButton();
-
 	JCheckBox askConfirmChB = new JCheckBox();
-
 	JRadioButton closeHideRB = new JRadioButton();
-
 	JLabel jLabel3 = new JLabel();
-
 	ButtonGroup lfGroup = new ButtonGroup();
-
 	JRadioButton lfSystemRB = new JRadioButton();
-
 	JRadioButton lfJavaRB = new JRadioButton();
-
 	JRadioButton lfCustomRB = new JRadioButton();
-
 	JLabel classNameLabel = new JLabel();
-
 	JTextField lfClassName = new JTextField();
-
 	JLabel jLabel4 = new JLabel();
-
 	JCheckBox enSystrayChB = new JCheckBox();
-
 	JCheckBox startMinimizedChB = new JCheckBox();
-
 	JCheckBox enSplashChB = new JCheckBox();
-
 	JCheckBox enL10nChB = new JCheckBox();
-
 	JCheckBox firstdow = new JCheckBox();
 
 	JPanel resourcePanel = new JPanel(new BorderLayout());
-
 	ResourceTypePanel resourceTypePanel = new ResourceTypePanel();
-
 	Border rstPanelBorder;
-
 	JPanel rsBottomPanel = new JPanel(new GridBagLayout());
-
 	TitledBorder rsbpBorder;
-
 	JButton okB = new JButton();
-
 	JButton cancelB = new JButton();
-
 	JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-
 	JLabel jLabel5 = new JLabel();
-
 	JTextField browserPath = new JTextField();
-
 	JButton browseB = new JButton();
-
 	JLabel lblExit = new JLabel();
-
+	
 	JPanel soundPanel = new JPanel();
-
 	JCheckBox enableSoundCB = new JCheckBox();
-
 	BorderLayout borderLayout1 = new BorderLayout();
-
 	TitledBorder titledBorder1;
-
 	ButtonGroup soundGroup = new ButtonGroup();
-
 	JPanel jPanel2 = new JPanel();
-
 	JButton soundFileBrowseB = new JButton();
-
 	GridLayout gridLayout1 = new GridLayout();
-
 	JPanel jPanel1 = new JPanel();
-
 	JRadioButton soundBeepRB = new JRadioButton();
-
 	JLabel jLabel6 = new JLabel();
-
 	JTextField soundFile = new JTextField();
-
 	JRadioButton soundDefaultRB = new JRadioButton();
-
 	BorderLayout borderLayout3 = new BorderLayout();
-
 	JPanel jPanel3 = new JPanel();
-
 	JRadioButton soundCustomRB = new JRadioButton();
-
 	BorderLayout borderLayout2 = new BorderLayout();
 	
 	JPanel editorConfigPanel = new JPanel(new BorderLayout());
@@ -137,6 +91,11 @@ public class PreferencesDialog extends JDialog {
 	JLabel headerFontLabel = new JLabel();
 	JLabel monoFontLabel = new JLabel();
 	JLabel baseFontSizeLabel = new JLabel();
+	
+	//Language Panel
+	JPanel languagesPanel = new JPanel(new BorderLayout());
+	Vector languagesList = getLanguages(); 
+	JComboBox languagesListCB = new JComboBox(languagesList);
 
 	public PreferencesDialog(Frame frame) {
 		super(frame, Local.getString("Preferences"), true);
@@ -481,11 +440,15 @@ public class PreferencesDialog extends JDialog {
 		((GridLayout)econfPanel.getLayout()).setHgap(10);
 		((GridLayout)econfPanel.getLayout()).setVgap(5);
 		editorConfigPanel.add(econfPanel, BorderLayout.NORTH);
+		
+		languagesPanel.add(languagesListCB, BorderLayout.NORTH);
+		
 		// Build TabbedPanel
 		tabbedPanel.add(GeneralPanel, Local.getString("General"));
 		tabbedPanel.add(resourcePanel, Local.getString("Resource types"));
 		tabbedPanel.add(soundPanel, Local.getString("Sound"));
 		tabbedPanel.add(editorConfigPanel, Local.getString("Editor"));
+		tabbedPanel.add(languagesPanel, Local.getString("Languages"));
 
 		// Build TopPanel
 		topPanel.add(tabbedPanel, BorderLayout.CENTER);
@@ -705,6 +668,7 @@ public class PreferencesDialog extends JDialog {
 		Configuration.put("HEADER_FONT", headerFontCB.getSelectedItem());
 		Configuration.put("MONO_FONT", monoFontCB.getSelectedItem());
 		Configuration.put("BASE_FONT_SIZE", baseFontSize.getValue());
+		Configuration.put("LOCALES_DIR", languagesListCB.getName());
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.editor.setAntiAlias(antialiasChB.isSelected());
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.initCSS();
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.repaint();
@@ -892,4 +856,22 @@ public class PreferencesDialog extends JDialog {
             fonts.add(envfonts[i]);
 		return fonts;
 	}
+	
+	private Vector<String> getLanguages() {
+		Vector<String> languages = new Vector<String>();
+		
+		File[] files = new File("./src/net/sf/memoranda/util/localmessages").listFiles();
+		
+		languages.add("English");
+		
+		for (File file : files) {
+			if (file.getName().substring(11, 12).equals(".")) {
+				languages.add(Locale.forLanguageTag(file.getName().substring(9, 11)).getDisplayLanguage());
+			}
+		}
+		
+		
+		return languages;
+	}
+	
 }
