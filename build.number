@@ -1,3 +1,8 @@
 #Build Number for ANT. Do not edit!
+<<<<<<< HEAD
 #Thu Feb 04 16:30:41 MST 2016
 build.number=277
+=======
+#Wed Feb 03 19:28:13 EST 2016
+build.number=255
+>>>>>>> 20c90dea97ba612d3f16c0dc20bc7d6ec632aca6
