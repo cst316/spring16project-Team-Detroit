@@ -1,3 +1,4 @@
+<<<<<<< f6b7503bacf15ee8c3e3dbc29866c8317b3cf44d
 <<<<<<< 001add229da35bd1b13219c828458946ef8ea151
 #Build Number for ANT. Do not edit!
 #Fri Feb 12 15:51:51 MST 2016
@@ -7,3 +8,11 @@ build.number=262
 #Thu Feb 04 16:30:41 MST 2016
 build.number=277
 >>>>>>> Languages tab added to Preferences
+=======
+#Build Number for ANT. Do not edit!
+#Thu Feb 04 20:05:36 MST 2016
+build.number=289
+>>>>>>>=20c90dea97ba612d3f16c0dc20bc7d6ec632aca6
+<<<<<<<=HEAD
+=\=\=\=\=\=\=
+>>>>>>> Language saves for the next time the program is opened, but isn't fully dynamic yet
