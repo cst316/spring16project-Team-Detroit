@@ -22,7 +22,7 @@ import net.sf.memoranda.util.Configuration;
 public class App {
 	// boolean packFrame = false;
 
-	static AppFrame frame = null;
+	public static AppFrame frame = null;
 	
 	public static final String GUIDE_URL = "http://memoranda.sourceforge.net/guide.html";
 	public static final String BUGS_TRACKER_URL = "http://sourceforge.net/tracker/?group_id=90997&atid=595566";

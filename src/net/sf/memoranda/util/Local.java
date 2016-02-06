@@ -282,7 +282,7 @@ public class Local {
         return time;
     }
     
-    //StackOverflow user "Joop Eggan"
+    //Obtained from StackOverflow user "Joop Eggan"
     public static String toLanguageTag(String name) {
         for (Locale locale : Locale.getAvailableLocales()) {
             if (name.equals(locale.getDisplayLanguage())) {

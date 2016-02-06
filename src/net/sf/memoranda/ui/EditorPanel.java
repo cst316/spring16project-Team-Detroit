@@ -565,4 +565,23 @@ public class EditorPanel extends JPanel {
 			new ExceptionDialog(ioe, "Cannot create temporary file", null);
 		}
 	}
+	
+	public void updateLanguages() {
+		newB.setToolTipText(Local.getString("New note"));
+		importB.setToolTipText(Local.getString("Insert file"));
+		exportB.setToolTipText(Local.getString("Export note to file"));
+		redoB.setToolTipText(Local.getString("Redo"));
+		copyB.setToolTipText(Local.getString("Copy"));
+		historyBackB.setToolTipText(Local.getString("History back"));
+		historyForwardB.setToolTipText(Local.getString("History forward"));
+		pasteB.setToolTipText(Local.getString("paste"));
+		insDateB.setToolTipText(Local.getString("Insert current date"));
+		insTimeB.setToolTipText(Local.getString("Insert current time"));
+		undoB.setToolTipText(Local.getString("Undo"));
+		cutB.setToolTipText(Local.getString("Cut"));
+		previewB.setToolTipText(previewAction.getValue(Action.NAME).toString());
+		titleLabel.setText(Local.getString("Title") + "  ");
+		
+		this.repaint();
+	}
 }
