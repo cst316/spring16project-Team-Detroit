@@ -303,6 +303,14 @@ public class JNCalendarPanel extends JPanel {
     notifyListeners();
   }
 
+  public void updateLanguages() {
+	  monthsCB = new JComboBox(Local.getMonthNames());
+	  dayForwardB.setToolTipText(Local.getString("One day forward"));
+	  todayB.setToolTipText(Local.getString("To today"));
+	  dayBackB.setToolTipText(Local.getString("One day back"));
+	  
+	  this.repaint();
+  }
 
 
 }

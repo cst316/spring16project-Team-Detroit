@@ -677,7 +677,15 @@ public class PreferencesDialog extends JDialog {
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.editor.setAntiAlias(antialiasChB.isSelected());
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.initCSS();
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.repaint();
-		App.getFrame().repaint();
+
+		App.getFrame().updateLanguages();
+		App.getFrame().workPanel.dailyItemsPanel.updateLanguages();
+		App.getFrame().workPanel.dailyItemsPanel.parentPanel.updateLanguages();
+		App.getFrame().workPanel.dailyItemsPanel.tasksPanel.updateLanguages();
+		App.getFrame().workPanel.dailyItemsPanel.calendar.updateLanguages();
+		App.getFrame().workPanel.dailyItemsPanel.editorPanel.updateLanguages();
+		App.getFrame().projectsPanel.prjTablePanel.initProjectsTable();
+		
 		System.out.println(Local.getCurrentLocale().getDisplayLanguage());
 		System.out.println(Local.getMessages().get("ALIGNMENT"));
 		

@@ -758,5 +758,26 @@ public class TaskPanel extends JPanel {
   void ppCalcTask_actionPerformed(ActionEvent e) {
       calcTask_actionPerformed(e);
   }
+  
+  public void updateLanguages() {
+	  historyBackB.setToolTipText(Local.getString("History back"));
+	  historyForwardB.setToolTipText(Local.getString("History forward"));
+	  newTaskB.setToolTipText(Local.getString("Create new task"));
+	  subTaskB.setToolTipText(Local.getString("Add subtask"));
+	  editTaskB.setToolTipText(Local.getString("Edit task"));
+	  removeTaskB.setToolTipText(Local.getString("Remove task"));
+	  completeTaskB.setToolTipText(Local.getString("Complete task"));
+	  ppCompleteTask.setText(Local.getString("Complete task"));
+	  ppShowActiveOnlyChB.setText(
+				Local.getString("Show Active only"));
+	  ppEditTask.setText(Local.getString("Edit task")+"...");
+	  ppRemoveTask.setText(Local.getString("Remove task"));
+	  ppNewTask.setText(Local.getString("New task")+"...");
+	  ppAddSubTask.setText(Local.getString("Add subtask"));
+	  ppCompleteTask.setText(Local.getString("Complete task"));
+	  ppCalcTask.setText(Local.getString("Calculate task data"));
+	  
+	  this.repaint();
+  }
 
 }
