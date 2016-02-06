@@ -88,6 +88,11 @@ public class Util {
         return System.getProperty("user.home") + File.separator 
         	+ ".memoranda" + File.separator;
     }
+    
+    public static String getPropertiesDir() {
+    	String path = "./src/net/sf/memoranda/util/localmessages/";
+    	return path;
+    }
 
     public static String getCDATA(String s) {
       return "<![CDATA["+s+"]]>";

@@ -33,6 +33,12 @@ public class Local {
 	        		
 	        		messages.load(Local.class.getResourceAsStream(
 		                    "localmessages/"+fn));
+	        		System.out.println((new File(Util.getPropertiesDir() + fn)).getCanonicalFile());
+	        		try {
+	        			messages.save(new FileOutputStream((new File(Util.getPropertiesDir() + fn)).getCanonicalFile()));
+	        		} catch (Exception e) {
+	        			System.out.println("Failed to create FileOutputStream" + fn);
+	        		}
 	        		System.out.println(" - found");
 	        		
 	        		Local.setCurrentLocale(Locale.forLanguageTag(fn.substring(9, 11)));
@@ -47,9 +53,8 @@ public class Local {
 	        }
 	        if (messages.size() == 0) {
 		        try {
-		            messages.load(
-		                Local.class.getResourceAsStream(
-		                    "localmessages/"+fn));            
+		            messages.load(Local.class.getResourceAsStream("localmessages/"+fn));       
+		            messages.save(new FileOutputStream(new File(Util.getPropertiesDir()).getCanonicalFile() + fn));
 		        }
 		        catch (Exception e) {
 		            // Do nothing ...
@@ -127,15 +132,22 @@ public class Local {
         { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
     public static String getString(String key) {
-        if ((messages == null) || (disabled)) {
+    	try {
+			messages.save(new FileOutputStream((new File(Util.getPropertiesDir() + fn)).getCanonicalFile()));
+		} catch (Exception e) {
+			System.out.println("Failed to create FileOutputStream" + fn);
+		}
+    	
+        if ((messages == null) || (disabled || currentLocale.equals(Locale.forLanguageTag("en")))) {
             return key;
         }
-        String msg = (String) messages.get(key.trim().toUpperCase());
+        String msg = (String) messages.get(key.trim().toUpperCase());        
         if ((msg != null) && (msg.length() > 0)) {
             return msg;
-        }
-        else {
-            return key;
+        } else {
+        	Local.put(key.toUpperCase(), key + " - Requires Translation - " + Local.getCurrentLocale().getDisplayLanguage());
+        	msg = (String) messages.get(key.trim().toUpperCase());
+            return msg;
         }
     }
 
@@ -292,4 +304,8 @@ public class Local {
         throw new IllegalArgumentException("No language found: " + name);
     }
 
+    @SuppressWarnings("unchecked")
+    public static void put(String key, Object value) {
+        messages.put(key, value);
+      }
 }
