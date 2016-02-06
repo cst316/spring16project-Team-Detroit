@@ -1,3 +1,4 @@
+<<<<<<< 78bd47cba40c993472e3c95282f27700c501215f
 <<<<<<< e6140e7aeabd7f6edf81350b15459539f88f1509
 <<<<<<< f6b7503bacf15ee8c3e3dbc29866c8317b3cf44d
 <<<<<<< 001add229da35bd1b13219c828458946ef8ea151
@@ -25,3 +26,11 @@ build.number=318
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>> Partially completed dynamic language changes
+=======
+#Build Number for ANT. Do not edit!
+#Fri Feb 05 23:36:36 MST 2016
+build.number=345
+>>>>>>>=20c90dea97ba612d3f16c0dc20bc7d6ec632aca6
+<<<<<<<=HEAD
+=\=\=\=\=\=\=
+>>>>>>> Missing keys in message_[LanguageKey].properties will populate with a translation request
