@@ -33,11 +33,12 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
-import net.sf.memoranda.Print;
+
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
+import net.sf.memoranda.Print;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
@@ -113,6 +114,32 @@ public class AppFrame extends JFrame {
             doPrintEvents();
         }
     };
+    
+    //////////////////////////////
+    /**
+	 * eventsPrintAction handles printing event from file drop down menu
+	 * Added:  Ryan Schultz 1/31/2016
+	 */
+    public Action userEmailSetUpAction = new AbstractAction("Set Up User Email") {
+    	//  Calls action event
+        public void actionPerformed(ActionEvent e) {
+            showUserEmailSetUp();
+        }
+    };
+    ///////////////////////////////
+    
+    //////////////////////////////
+    /**
+     * eventsPrintAction handles printing event from file drop down menu
+     * Added:  Ryan Schultz 1/31/2016
+     */
+    public Action addContactAction = new AbstractAction("Add Contact") {
+    	//  Calls action event
+    	public void actionPerformed(ActionEvent e) {
+    		showAddContact();
+    	}
+    };
+    ///////////////////////////////
     
     public Action minimizeAction = new AbstractAction("Close the window") {
         public void actionPerformed(ActionEvent e) {
@@ -257,6 +284,12 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuHelpWeb = new JMenuItem();
     JMenuItem jMenuHelpBug = new JMenuItem();
     JMenuItem jMenuHelpAbout = new JMenuItem();
+    
+    /////////////
+    JMenu jMenuEmail = new JMenu();
+    JMenuItem jMenuUserEmailSetUp = new JMenuItem(userEmailSetUpAction);
+    JMenuItem jMenuAddContact = new JMenuItem(addContactAction);
+    ////////////
 
     //Construct the frame
     public AppFrame() {
@@ -459,10 +492,18 @@ public class AppFrame extends JFrame {
         jMenuInsertBR.setToolTipText(Local.getString("Insert break"));
         jMenuInsertHR.setText(Local.getString("Horizontal rule"));
         jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
+        
+        //////////////////////////
+        jMenuEmail.setText(Local.getString("Email"));
+        jMenuUserEmailSetUp.setText(Local.getString("Set Up User Email"));
+        jMenuUserEmailSetUp.setToolTipText(Local.getString("Set Up User Email"));
+        jMenuAddContact.setText(Local.getString("Add Contact"));
+        jMenuAddContact.setToolTipText(Local.getString("Add Contact"));
+        ///////////////////////////
 
         toolBar.add(jButton3);
         jMenuFile.add(jMenuFileNewPrj);
-                jMenuFile.add(jMenuFileNewNote);
+        jMenuFile.add(jMenuFileNewNote);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFilePackPrj);
         jMenuFile.add(jMenuFileUnpackPrj);
@@ -493,6 +534,11 @@ public class AppFrame extends JFrame {
         menuBar.add(jMenuInsert);
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
+        
+        //////////////////
+        menuBar.add(jMenuEmail);
+        //////////////////
+        
         menuBar.add(jMenuHelp);
         this.setJMenuBar(menuBar);
         //contentPane.add(toolBar, BorderLayout.NORTH);
@@ -573,6 +619,11 @@ public class AppFrame extends JFrame {
         jMenuGo.add(jMenuGoDayBack);
         jMenuGo.add(jMenuGoDayFwd);
         jMenuGo.add(jMenuGoToday);
+        
+        ///////////////////////
+        jMenuEmail.add(jMenuUserEmailSetUp);
+        jMenuEmail.add(jMenuAddContact);
+        //////////////////////
 
         splitPane.setBorder(null);
         workPanel.setBorder(null);
@@ -802,6 +853,23 @@ public class AppFrame extends JFrame {
     	printJob.printEvents();
     }
     
+    //////////////////
+    public void showUserEmailSetUp() {
+    	UserEmailSetUpDialog eDlg = new UserEmailSetUpDialog(this);
+    	eDlg.pack();
+        eDlg.setLocationRelativeTo(this);
+        eDlg.setVisible(true);
+    }
+    //////////////////
+    
+    //////////////////
+    public void showAddContact() {
+    	AddContactDialog acDlg = new AddContactDialog(this);
+    	acDlg.pack();
+    	acDlg.setLocationRelativeTo(this);
+    	acDlg.setVisible(true);
+    }
+    //////////////////
     
     public void doPrjUnPack() {
         // Fix until Sun's JVM supports more locales...
