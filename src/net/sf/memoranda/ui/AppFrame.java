@@ -40,11 +40,12 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
-import net.sf.memoranda.Print;
+
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
+import net.sf.memoranda.Print;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
@@ -120,8 +121,34 @@ public class AppFrame extends JFrame {
             doPrintEvents();
         }
     };
+    //////////////////////////////
+    /**
+	 * eventsPrintAction handles printing event from file drop down menu
+	 * Added:  Ryan Schultz 1/31/2016
+	 */
+    public Action userEmailSetUpAction = new AbstractAction("Set Up User Email") {
+    	//  Calls action event
+        public void actionPerformed(ActionEvent e) {
+            showUserEmailSetUp();
+        }
+    };
+    ///////////////////////////////
     
-    public Action minimizeAction = new AbstractAction(Local.getString("Close the window")) {
+    //////////////////////////////
+    /**
+     * eventsPrintAction handles printing event from file drop down menu
+     * Added:  Ryan Schultz 1/31/2016
+     */
+    public Action addContactAction = new AbstractAction("Add Contact") {
+    	//  Calls action event
+    	public void actionPerformed(ActionEvent e) {
+    		showAddContact();
+    	}
+    };
+    ///////////////////////////////
+    
+    public Action minimizeAction = new AbstractAction("Close the window") {
+>>>>>>> Create User Email, Add Contact, Create Contact List
         public void actionPerformed(ActionEvent e) {
             doMinimize();
         }
@@ -264,6 +291,12 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuHelpWeb = new JMenuItem();
     JMenuItem jMenuHelpBug = new JMenuItem();
     JMenuItem jMenuHelpAbout = new JMenuItem();
+    
+    /////////////
+    JMenu jMenuEmail = new JMenu();
+    JMenuItem jMenuUserEmailSetUp = new JMenuItem(userEmailSetUpAction);
+    JMenuItem jMenuAddContact = new JMenuItem(addContactAction);
+    ////////////
 
     //Construct the frame
     public AppFrame() {
@@ -348,10 +381,121 @@ public class AppFrame extends JFrame {
         jMenuFileMin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10,
                 InputEvent.ALT_MASK));
 
+        jMenuEdit.setText(Local.getString("Edit"));
+
+        jMenuEditUndo.setText(Local.getString("Undo"));
+        jMenuEditUndo.setToolTipText(Local.getString("Undo"));
+        jMenuEditRedo.setText(Local.getString("Redo"));
+        jMenuEditRedo.setToolTipText(Local.getString("Redo"));
+        jMenuEditCut.setText(Local.getString("Cut"));
+        jMenuEditCut.setToolTipText(Local.getString("Cut"));
+        jMenuEditCopy.setText((String) Local.getString("Copy"));
+        jMenuEditCopy.setToolTipText(Local.getString("Copy"));
+        jMenuEditPaste.setText(Local.getString("Paste"));
+        jMenuEditPaste.setToolTipText(Local.getString("Paste"));
+        jMenuEditPasteSpec.setText(Local.getString("Paste special"));
+        jMenuEditPasteSpec.setToolTipText(Local.getString("Paste special"));
+        jMenuEditSelectAll.setText(Local.getString("Select all"));
+
+        jMenuEditFind.setText(Local.getString("Find & replace") + "...");
+
+        jMenuEditPref.setText(Local.getString("Preferences") + "...");
+
+        jMenuInsert.setText(Local.getString("Insert"));
+
+        jMenuInsertImage.setText(Local.getString("Image") + "...");
+        jMenuInsertImage.setToolTipText(Local.getString("Insert Image"));
+        jMenuInsertTable.setText(Local.getString("Table") + "...");
+        jMenuInsertTable.setToolTipText(Local.getString("Insert Table"));
+        jMenuInsertLink.setText(Local.getString("Hyperlink") + "...");
+        jMenuInsertLink.setToolTipText(Local.getString("Insert Hyperlink"));
+        jMenuInsertList.setText(Local.getString("List"));
+
+        jMenuInsertListUL.setText(Local.getString("Unordered"));
+        jMenuInsertListUL.setToolTipText(Local.getString("Insert Unordered"));
+        jMenuInsertListOL.setText(Local.getString("Ordered"));
+
+        jMenuInsertSpecial.setText(Local.getString("Special"));
+        jMenuInsertBR.setText(Local.getString("Line break"));
+        jMenuInsertHR.setText(Local.getString("Horizontal rule"));
+
+        jMenuInsertListOL.setToolTipText(Local.getString("Insert Ordered"));
+
+        jMenuInsertChar.setText(Local.getString("Special character") + "...");
+        jMenuInsertChar.setToolTipText(Local.getString(
+                "Insert Special character"));
+        jMenuInsertDate.setText(Local.getString("Current date"));
+        jMenuInsertTime.setText(Local.getString("Current time"));
+        jMenuInsertFile.setText(Local.getString("File") + "...");
+
+        jMenuFormat.setText(Local.getString("Format"));
+        jMenuFormatPStyle.setText(Local.getString("Paragraph style"));
+        jMenuFormatP.setText(Local.getString("Paragraph"));
+        jMenuFormatH1.setText(Local.getString("Header") + " 1");
+        jMenuFormatH2.setText(Local.getString("Header") + " 2");
+        jMenuFormatH3.setText(Local.getString("Header") + " 3");
+        jMenuFormatH4.setText(Local.getString("Header") + " 4");
+        jMenuFormatH5.setText(Local.getString("Header") + " 5");
+        jMenuFormatH6.setText(Local.getString("Header") + " 6");
+        jMenuFormatPRE.setText(Local.getString("Preformatted text"));
+        jMenuFormatBLCQ.setText(Local.getString("Blockquote"));
+        jjMenuFormatChStyle.setText(Local.getString("Character style"));
+        jMenuFormatChNorm.setText(Local.getString("Normal"));
+        jMenuFormatChEM.setText(Local.getString("Emphasis"));
+        jMenuFormatChSTRONG.setText(Local.getString("Strong"));
+        jMenuFormatChCODE.setText(Local.getString("Code"));
+        jMenuFormatChCite.setText(Local.getString("Cite"));
+        jMenuFormatChSUP.setText(Local.getString("Superscript"));
+        jMenuFormatChSUB.setText(Local.getString("Subscript"));
+        jMenuFormatChCustom.setText(Local.getString("Custom style") + "...");
+        jMenuFormatChB.setText(Local.getString("Bold"));
+        jMenuFormatChB.setToolTipText(Local.getString("Bold"));
+        jMenuFormatChI.setText(Local.getString("Italic"));
+        jMenuFormatChI.setToolTipText(Local.getString("Italic"));
+        jMenuFormatChU.setText(Local.getString("Underline"));
+        jMenuFormatChU.setToolTipText(Local.getString("Underline"));
+        jMenuFormatAlign.setText(Local.getString("Alignment"));
+        jMenuFormatAlignL.setText(Local.getString("Left"));
+        jMenuFormatAlignL.setToolTipText(Local.getString("Left"));
+        jMenuFormatAlignC.setText(Local.getString("Center"));
+        jMenuFormatAlignC.setToolTipText(Local.getString("Center"));
+        jMenuFormatAlignR.setText(Local.getString("Right"));
+        jMenuFormatAlignR.setToolTipText(Local.getString("Right"));
+        jMenuFormatTable.setText(Local.getString("Table"));
+        jMenuFormatTableInsR.setText(Local.getString("Insert row"));
+        jMenuFormatTableInsC.setText(Local.getString("Insert cell"));
+        jMenuFormatProperties.setText(Local.getString("Object properties")
+                + "...");
+        jMenuFormatProperties.setToolTipText(Local.getString(
+                "Object properties"));
+
+        jMenuGo.setText(Local.getString("Go"));
+        jMenuGoHBack.setText(Local.getString("History back"));
+        jMenuGoHBack.setToolTipText(Local.getString("History back"));
+        jMenuGoFwd.setText(Local.getString("History forward"));
+        jMenuGoFwd.setToolTipText(Local.getString("History forward"));
+        jMenuGoDayBack.setText(Local.getString("One day back"));
+        jMenuGoDayFwd.setText(Local.getString("One day forward"));
+        jMenuGoToday.setText(Local.getString("To today"));
+
+        jMenuInsertSpecial.setText(Local.getString("Special"));
+        jMenuInsertBR.setText(Local.getString("Line break"));
+        jMenuInsertBR.setToolTipText(Local.getString("Insert break"));
+        jMenuInsertHR.setText(Local.getString("Horizontal rule"));
+        jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
+        
+        //////////////////////////
+        jMenuEmail.setText(Local.getString("Email"));
+        jMenuUserEmailSetUp.setText(Local.getString("Set Up User Email"));
+        jMenuUserEmailSetUp.setToolTipText(Local.getString("Set Up User Email"));
+        jMenuAddContact.setText(Local.getString("Add Contact"));
+        jMenuAddContact.setToolTipText(Local.getString("Add Contact"));
+        ///////////////////////////
+>>>>>>> Create User Email, Add Contact, Create Contact List
 
         toolBar.add(jButton3);
         jMenuFile.add(jMenuFileNewPrj);
-                jMenuFile.add(jMenuFileNewNote);
+        jMenuFile.add(jMenuFileNewNote);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFilePackPrj);
         jMenuFile.add(jMenuFileUnpackPrj);
@@ -382,6 +526,11 @@ public class AppFrame extends JFrame {
         menuBar.add(jMenuInsert);
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
+        
+        //////////////////
+        menuBar.add(jMenuEmail);
+        //////////////////
+        
         menuBar.add(jMenuHelp);
         this.setJMenuBar(menuBar);
         //contentPane.add(toolBar, BorderLayout.NORTH);
@@ -462,6 +611,11 @@ public class AppFrame extends JFrame {
         jMenuGo.add(jMenuGoDayBack);
         jMenuGo.add(jMenuGoDayFwd);
         jMenuGo.add(jMenuGoToday);
+        
+        ///////////////////////
+        jMenuEmail.add(jMenuUserEmailSetUp);
+        jMenuEmail.add(jMenuAddContact);
+        //////////////////////
 
         splitPane.setBorder(null);
         workPanel.setBorder(null);
@@ -734,6 +888,23 @@ public class AppFrame extends JFrame {
     	printJob.printEvents();
     }
     
+    //////////////////
+    public void showUserEmailSetUp() {
+    	UserEmailSetUpDialog eDlg = new UserEmailSetUpDialog(this);
+    	eDlg.pack();
+        eDlg.setLocationRelativeTo(this);
+        eDlg.setVisible(true);
+    }
+    //////////////////
+    
+    //////////////////
+    public void showAddContact() {
+    	AddContactDialog acDlg = new AddContactDialog(this);
+    	acDlg.pack();
+    	acDlg.setLocationRelativeTo(this);
+    	acDlg.setVisible(true);
+    }
+    //////////////////
     
     public void doPrjUnPack() {
         // Fix until Sun's JVM supports more locales...
