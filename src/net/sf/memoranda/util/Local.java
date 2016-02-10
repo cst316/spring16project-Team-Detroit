@@ -92,6 +92,7 @@ public class Local {
     
     public static void setMessages(String languageTag) {
 		fn = "messages_" + languageTag + ".properties";
+		messages.clear();
 		
 		//System.out.println(fn);
 		

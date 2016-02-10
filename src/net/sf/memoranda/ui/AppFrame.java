@@ -91,13 +91,13 @@ public class AppFrame extends JFrame {
 
     static Vector exitListeners = new Vector();
 
-    public Action prjPackAction = new AbstractAction("Pack current project") {
+    public Action prjPackAction = new AbstractAction(Local.getString("Pack current project")) {
         public void actionPerformed(ActionEvent e) {
             doPrjPack();
         }
     };
 
-    public Action prjUnpackAction = new AbstractAction("Unpack project") {
+    public Action prjUnpackAction = new AbstractAction(Local.getString("Unpack project")) {
         public void actionPerformed(ActionEvent e) {
             doPrjUnPack();
         }
@@ -107,20 +107,20 @@ public class AppFrame extends JFrame {
 	 * eventsPrintAction handles printing event from file drop down menu
 	 * Added:  Ryan Schultz 1/31/2016
 	 */
-    public Action eventsPrintAction = new AbstractAction("Print Events") {
+    public Action eventsPrintAction = new AbstractAction(Local.getString("Print Events")) {
     	//  Calls action event
         public void actionPerformed(ActionEvent e) {
             doPrintEvents();
         }
     };
     
-    public Action minimizeAction = new AbstractAction("Close the window") {
+    public Action minimizeAction = new AbstractAction(Local.getString("Close the window")) {
         public void actionPerformed(ActionEvent e) {
             doMinimize();
         }
     };
 
-    public Action preferencesAction = new AbstractAction("Preferences") {
+    public Action preferencesAction = new AbstractAction(Local.getString("Preferences")) {
         public void actionPerformed(ActionEvent e) {
             showPreferences();
         }
@@ -151,7 +151,7 @@ public class AppFrame extends JFrame {
     };
     
     JMenuItem jMenuFileNewPrj = new JMenuItem();
-        JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
+    JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
     JMenuItem jMenuFilePackPrj = new JMenuItem(prjPackAction);
     JMenuItem jMenuFileUnpackPrj = new JMenuItem(prjUnpackAction);
     // Print events menu file menu item Added:  Ryan Schultz 1/31/2016
@@ -1018,6 +1018,7 @@ public class AppFrame extends JFrame {
     }
 		public void updateLanguages() {
 			jMenuFileNewPrj.setText(Local.getString("New project") + "...");
+			jMenuFileNewNote.setText(Local.getString("New Note"));
 			jMenuFile.setText(Local.getString("File"));
 			jMenuFileExit.setText(Local.getString("Exit"));
 			jMenuHelp.setText(Local.getString("Help"));
@@ -1031,8 +1032,10 @@ public class AppFrame extends JFrame {
 	        jMenuFilePrintEvent.setText(Local.getString("Print Events"));
 	        jMenuFileExportNote.setText(Local.getString("Export current note")
 	                + "...");
+	        jMenuFileExportPrj.setText(Local.getString("Export notes") + "...");
 	        jMenuFileImportNote.setText(Local.getString("Import one note")
 	                + "...");
+	        jMenuFileImportPrj.setText(Local.getString("Import multiple notes"));
 	        jMenuFilePackPrj.setText(Local.getString("Pack project") + "...");
 	        jMenuFileMin.setText(Local.getString("Close the window"));
 	        jMenuEdit.setText(Local.getString("Edit"));

@@ -574,6 +574,15 @@ public class PreferencesDialog extends JDialog {
 	}
 
 	void apply() {
+		//Set the language file
+		Local.setMessages(Local.toLanguageTag(languagesListCB.getSelectedItem().toString()));
+		//Set the current locale
+		Local.setCurrentLocale(Locale.forLanguageTag(Local.toLanguageTag(
+				languagesListCB.getSelectedItem().toString())));
+		//save current locale to configuration
+		Configuration.put("LOCALES_DIR", Local.toLanguageTag(
+				languagesListCB.getSelectedItem().toString()));
+	
 		if (this.firstdow.isSelected())
 			Configuration.put("FIRST_DAY_OF_WEEK", "mon");
 		else
@@ -669,11 +678,7 @@ public class PreferencesDialog extends JDialog {
 		Configuration.put("HEADER_FONT", headerFontCB.getSelectedItem());
 		Configuration.put("MONO_FONT", monoFontCB.getSelectedItem());
 		Configuration.put("BASE_FONT_SIZE", baseFontSize.getValue());
-		Configuration.put("LOCALES_DIR", Local.toLanguageTag(
-				languagesListCB.getSelectedItem().toString()));
-		Local.setCurrentLocale(Locale.forLanguageTag(Local.toLanguageTag(
-				languagesListCB.getSelectedItem().toString())));
-		Local.setMessages(Local.toLanguageTag(languagesListCB.getSelectedItem().toString()));
+		
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.editor.setAntiAlias(antialiasChB.isSelected());
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.initCSS();
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.repaint();

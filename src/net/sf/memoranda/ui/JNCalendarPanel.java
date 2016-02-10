@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.MutableComboBoxModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
@@ -54,7 +55,8 @@ public class JNCalendarPanel extends JPanel {
   JPanel todayBPanel = new JPanel();
   JPanel dayBackBPanel = new JPanel();
   JButton dayBackB = new JButton();
-  JComboBox monthsCB = new JComboBox(Local.getMonthNames());
+  JComboBox monthsCB = new JComboBox();
+  MutableComboBoxModel model = (MutableComboBoxModel)monthsCB.getModel();
   BorderLayout borderLayout4 = new BorderLayout();
   JNCalendar jnCalendar = new JNCalendar(CurrentDate.get());
   JPanel jnCalendarPanel = new JPanel();
@@ -111,6 +113,9 @@ public class JNCalendarPanel extends JPanel {
     //dayForwardAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, KeyEvent.ALT_MASK));
     todayAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_HOME, KeyEvent.ALT_MASK));
     
+    for (String month : Local.getMonthNames()) {
+    	model.addElement(month);
+    }
     monthsCB.setRequestFocusEnabled(false);
     monthsCB.setMaximumRowCount(12);
     monthsCB.setPreferredSize(new Dimension(50 , 20));
@@ -304,7 +309,14 @@ public class JNCalendarPanel extends JPanel {
   }
 
   public void updateLanguages() {
-	  monthsCB = new JComboBox(Local.getMonthNames());
+	  while(model.getSize() > 0){
+		  model.removeElementAt(0);
+	  }
+	  
+	  for (String month : Local.getMonthNames()) {
+		model.addElement(month);
+	  }
+	    
 	  dayForwardB.setToolTipText(Local.getString("One day forward"));
 	  todayB.setToolTipText(Local.getString("To today"));
 	  dayBackB.setToolTipText(Local.getString("One day back"));
