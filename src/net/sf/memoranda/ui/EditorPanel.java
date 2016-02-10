@@ -125,7 +125,7 @@ public class EditorPanel extends JPanel {
 		}
 	};
 
-	public Action previewAction = new AbstractAction(Local.getString("Preview note in default browser"), new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/preview.png"))) {
+	public Action previewAction = new AbstractAction(Local.getString("Preview note in browser"), new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/preview.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			previewB_actionPerformed(e);
 		}
@@ -581,6 +581,7 @@ public class EditorPanel extends JPanel {
 		cutB.setToolTipText(Local.getString("Cut"));
 		previewB.setToolTipText(previewAction.getValue(Action.NAME).toString());
 		titleLabel.setText(Local.getString("Title") + "  ");
+		previewB.setText(Local.getString("Preview note in browser"));
 		
 		this.repaint();
 	}
