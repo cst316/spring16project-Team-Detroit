@@ -1,10 +1,17 @@
 package net.sf.memoranda.ui;
 
 import java.awt.AWTEvent;
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.MenuItem;
 import java.awt.Point;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -684,9 +691,49 @@ public class AppFrame extends JFrame {
         System.exit(0);
     }
 
+    //System tray code modified from code snippet presented by
+    //"peeskillet" of StackOverflow.com
     public void doMinimize() {
-        exitNotify();
-        App.closeWindow();
+        //exitNotify();
+        //App.closeWindow();
+    	
+    	if (!SystemTray.isSupported()) {
+    	    System.out.println("SystemTray is not supported");
+    	    return;
+    	}
+
+    	final SystemTray tray = SystemTray.getSystemTray();
+    	Image image = Toolkit.getDefaultToolkit().getImage("src/net/sf/memoranda/ui/resources/icons/resource48.png");
+    	PopupMenu popup = new PopupMenu();
+    	final TrayIcon trayIcon = new TrayIcon(image, "Memoranda", popup);
+
+        MenuItem defaultItem = new MenuItem("Exit");
+        defaultItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                doExit();
+            }
+        });
+        popup.add(defaultItem);
+        
+        defaultItem = new MenuItem("Open");
+        defaultItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+                tray.remove(trayIcon);
+                setExtendedState(JFrame.NORMAL);
+            }
+        });
+        popup.add(defaultItem);
+        
+        trayIcon.setImageAutoSize(true);     
+    	try {
+    	    tray.add(trayIcon);
+    	} catch (AWTException e) {
+    	    // TODO Auto-generated catch block
+    	    e.printStackTrace();
+    	}
+
+       
     }
 
     //Help | About action performed
