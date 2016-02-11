@@ -150,15 +150,21 @@ public class Calculator extends JFrame implements ActionListener {
 		}
 
 		clearAll();
+		
+		
 
-		// Closing and Ending
+		/* Closing and Ending
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent e) {
 				System.exit(0);
 			}
 		});
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.Dispose);*/
 	}
+	
+	void cancelB_actionPerformed(ActionEvent e) {
+        this.dispose();
+    }
 
 	// Actions
 	public void actionPerformed(ActionEvent e) {
@@ -463,7 +469,7 @@ public class Calculator extends JFrame implements ActionListener {
 		clearOnNextDigit = true;
 	}
 
-	public static void main(String args[]) {
+	public static void openCalc() {
 		Calculator calc = new Calculator();
 		calc.setTitle("Calculator");
 		calc.setSize(240, 200);
