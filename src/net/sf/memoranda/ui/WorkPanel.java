@@ -273,7 +273,7 @@ public class WorkPanel extends JPanel {
 		currentB.setOpaque(true);
 	}
 	
-	public void updateLanguages() {
+	public void updateLanguage() {
 		agendaB.setText(Local.getString("Agenda"));
 		eventsB.setText(Local.getString("Events"));
 		tasksB.setText(Local.getString("Tasks"));

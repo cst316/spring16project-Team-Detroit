@@ -267,7 +267,7 @@ public class EditorPanel extends JPanel {
 		previewB.setFocusable(false);
 		previewB.setPreferredSize(new Dimension(24, 24));
 		previewB.setRequestFocusEnabled(false);
-		previewB.setToolTipText(previewAction.getValue(Action.NAME).toString());
+		previewB.setToolTipText(Local.getString("Preview note in browser"));
 		previewB.setMinimumSize(new Dimension(24, 24));
 		previewB.setMaximumSize(new Dimension(24, 24));
 		previewB.setText("");
@@ -566,7 +566,7 @@ public class EditorPanel extends JPanel {
 		}
 	}
 	
-	public void updateLanguages() {
+	public void updateLanguage() {
 		newB.setToolTipText(Local.getString("New note"));
 		importB.setToolTipText(Local.getString("Insert file"));
 		exportB.setToolTipText(Local.getString("Export note to file"));
@@ -579,9 +579,8 @@ public class EditorPanel extends JPanel {
 		insTimeB.setToolTipText(Local.getString("Insert current time"));
 		undoB.setToolTipText(Local.getString("Undo"));
 		cutB.setToolTipText(Local.getString("Cut"));
-		previewB.setToolTipText(previewAction.getValue(Action.NAME).toString());
+		previewB.setToolTipText(Local.getString("Preview note in browser"));
 		titleLabel.setText(Local.getString("Title") + "  ");
-		previewB.setText(Local.getString("Preview note in browser"));
 		
 		this.repaint();
 	}

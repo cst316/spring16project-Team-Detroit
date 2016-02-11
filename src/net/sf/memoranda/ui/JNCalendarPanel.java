@@ -308,7 +308,7 @@ public class JNCalendarPanel extends JPanel {
     notifyListeners();
   }
 
-  public void updateLanguages() {
+  public void updateLanguage() {
 	  while(model.getSize() > 0){
 		  model.removeElementAt(0);
 	  }

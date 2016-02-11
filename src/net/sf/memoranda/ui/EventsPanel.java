@@ -494,4 +494,13 @@ public class EventsPanel extends JPanel {
     void ppNewEvent_actionPerformed(ActionEvent e) {
         newEventB_actionPerformed(e);
     }
+    
+    public void updateLanguage() {
+    	newEventB.setToolTipText(Local.getString("New event"));
+    	removeEventB.setToolTipText(Local.getString("Remove event"));
+    	editEventB.setToolTipText(Local.getString("Edit event"));
+    	printEventsB.setToolTipText(Local.getString("Print events"));
+    	
+    	eventsTable = new EventsTable();
+    }
 }

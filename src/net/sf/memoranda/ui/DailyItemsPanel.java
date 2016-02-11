@@ -497,7 +497,7 @@ public class DailyItemsPanel extends JPanel {
         parentPanel.eventsB_actionPerformed(null);
     }
     
-    public void updateLanguages() {
+    public void updateLanguage() {
     	taskB.setToolTipText(Local.getString("Active to-do tasks"));
     	alarmB.setToolTipText(Local.getString("Active events"));
     	
