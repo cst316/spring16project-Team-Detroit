@@ -314,7 +314,7 @@ public class EventDialog extends JDialog implements WindowListener {
         gbc.insets = new Insets(5, 0, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         repeatPanel.add(setEndDateB, gbc);
-        monthlyRepeatRB.setActionCommand("daily");
+        monthlyRepeatRB.setActionCommand("monthly");
         monthlyRepeatRB.setText(Local.getString("Every"));
         monthlyRepeatRB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -528,5 +528,25 @@ public class EventDialog extends JDialog implements WindowListener {
 	public void windowActivated( WindowEvent e ) {}
 
 	public void windowDeactivated( WindowEvent e ) {}
-
+	
+	/*public void updateLanguage() {
+		header.setText(Local.getString("Event"));
+		lblTime.setText(Local.getString("Time"));
+		lblText.setText(Local.getString("Text"));
+		repeatBorder = new TitledBorder(BorderFactory.createLineBorder(
+		        Color.gray, 1), Local.getString("Repeat"));
+		noRepeatRB.setText(Local.getString("No repeat"));
+		dailyRepeatRB.setText(Local.getString("Every"));
+		lblDays.setText(Local.getString("day(s)"));
+		lblSince.setText(Local.getString("Since"));
+		weeklyRepeatRB.setText(Local.getString("Every"));
+		enableEndDateCB.setText(Local.getString("Till"));
+		workingDaysOnlyCB.setText(Local.getString("Working days only"));
+		monthlyRepeatRB.setText(Local.getString("Every"));
+		lblDoM.setText(Local.getString("day of month"));
+		yearlyRepeatRB.setText(Local.getString("Yearly"));
+		okB.setText(Local.getString("Ok"));
+		cancelB.setText(Local.getString("Cancel"));
+	}*/
+	
 }

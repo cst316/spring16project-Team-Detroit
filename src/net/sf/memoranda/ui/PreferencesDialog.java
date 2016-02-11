@@ -683,13 +683,17 @@ public class PreferencesDialog extends JDialog {
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.initCSS();
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.repaint();
 
-		App.getFrame().updateLanguages();
-		App.getFrame().workPanel.dailyItemsPanel.updateLanguages();
-		App.getFrame().workPanel.dailyItemsPanel.parentPanel.updateLanguages();
-		App.getFrame().workPanel.dailyItemsPanel.tasksPanel.updateLanguages();
-		App.getFrame().workPanel.dailyItemsPanel.calendar.updateLanguages();
-		App.getFrame().workPanel.dailyItemsPanel.editorPanel.updateLanguages();
-		App.getFrame().projectsPanel.prjTablePanel.initProjectsTable();
+		App.getFrame().updateLanguage();
+		App.getFrame().projectsPanel.updateLanguage();
+		App.getFrame().projectsPanel.prjTablePanel.updateLanguage();
+		App.getFrame().workPanel.dailyItemsPanel.updateLanguage();
+		App.getFrame().workPanel.dailyItemsPanel.parentPanel.updateLanguage();
+		App.getFrame().workPanel.dailyItemsPanel.tasksPanel.updateLanguage();
+		App.getFrame().workPanel.dailyItemsPanel.calendar.updateLanguage();
+		App.getFrame().workPanel.dailyItemsPanel.eventsPanel.updateLanguage();
+		App.getFrame().workPanel.dailyItemsPanel.editorPanel.updateLanguage();
+		App.getFrame().workPanel.dailyItemsPanel.notesControlPane.updateLanguage();
+		App.getFrame().workPanel.dailyItemsPanel.notesControlPane.searchPanel.updateLanguage();
 		
 		System.out.println(Local.getCurrentLocale().getDisplayLanguage());
 		System.out.println(Local.getMessages().get("ALIGNMENT"));

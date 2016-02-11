@@ -200,4 +200,20 @@ public class ProjectsTablePanel extends JPanel {
             return columnNames[col];
         }
     }
+    
+    public void updateLanguage() {
+    	projectsTable.setModel(new PrjTableModel());
+        for (int i = 0; i < 4; i++) {
+            TableColumn column = projectsTable.getColumnModel().getColumn(i);
+            if (i == 0) {
+                column.setPreferredWidth(32767);
+            }
+            else {
+                column.setMinWidth(80);
+                column.setPreferredWidth(80);                
+            }
+        }
+        
+    	this.repaint();
+    }
 }

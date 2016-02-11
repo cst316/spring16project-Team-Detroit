@@ -759,7 +759,7 @@ public class TaskPanel extends JPanel {
       calcTask_actionPerformed(e);
   }
   
-  public void updateLanguages() {
+  public void updateLanguage() {
 	  historyBackB.setToolTipText(Local.getString("History back"));
 	  historyForwardB.setToolTipText(Local.getString("History forward"));
 	  newTaskB.setToolTipText(Local.getString("Create new task"));
