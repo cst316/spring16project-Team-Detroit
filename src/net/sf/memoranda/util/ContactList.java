@@ -1,82 +1,70 @@
-//package net.sf.memoranda.util;
+/* 
+  File:		ContactList.java
+  Author:	Ryan Schultz	
+  Date:		2/11/2016
 
-/**
- * Configuration.java
- * Created on 12.03.2003, 0:31:22 Alex
- * Package: net.sf.memoranda.util
- *
- * @author Alex V. Alishevskikh, alex@openmechanics.net
- * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
- */
+  Description: Manages contact list as a hash map
+*/
+
 package net.sf.memoranda.util;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
+import java.util.*;
 
 import net.sf.memoranda.EmailContact;
-import net.sf.memoranda.ui.AppFrame;
-import net.sf.memoranda.ui.ExceptionDialog;
 
+/**
+Class:	ContactList
+
+Description:  Creates hash map out of contact list and manages the created hash map
+*/
 public class ContactList {
+	
+	static HashMap<String, EmailContact> contactList = new HashMap<String, EmailContact>();
+	
+	public ContactList(ArrayList<EmailContact> cl) {		
+		if (cl.size() != 0) {
+			contactList.put("USER", cl.get(0));
+			for (int i=1; i < cl.size(); i++) {
+			    contactList.put(cl.get(i).getName().toUpperCase(),cl.get(i));
+			}
+		}		
+	}
+	
+	public ContactList() {		
+	}
+	
+	public static EmailContact getContact(String key) {
+		if (contactList.containsKey(key)) {
+			return contactList.get(key);
+		}
+		return null;
+	}
+	
+	public static String getEmail(EmailContact ec) {
+		return ec.getEmail();		
+	}
+	
+	/**
+	  Method:	addContactToMap
+	  @param:	Key value for object, Email contact object to be stored in map
+	  @return: 	N/A
 
-    static LoadableProperties config  = new LoadableProperties();
-    static String configPath = getConfigPath();
+	  Description: Adds a contact to the contact list hash map
+	*/
+	public static void addContactToMap(String key, EmailContact ec) {
+		contactList.put(key,ec);		
+	}
+	
+	/**
+	  Method:	addUserToMap
+	  @param:	Key value for object, User email object to be stored in map
+	  @return: 	N/A
 
-    static {
-    	AppFrame.addExitListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //CurrentStorage.get().storeContacts();
-            	saveConfig();
-            }
-        });
-    try {
-     config.load(new FileInputStream(configPath));
-     System.out.println("Loaded from " + configPath);
-    }
-    catch (Exception e) {      
-      File f = new File(configPath);
-      new File(f.getParent()).mkdirs();      
-      /*DEBUG*/System.out.println("New contact list created: "+configPath);
-      try {
-        //config.load(ContactList.class.getResourceAsStream("resources/memoranda.default.properties"));
-        saveConfig();      
-      }
-      catch (Exception e2) {
-        new ExceptionDialog(e2, "Failed to load default configuration from resources.", "");
-        config = null;
-      }
-    }
-  }
-  
-  static String getConfigPath() {
-    String p = Util.getEnvDir() + "contacts" + File.separator + "contactsList.properties";
-    if (new File(p).exists()) 
-        return p;   
-    return p;
-  }
-
-  public static void saveConfig() {
-    try {
-    config.save(new FileOutputStream(configPath));
-    System.out.println("[DEBUG] Save contacts list: " + getConfigPath());
-    //System.out.println("Saving contact list");
-    }
-    catch (Exception e) {
-     new ExceptionDialog(e, "Failed to save a contactList file:<br>"+configPath, "");
-    }
-  }
-
-  public static Object get(String key) {
-    if ((config.get(key)) == null) {
-        return "";
-    }
-    return config.get(key);
-  }
-
-  @SuppressWarnings("unchecked")
-public static void put(String key, EmailContact value) {
-    config.put(key, value);
-  }
+	  Description: Adds user name and email to the contact list hash map
+	*/
+	public static void addUserToMap(String key, EmailContact ec) {
+		contactList.put(key,ec);
+	}
+	
+		
 }

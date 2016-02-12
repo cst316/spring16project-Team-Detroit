@@ -1,9 +1,10 @@
+/* 
+  File:		Print.java
+  Author:	Ryan Schultz	
+  Date:		1/31/2016
 
-
-
-
-
-
+  Description: Prints events for current day
+*/
 
 package net.sf.memoranda;
 
@@ -13,34 +14,29 @@ import java.awt.*;
 import java.text.*;
 
 /**
- * Print class to print events and possible other items in future
- * Created:  Ryan Schultz 1/31/2016
- */
+Class:	Print
+
+Description:  Prints events for current day to users default printer using dialog box
+*/
 public class Print implements Printable {
 	
-	/**
-	 * Constructor for Print class
-	 * Created:  Ryan Schultz 1/31/2016
-	 */
 	public Print() {
 	}
 	
 	/**
-	 * print prints the events
-	 * @param g graphics to be printed
-	 * @param pf page format
-	 * @param page pages to be printed
-	 * Created:  Ryan Schultz 1/31/2016
-	 */
+	  Method:	print
+	  @param:	Formatted graphics, page format, pages to be printed
+	  @return: 	Pages printed
+
+	  Description: Formats and prints the events
+	*/
 	public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
-		// Add date to be printed
 		String evlist = new SimpleDateFormat("EEEE, MMMM, dd yyyy").format(new Date()) + "\n";
-		// Get all events for the day
         for (Iterator it = EventsScheduler.getScheduledEvents().iterator(); it.hasNext();) {
             net.sf.memoranda.Event ev = (net.sf.memoranda.Event)it.next();   
             evlist += ev.getTimeString()+" - "+ev.getText()+"\n";
         }
-        // Split the string to be printed on separate lines
+
         String[] lines = evlist.split("\r?\n|\r");
         
 		if (page > 0) { /* We have only one page, and 'page' is zero-based */
@@ -63,9 +59,12 @@ public class Print implements Printable {
 	}
 	
 	/**
-	 * printEvents creates printer job and brings up print dialog
-	 * Created:  Ryan Schultz 1/31/2016
-	 */
+	  Method:	printEvents
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Creates printer job and brings up print dialog
+	*/
 	public void printEvents() {
 		PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(this);
@@ -74,7 +73,7 @@ public class Print implements Printable {
             try {
                  job.print();
             } catch (PrinterException ex) {
-            	System.out.println(ex);
+            	ex.getStackTrace();
             }
         }
 	}

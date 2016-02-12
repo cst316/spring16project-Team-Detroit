@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
@@ -35,6 +36,7 @@ import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
 
 import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.DailyEmail;
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
@@ -46,6 +48,8 @@ import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.htmleditor.HTMLEditor;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.ContactList;
+import net.sf.memoranda.util.ContactListStorage;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
@@ -105,41 +109,50 @@ public class AppFrame extends JFrame {
     };
     
     /**
-	 * eventsPrintAction handles printing event from file drop down menu
-	 * Added:  Ryan Schultz 1/31/2016
-	 */
+	  Method:	eventsPrintAction
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Handles printing event from file drop down menu
+	*/
     public Action eventsPrintAction = new AbstractAction("Print Events") {
-    	//  Calls action event
         public void actionPerformed(ActionEvent e) {
             doPrintEvents();
         }
     };
     
-    //////////////////////////////
     /**
-	 * eventsPrintAction handles printing event from file drop down menu
-	 * Added:  Ryan Schultz 1/31/2016
-	 */
+	  Method:	userEmailSetUpAction
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Handles click event of Set Up User Email from Email drop down menu
+	*/
     public Action userEmailSetUpAction = new AbstractAction("Set Up User Email") {
-    	//  Calls action event
         public void actionPerformed(ActionEvent e) {
             showUserEmailSetUp();
         }
     };
-    ///////////////////////////////
     
-    //////////////////////////////
     /**
-     * eventsPrintAction handles printing event from file drop down menu
-     * Added:  Ryan Schultz 1/31/2016
-     */
+	  Method:	addContactAction
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Handles click event of Add Contact from Email drop down menu, forces user to set 
+	               up their own email first.
+	*/
     public Action addContactAction = new AbstractAction("Add Contact") {
-    	//  Calls action event
     	public void actionPerformed(ActionEvent e) {
-    		showAddContact();
+    		if (ContactListStorage.getSize() == 0) {
+    			JOptionPane.showMessageDialog(null, "You must set up user email first!", "Error", JOptionPane.INFORMATION_MESSAGE);
+    			showUserEmailSetUp();   			
+    		}
+    		else {
+    			showAddContact();
+    		}   		
     	}
     };
-    ///////////////////////////////
     
     public Action minimizeAction = new AbstractAction("Close the window") {
         public void actionPerformed(ActionEvent e) {
@@ -285,11 +298,10 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuHelpBug = new JMenuItem();
     JMenuItem jMenuHelpAbout = new JMenuItem();
     
-    /////////////
+    //  Email menu items:  Ryan Schultz 2/10/2016
     JMenu jMenuEmail = new JMenu();
     JMenuItem jMenuUserEmailSetUp = new JMenuItem(userEmailSetUpAction);
     JMenuItem jMenuAddContact = new JMenuItem(addContactAction);
-    ////////////
 
     //Construct the frame
     public AppFrame() {
@@ -303,6 +315,9 @@ public class AppFrame extends JFrame {
     }
     //Component initialization
     private void jbInit() throws Exception {
+    	// Initialize contact list upon loading of frame Added: Ryan Schultz 2/12/2016
+    	ContactListStorage cls = new ContactListStorage();
+       	
         this.setIconImage(new ImageIcon(AppFrame.class.getResource(
                 "resources/icons/jnotes16.png"))
                 .getImage());
@@ -493,13 +508,12 @@ public class AppFrame extends JFrame {
         jMenuInsertHR.setText(Local.getString("Horizontal rule"));
         jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
         
-        //////////////////////////
+        //  Set text of email drop down, UserEmailSetUp and AddContact Email jMenuItems:  Ryan Schultz 2/10/2016
         jMenuEmail.setText(Local.getString("Email"));
         jMenuUserEmailSetUp.setText(Local.getString("Set Up User Email"));
         jMenuUserEmailSetUp.setToolTipText(Local.getString("Set Up User Email"));
         jMenuAddContact.setText(Local.getString("Add Contact"));
         jMenuAddContact.setToolTipText(Local.getString("Add Contact"));
-        ///////////////////////////
 
         toolBar.add(jButton3);
         jMenuFile.add(jMenuFileNewPrj);
@@ -535,9 +549,8 @@ public class AppFrame extends JFrame {
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
         
-        //////////////////
+        //  Add Email jMenuItem item to menuBar Added:  Ryan Schultz 2/10/2016
         menuBar.add(jMenuEmail);
-        //////////////////
         
         menuBar.add(jMenuHelp);
         this.setJMenuBar(menuBar);
@@ -620,10 +633,10 @@ public class AppFrame extends JFrame {
         jMenuGo.add(jMenuGoDayFwd);
         jMenuGo.add(jMenuGoToday);
         
-        ///////////////////////
+        //  Add jMenuItems to Email drop down menu item:  Ryan Schultz 2/10/2016
         jMenuEmail.add(jMenuUserEmailSetUp);
         jMenuEmail.add(jMenuAddContact);
-        //////////////////////
+    	jMenuAddContact.setVisible(true);        
 
         splitPane.setBorder(null);
         workPanel.setBorder(null);
@@ -731,6 +744,10 @@ public class AppFrame extends JFrame {
         Context.put("FRAME_HEIGHT", new Integer(this.getHeight()));
         Context.put("FRAME_XPOS", new Integer(this.getLocation().x));
         Context.put("FRAME_YPOS", new Integer(this.getLocation().y));
+        //  Upon exit checks if user set up email, if so sets up daily events email Added:  Ryan Schultz 2/12/2016
+        if (ContactListStorage.getSize() != 0) {
+        	DailyEmail de = new DailyEmail();
+        } 
         exitNotify();
         System.exit(0);
     }
@@ -845,31 +862,44 @@ public class AppFrame extends JFrame {
     }
 
     /**
-	 * doPrintEvents invokes print class to print events list
-	 * Added:  Ryan Schultz 1/31/2016
-	 */
+	  Method:	doPrintEvents
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Invokes print class to print events list
+	*/
     public void doPrintEvents() {
     	Print printJob = new Print();
     	printJob.printEvents();
     }
     
-    //////////////////
+    /**
+	  Method:	showUserEmailSetUp
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Displays dialog box to set up user email
+	*/
     public void showUserEmailSetUp() {
     	UserEmailSetUpDialog eDlg = new UserEmailSetUpDialog(this);
     	eDlg.pack();
         eDlg.setLocationRelativeTo(this);
         eDlg.setVisible(true);
     }
-    //////////////////
     
-    //////////////////
+    /**
+	  Method:	showAddContact
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Displays dialog box to add contact
+	*/
     public void showAddContact() {
     	AddContactDialog acDlg = new AddContactDialog(this);
     	acDlg.pack();
     	acDlg.setLocationRelativeTo(this);
     	acDlg.setVisible(true);
     }
-    //////////////////
     
     public void doPrjUnPack() {
         // Fix until Sun's JVM supports more locales...
