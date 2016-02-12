@@ -1,24 +1,27 @@
+/* 
+  File:		AddContactDialog.java
+  Author:	Ryan Schultz	
+  Date:		2/10/2016
+
+  Description: Creates, displays, contains functionality of Add Contact dialog box
+*/
+
 package net.sf.memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import net.sf.memoranda.EmailContact;
 import net.sf.memoranda.util.ContactList;
+import net.sf.memoranda.util.ContactListStorage;
 import net.sf.memoranda.util.Local;
 
+/**
+Class:	AddContactDialog
+
+Description:  Creates Add Contact dialog box and handles action events to add contact or cancel
+*/
 public class AddContactDialog extends JDialog {
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());
@@ -28,8 +31,7 @@ public class AddContactDialog extends JDialog {
 	JPanel inputPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JPanel inputPanel3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JPanel inputPanel4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-	
-	
+		
 	JLabel nameLabel = new JLabel();
 	JTextField nameTextField = new JTextField(20);
 	JLabel emailLabel = new JLabel();
@@ -38,8 +40,7 @@ public class AddContactDialog extends JDialog {
 	JTextField phoneTextField = new JTextField(20);
 	JLabel notesLabel = new JLabel();
 	JTextField notesTextField = new JTextField(20);
-	
-	
+		
 	JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JButton okB = new JButton();
 	JButton cancelB = new JButton("Cancel");
@@ -54,7 +55,14 @@ public class AddContactDialog extends JDialog {
 	           new ExceptionDialog(ex);
 	       }
 	}
-		
+	
+	/**
+	  Method:	jbInit
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Initializes AddContactDialog box
+	*/
 	void jbInit() throws Exception {
 		this.setResizable(false);
 		nameLabel.setText("Name:  ");
@@ -104,11 +112,14 @@ public class AddContactDialog extends JDialog {
 		this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 	}
 	
-	@SuppressWarnings("static-access")
-	// ok button action
+	/**
+	  Method:	okB_actionPerformed
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Adds contact after validation - Ok button action event
+	*/
     void okB_actionPerformed(ActionEvent e) {
-    	//  ADDED FOR CONFIG STUFF
-    	ContactList contactList = new ContactList();
     	String name = nameTextField.getText();
     	String email = emailTextField.getText();
     	String phone = phoneTextField.getText();
@@ -116,42 +127,60 @@ public class AddContactDialog extends JDialog {
     	EmailContact contact = new EmailContact();// = new EmailContact(email);
     	if (name != null && !name.isEmpty()) {
     		if (email != null && !name.isEmpty()) {
-    			if (phone != null && !phone.isEmpty()) {
-    				if (phone != null && !phone.isEmpty()) {
+    			if (phone != null && !phone.isEmpty() && phone.matches("^-?\\d+$")) {
+    				if (notes != null && !notes.isEmpty()) {
 				    	if (contact.validateEmail(email)) {
-				    		if (contactList.get(name.toUpperCase()).equals("")) {
-				    			contactList.put(name.toUpperCase(), new EmailContact(name,email,phone,notes));
+				    		if (ContactList.getContact(name.toUpperCase()) == null) {
+				    			ContactListStorage.addContactToList(new EmailContact(name,email,phone,notes));
 				    			this.dispose();
 				    			JOptionPane.showMessageDialog(null, name + " added to contacts!", "Successfully Added", JOptionPane.INFORMATION_MESSAGE);
 				    		}
 				    		else {
 				    			JOptionPane.showMessageDialog(null, "Contact already exists!", "Invalid Contact", JOptionPane.INFORMATION_MESSAGE);
+				    			//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
+				    			cancelB.transferFocus();
 				    		}
 				    	}
 				    	else {
 				    		JOptionPane.showMessageDialog(null, "You entered an invalid email!" + "\n" + "Example:  abcd@gmail.com", "Invalid Email", JOptionPane.INFORMATION_MESSAGE);
+				    		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
+				    		nameTextField.transferFocus();
 				    	}
     				}
     				else {
                 		JOptionPane.showMessageDialog(null, "You left Notes Blank!", "Blank Notes Input", JOptionPane.INFORMATION_MESSAGE);
+                		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
+                		phoneTextField.transferFocus();
+                		
                 	}
     			}
     			else {
-            		JOptionPane.showMessageDialog(null, "You left Phone Blank!", "Blank Phone Input", JOptionPane.INFORMATION_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "You entered invalid Phone!\nPlease only enter numbers", "Invalid Phone Input", JOptionPane.INFORMATION_MESSAGE);
+            		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
+            		emailTextField.transferFocus();
             	}
     		}
     		else {
         		JOptionPane.showMessageDialog(null, "You left Email Blank!", "Blank Email Input", JOptionPane.INFORMATION_MESSAGE);
+        		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
+        		nameTextField.transferFocus();
         	}
     	}
     	else {
     		JOptionPane.showMessageDialog(null, "You left Name Blank!", "Blank Name Input", JOptionPane.INFORMATION_MESSAGE);
+    		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
+    		cancelB.transferFocus();
     	}
     }
     
-  //cancel button action
+    /**
+	  Method:	cancelB_actionPerformed
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Closes Add Contact dialog box - Cancel Button action
+	*/
     void cancelB_actionPerformed(ActionEvent e) {
-        //CANCELLED = true;
         this.dispose();
     }
 
