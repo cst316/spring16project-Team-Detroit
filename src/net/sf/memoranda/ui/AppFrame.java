@@ -128,7 +128,14 @@ public class AppFrame extends JFrame {
         }
     };
     
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
+    /**
+	  Method:	userEmailSetUpAction
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Handles click event of Set Up User Email from Email drop down menu
+	*/
+
     /**
 	  Method:	userEmailSetUpAction
 	  @param:	N/A
@@ -137,20 +144,10 @@ public class AppFrame extends JFrame {
 	  Description: Handles click event of Set Up User Email from Email drop down menu
 	*/
     public Action userEmailSetUpAction = new AbstractAction("Set Up User Email") {
-=======
-    //////////////////////////////
-    /**
-	 * eventsPrintAction handles printing event from file drop down menu
-	 * Added:  Ryan Schultz 1/31/2016
-	 */
-    public Action userEmailSetUpAction = new AbstractAction("Set Up User Email") {
-    	//  Calls action event
->>>>>>> Create User Email, Add Contact, Create Contact List
         public void actionPerformed(ActionEvent e) {
             showUserEmailSetUp();
         }
     };
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
     
     /**
 	  Method:	addContactAction
@@ -171,25 +168,28 @@ public class AppFrame extends JFrame {
     		}   		
     	}
     };
-=======
-    ///////////////////////////////
     
-    //////////////////////////////
     /**
-     * eventsPrintAction handles printing event from file drop down menu
-     * Added:  Ryan Schultz 1/31/2016
-     */
+	  Method:	addContactAction
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Handles click event of Add Contact from Email drop down menu, forces user to set 
+	               up their own email first.
+	*/
     public Action addContactAction = new AbstractAction("Add Contact") {
-    	//  Calls action event
     	public void actionPerformed(ActionEvent e) {
-    		showAddContact();
+    		if (ContactListStorage.getSize() == 0) {
+    			JOptionPane.showMessageDialog(null, "You must set up user email first!", "Error", JOptionPane.INFORMATION_MESSAGE);
+    			showUserEmailSetUp();   			
+    		}
+    		else {
+    			showAddContact();
+    		}   		
     	}
     };
-    ///////////////////////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
     
     public Action minimizeAction = new AbstractAction("Close the window") {
->>>>>>> Create User Email, Add Contact, Create Contact List
         public void actionPerformed(ActionEvent e) {
             doMinimize();
         }
@@ -333,18 +333,10 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuHelpBug = new JMenuItem();
     JMenuItem jMenuHelpAbout = new JMenuItem();
     
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
     //  Email menu items:  Ryan Schultz 2/10/2016
     JMenu jMenuEmail = new JMenu();
     JMenuItem jMenuUserEmailSetUp = new JMenuItem(userEmailSetUpAction);
     JMenuItem jMenuAddContact = new JMenuItem(addContactAction);
-=======
-    /////////////
-    JMenu jMenuEmail = new JMenu();
-    JMenuItem jMenuUserEmailSetUp = new JMenuItem(userEmailSetUpAction);
-    JMenuItem jMenuAddContact = new JMenuItem(addContactAction);
-    ////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
 
     //Construct the frame
     public AppFrame() {
@@ -359,6 +351,7 @@ public class AppFrame extends JFrame {
     //Component initialization
     private void jbInit() throws Exception {
         updateThisLanguage();
+
     	// Initialize contact list upon loading of frame Added: Ryan Schultz 2/12/2016
     	ContactListStorage cls = new ContactListStorage();
        	
@@ -534,20 +527,12 @@ public class AppFrame extends JFrame {
         jMenuInsertHR.setText(Local.getString("Horizontal rule"));
         jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
         
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
         //  Set text of email drop down, UserEmailSetUp and AddContact Email jMenuItems:  Ryan Schultz 2/10/2016
-=======
-        //////////////////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
         jMenuEmail.setText(Local.getString("Email"));
         jMenuUserEmailSetUp.setText(Local.getString("Set Up User Email"));
         jMenuUserEmailSetUp.setToolTipText(Local.getString("Set Up User Email"));
         jMenuAddContact.setText(Local.getString("Add Contact"));
         jMenuAddContact.setToolTipText(Local.getString("Add Contact"));
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
-=======
-        ///////////////////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
 
         toolBar.add(jButton3);
         jMenuFile.add(jMenuFileNewPrj);
@@ -583,16 +568,9 @@ public class AppFrame extends JFrame {
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
         
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
         //  Add Email jMenuItem item to menuBar Added:  Ryan Schultz 2/10/2016
         menuBar.add(jMenuEmail);
-=======
-        //////////////////
-        menuBar.add(jMenuEmail);
-        //////////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
         
-        menuBar.add(jMenuHelp);
         this.setJMenuBar(menuBar);
         //contentPane.add(toolBar, BorderLayout.NORTH);
         contentPane.add(statusBar, BorderLayout.SOUTH);
@@ -673,17 +651,10 @@ public class AppFrame extends JFrame {
         jMenuGo.add(jMenuGoDayFwd);
         jMenuGo.add(jMenuGoToday);
         
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
         //  Add jMenuItems to Email drop down menu item:  Ryan Schultz 2/10/2016
         jMenuEmail.add(jMenuUserEmailSetUp);
         jMenuEmail.add(jMenuAddContact);
     	jMenuAddContact.setVisible(true);        
-=======
-        ///////////////////////
-        jMenuEmail.add(jMenuUserEmailSetUp);
-        jMenuEmail.add(jMenuAddContact);
-        //////////////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
 
         splitPane.setBorder(null);
         workPanel.setBorder(null);
@@ -963,7 +934,6 @@ public class AppFrame extends JFrame {
     	printJob.printEvents();
     }
     
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
     /**
 	  Method:	showUserEmailSetUp
 	  @param:	N/A
@@ -971,16 +941,12 @@ public class AppFrame extends JFrame {
 
 	  Description: Displays dialog box to set up user email
 	*/
-=======
-    //////////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
     public void showUserEmailSetUp() {
     	UserEmailSetUpDialog eDlg = new UserEmailSetUpDialog(this);
     	eDlg.pack();
         eDlg.setLocationRelativeTo(this);
         eDlg.setVisible(true);
     }
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
     
     /**
 	  Method:	showAddContact
@@ -989,21 +955,12 @@ public class AppFrame extends JFrame {
 
 	  Description: Displays dialog box to add contact
 	*/
-=======
-    //////////////////
-    
-    //////////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
     public void showAddContact() {
     	AddContactDialog acDlg = new AddContactDialog(this);
     	acDlg.pack();
     	acDlg.setLocationRelativeTo(this);
     	acDlg.setVisible(true);
     }
-<<<<<<< 589487b35b1add651c6a7df4fdf670d2d5ad095b
-=======
-    //////////////////
->>>>>>> Create User Email, Add Contact, Create Contact List
     
     public void doPrjUnPack() {
         // Fix until Sun's JVM supports more locales...
