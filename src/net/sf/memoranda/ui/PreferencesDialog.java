@@ -579,11 +579,9 @@ public class PreferencesDialog extends JDialog {
 		if (!languageTag.equals(Local.getCurrentLocale())) {
 			//Set the language file
 			Local.setMessages(languageTag);
-			//Set the current locale
-			Local.setCurrentLocale(Locale.forLanguageTag(languageTag));
-			//save current locale to configuration
+			//Save current locale to configuration
 			Configuration.put("LOCALES_DIR", languageTag);
-			
+			//Update the UI
 			App.getFrame().updateLanguage();
 			
 			System.out.println(Local.getCurrentLocale().getDisplayLanguage(Local.getCurrentLocale()));

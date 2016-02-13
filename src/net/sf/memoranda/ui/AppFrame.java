@@ -602,7 +602,7 @@ public class AppFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 setVisible(true);
                 tray.remove(trayIcon);
-                setExtendedState(JFrame.NORMAL);
+                setExtendedState(JFrame.MAXIMIZED_BOTH);
             }
         });
         popup.add(defaultItem);
@@ -614,8 +614,6 @@ public class AppFrame extends JFrame {
     	    // TODO Auto-generated catch block
     	    e.printStackTrace();
     	}
-
-       
     }
 
     //Help | About action performed

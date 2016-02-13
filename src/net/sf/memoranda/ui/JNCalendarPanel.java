@@ -309,6 +309,8 @@ public class JNCalendarPanel extends JPanel {
   }
 
   public void updateLanguage() {
+	  CalendarDate saveDate = _date;
+	  
 	  while(model.getSize() > 0){
 		  model.removeElementAt(0);
 	  }
@@ -321,7 +323,9 @@ public class JNCalendarPanel extends JPanel {
 	  todayB.setToolTipText(Local.getString("To today"));
 	  dayBackB.setToolTipText(Local.getString("One day back"));
 	  
-	  this.repaint();
+	  _date = saveDate;
+	  refreshView();
+	  notifyListeners();
   }
 
 

@@ -23,7 +23,8 @@ public class Local {
 
     static {
     	if (!Configuration.get("DISABLE_L10N").equals("yes")) {
-	    				setMessages(currentLocale.getLanguage());
+	    	setMessages(currentLocale.getLanguage());
+	    	
 	        if (Configuration.get("LOCALES_DIR") != "") {
 	        	System.out.print("Look "+fn+" at: "+Configuration.get("LOCALES_DIR")+" ");
 	        	try {
@@ -97,12 +98,19 @@ public class Local {
 		//System.out.println(fn);
 		
         try {
-            messages.load(Local.class.getResourceAsStream("localmessages/" + fn));   
+            messages.load(Local.class.getResourceAsStream("localmessages/" + fn));
             System.out.println("Translation File is now:" + fn);
-        }
-        catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Language Change Failed!");
         }
+        
+    	try {
+			messages.save(new FileOutputStream((new File(Util.getPropertiesDir() + fn)).getCanonicalFile()));
+		} catch (IOException e) {
+			System.out.println("Failed to create FileOutputStream" + fn);
+		}
+    	
+    	setCurrentLocale(Locale.forLanguageTag(languageTag));
     }
     
 
@@ -132,13 +140,7 @@ public class Local {
     static String weekdaynames[] =
         { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
-    public static String getString(String key) {
-    	try {
-			messages.save(new FileOutputStream((new File(Util.getPropertiesDir() + fn)).getCanonicalFile()));
-		} catch (Exception e) {
-			System.out.println("Failed to create FileOutputStream" + fn);
-		}
-    	
+    public static String getString(String key) {    	
         if ((messages == null) || (disabled || currentLocale.equals(Locale.forLanguageTag("en")))) {
             return key;
         }
@@ -146,7 +148,7 @@ public class Local {
         if ((msg != null) && (msg.length() > 0)) {
             return msg;
         } else {
-        	Local.put(key.toUpperCase(), key + " - Requires Translation - " + Local.getCurrentLocale().getDisplayLanguage());
+        	put(key.toUpperCase(), key + " - Requires Translation - " + Local.getCurrentLocale().getDisplayLanguage());
         	msg = (String) messages.get(key.trim().toUpperCase());
             return msg;
         }
