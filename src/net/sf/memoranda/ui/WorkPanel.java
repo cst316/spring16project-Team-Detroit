@@ -280,6 +280,9 @@ public class WorkPanel extends JPanel {
 		notesB.setText(Local.getString("Notes"));
 		filesB.setText(Local.getString("Resources"));
 		
+		filesPanel.updateLanguage(); //branches complete
+		dailyItemsPanel.updateLanguage();
+		
 		this.repaint();
 	}
 }

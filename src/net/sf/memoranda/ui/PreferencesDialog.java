@@ -95,7 +95,7 @@ public class PreferencesDialog extends JDialog {
 	
 	//Language Panel
 	JPanel languagesPanel = new JPanel(new BorderLayout());
-	Vector<String> languagesList = getLanguages(); 
+	Vector<String> languagesList = getLanguages().elementAt(1); 
 	JComboBox<String> languagesListCB = new JComboBox<String>(languagesList);
 
 	public PreferencesDialog(Frame frame) {
@@ -574,14 +574,21 @@ public class PreferencesDialog extends JDialog {
 	}
 
 	void apply() {
-		//Set the language file
-		Local.setMessages(Local.toLanguageTag(languagesListCB.getSelectedItem().toString()));
-		//Set the current locale
-		Local.setCurrentLocale(Locale.forLanguageTag(Local.toLanguageTag(
-				languagesListCB.getSelectedItem().toString())));
-		//save current locale to configuration
-		Configuration.put("LOCALES_DIR", Local.toLanguageTag(
-				languagesListCB.getSelectedItem().toString()));
+		String languageTag = getLanguages().get(0).get(languagesListCB.getSelectedIndex());
+		
+		if (!languageTag.equals(Local.getCurrentLocale())) {
+			//Set the language file
+			Local.setMessages(languageTag);
+			//Set the current locale
+			Local.setCurrentLocale(Locale.forLanguageTag(languageTag));
+			//save current locale to configuration
+			Configuration.put("LOCALES_DIR", languageTag);
+			
+			App.getFrame().updateLanguage();
+			
+			System.out.println(Local.getCurrentLocale().getDisplayLanguage(Local.getCurrentLocale()));
+		}
+
 	
 		if (this.firstdow.isSelected())
 			Configuration.put("FIRST_DAY_OF_WEEK", "mon");
@@ -682,21 +689,6 @@ public class PreferencesDialog extends JDialog {
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.editor.setAntiAlias(antialiasChB.isSelected());
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.initCSS();
 		App.getFrame().workPanel.dailyItemsPanel.editorPanel.editor.repaint();
-
-		App.getFrame().updateLanguage();
-		App.getFrame().projectsPanel.updateLanguage();
-		App.getFrame().projectsPanel.prjTablePanel.updateLanguage();
-		App.getFrame().workPanel.dailyItemsPanel.updateLanguage();
-		App.getFrame().workPanel.dailyItemsPanel.parentPanel.updateLanguage();
-		App.getFrame().workPanel.dailyItemsPanel.tasksPanel.updateLanguage();
-		App.getFrame().workPanel.dailyItemsPanel.calendar.updateLanguage();
-		App.getFrame().workPanel.dailyItemsPanel.eventsPanel.updateLanguage();
-		App.getFrame().workPanel.dailyItemsPanel.editorPanel.updateLanguage();
-		App.getFrame().workPanel.dailyItemsPanel.notesControlPane.updateLanguage();
-		App.getFrame().workPanel.dailyItemsPanel.notesControlPane.searchPanel.updateLanguage();
-		
-		System.out.println(Local.getCurrentLocale().getDisplayLanguage());
-		System.out.println(Local.getMessages().get("ALIGNMENT"));
 		
 		Configuration.saveConfig();
 		
@@ -882,18 +874,23 @@ public class PreferencesDialog extends JDialog {
 		return fonts;
 	}
 	
-	private Vector<String> getLanguages() {
-		Vector<String> languages = new Vector<String>();
+	private Vector<Vector<String>> getLanguages() {
+		Vector<Vector<String>> languages = new Vector<Vector<String>>();
 		
 		File[] files = new File("./src/net/sf/memoranda/util/localmessages").listFiles();
+		Vector<String> languageTag = new Vector<String>();
+		Vector<String> displayLanguage = new Vector<String>();
 		
 		for (File file : files) {
 			if (file.getName().substring(11, 12).equals(".")) {
-				languages.add(Locale.forLanguageTag(file.getName().substring(9, 11)).getDisplayLanguage());
+				languageTag.add(file.getName().substring(9, 11));
+				displayLanguage.add(Locale.forLanguageTag(file.getName().substring(9, 11)).
+						getDisplayLanguage(Local.getCurrentLocale()));
 			}
 		}
 		
-		
+		languages.add(languageTag);
+		languages.add(displayLanguage);
 		return languages;
 	}
 	

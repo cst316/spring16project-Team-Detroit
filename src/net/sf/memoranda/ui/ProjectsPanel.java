@@ -466,5 +466,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		
 		prjTablePanel.projectsTable.setToolTipText(
 				Local.getString("Double-click to set a current project"));
+		
+		prjTablePanel.updateLanguage();
 	}
 }

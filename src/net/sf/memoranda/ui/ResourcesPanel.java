@@ -437,4 +437,17 @@ public class ResourcesPanel extends JPanel {
 		     
   return destStr;
   }
+  
+  public void updateLanguage() {
+      newResB.setToolTipText(Local.getString("New resource"));
+      removeResB.setToolTipText(Local.getString("Remove resource"));
+      refreshB.setToolTipText(Local.getString("Refresh"));
+	  
+	  ppRun.setText(Local.getString("Open resource")+"...");
+	  ppRemoveRes.setText(Local.getString("Remove resource"));
+	  ppNewRes.setText(Local.getString("New resource")+"...");
+	  ppRefresh.setText(Local.getString("Refresh"));
+	    
+	  resourcesTable.updateLanguage();
+  }
 }
