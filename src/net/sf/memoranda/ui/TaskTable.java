@@ -82,17 +82,12 @@ import net.sf.memoranda.ui.treetable.*;
 public class TaskTable extends JTable {
 
     public static final int TASK_ID = 100;
-
     public static final int TASK = 101;
-
+    
     protected TreeTableCellRenderer tree;
-
     protected TaskTableModel model;
-    
     protected TreeTableModelAdapter modelAdapter;
-    
     protected TaskTreeTableCellRenderer renderer;
-	
 	protected ExpansionHandler expansion; 
     
     public TaskTable() {
@@ -528,5 +523,15 @@ public class TaskTable extends JTable {
 		}
 		
 	} // }}}	
+	 
+	 public void updateLanguage() {
+		 model = new TaskTableSorter( this );
+		 modelAdapter = new TreeTableModelAdapter(model, tree);
+		 super.setModel(modelAdapter);
+		 
+		 initColumnWidths();
+		 
+		 this.repaint();
+	 }
 	
 }

@@ -582,6 +582,30 @@ public class EditorPanel extends JPanel {
 		previewB.setToolTipText(Local.getString("Preview note in browser"));
 		titleLabel.setText(Local.getString("Title") + "  ");
 		
+		jPanel1.remove(editor);
+		editor = new HTMLEditor();
+		redoB.setAction(editor.redoAction);
+		copyB.setAction(editor.copyAction);
+		pasteB.setAction(editor.pasteAction);
+		undoB.setAction(editor.undoAction);
+		cutB.setAction(editor.cutAction);
+		editor.editToolbar.setFloatable(false);
+		editor.editor.setAntiAlias(Configuration.get("ANTIALIAS_TEXT").toString().equalsIgnoreCase("yes"));
+		titleField.addKeyListener(new KeyListener() {
+
+			public void keyPressed(KeyEvent ke) {
+				if (ke.getKeyCode() == KeyEvent.VK_ENTER)
+					editor.editor.requestFocus();
+			}
+
+			public void keyReleased(KeyEvent arg0) {
+			}
+
+			public void keyTyped(KeyEvent arg0) {
+			}
+		});
+		jPanel1.add(editor, BorderLayout.CENTER);
+		
 		this.repaint();
 	}
 }

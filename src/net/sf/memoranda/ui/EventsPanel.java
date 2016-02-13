@@ -501,6 +501,10 @@ public class EventsPanel extends JPanel {
     	editEventB.setToolTipText(Local.getString("Edit event"));
     	printEventsB.setToolTipText(Local.getString("Print events"));
     	
-    	eventsTable = new EventsTable();
+    	ppEditEvent.setText(Local.getString("Edit event") + "...");
+        ppRemoveEvent.setText(Local.getString("Remove event"));
+        ppNewEvent.setText(Local.getString("New event") + "...");
+    	
+    	eventsTable.updateLanguage();
     }
 }

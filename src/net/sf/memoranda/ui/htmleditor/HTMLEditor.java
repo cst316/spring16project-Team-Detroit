@@ -2791,6 +2791,5 @@ public class HTMLEditor extends JPanel {
 				dlg.chkRegExp.isSelected(),
 				repl);
 		finder.start();
-
 	}
 }

@@ -777,6 +777,8 @@ public class TaskPanel extends JPanel {
 	  ppCompleteTask.setText(Local.getString("Complete task"));
 	  ppCalcTask.setText(Local.getString("Calculate task data"));
 	  
+	  taskTable.updateLanguage();
+	  
 	  this.repaint();
   }
 

@@ -270,7 +270,7 @@ public class AppFrame extends JFrame {
     }
     //Component initialization
     void jbInit() throws Exception {
-    	updateLanguage();
+    	updateThisLanguage();
     	
         this.setIconImage(new ImageIcon(AppFrame.class.getResource(
                 "resources/icons/jnotes16.png"))
@@ -1015,7 +1015,7 @@ public class AppFrame extends JFrame {
                 exc.printStackTrace();
         }
     }
-		public void updateLanguage() {
+		public void updateThisLanguage() {
 			jMenuFileNewPrj.setText(Local.getString("New project") + "...");
 			jMenuFileNewNote.setText(Local.getString("New Note"));
 			jMenuFile.setText(Local.getString("File"));
@@ -1138,6 +1138,15 @@ public class AppFrame extends JFrame {
 	        jMenuInsertBR.setToolTipText(Local.getString("Insert break"));
 	        jMenuInsertHR.setText(Local.getString("Horizontal rule"));
 	        jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
+			
+			
+		}
+		
+		public void updateLanguage() {
+			updateThisLanguage();
+			
+			projectsPanel.updateLanguage();
+			workPanel.updateLanguage();
 			
 			this.repaint();
 		}
