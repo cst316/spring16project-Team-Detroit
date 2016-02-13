@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< 44673ba4ad304bce262b77989fa0124fba89488c
 <<<<<<< 78bd47cba40c993472e3c95282f27700c501215f
 <<<<<<< e6140e7aeabd7f6edf81350b15459539f88f1509
@@ -43,3 +44,11 @@ build.number=389
 <<<<<<<=HEAD
 =\=\=\=\=\=\=
 >>>>>>> Fully functional, needs tests and possibly refactoring
+=======
+#Build Number for ANT. Do not edit!
+#Fri Feb 12 18:14:52 MST 2016
+build.number=389
+>>>>>>>=20c90dea97ba612d3f16c0dc20bc7d6ec632aca6
+<<<<<<<=HEAD
+=\=\=\=\=\=\=
+>>>>>>> 7e399021ba56dce548eec41f1ba72a73266dd579
