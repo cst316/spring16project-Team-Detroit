@@ -27,20 +27,23 @@ public class SerializationUtil {
 
 	  Description: Serializes contact list ArrayList and writes file
 	*/
-	public static void serilaizeList(ArrayList<EmailContact> cl) {
+	public static boolean serilaizeList(ArrayList<EmailContact> cl) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(getContactPath());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(cl);
             out.close();
             fileOut.close();
+            return true;
         } 
 		catch (FileNotFoundException e) {
             e.printStackTrace();
+            return false;
         } 
 		catch (IOException e) {
             e.printStackTrace();
-        }		
+            return false;
+        }
 	}
 	
 	/**
@@ -50,6 +53,7 @@ public class SerializationUtil {
 
 	  Description: Deserializes contact list ArrayList
 	*/
+	@SuppressWarnings("unchecked")
 	public static ArrayList<EmailContact> deserializeList() {
 		try {
             FileInputStream fileIn = new FileInputStream(getContactPath());
