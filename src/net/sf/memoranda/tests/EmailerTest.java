@@ -1,4 +1,4 @@
-package net.sf.memoranda.unittest;
+package net.sf.memoranda.tests;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
