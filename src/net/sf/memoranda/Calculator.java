@@ -14,17 +14,20 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
+/**
+Class: Calculator
+
+Description: Main class for the calculator
+*/
 public class Calculator extends JFrame implements ActionListener {
 	/**
-	* 
+	* Serialized 
 	*/
 	private static final long serialVersionUID = 1L;
 	// Variables
@@ -151,15 +154,6 @@ public class Calculator extends JFrame implements ActionListener {
 
 		clearAll();
 		
-		
-
-		/* Closing and Ending
-		addWindowListener(new WindowAdapter() {
-			public void windowClosed(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		this.setDefaultCloseOperation(JFrame.Dispose);*/
 	}
 	
 	void cancelB_actionPerformed(ActionEvent e) {
@@ -167,6 +161,11 @@ public class Calculator extends JFrame implements ActionListener {
     }
 
 	// Actions
+	/*
+	Method: actionPerformed
+	@param: functions on the calculator
+	@return: double
+	*/
 	public void actionPerformed(ActionEvent e) {
 		double result = 0;
 
@@ -318,7 +317,7 @@ public class Calculator extends JFrame implements ActionListener {
 			}
 		}
 	}
-
+// All memory functions will be added in a future release
 	private void addToMemory() {
 		// need to figure out how to code
 
