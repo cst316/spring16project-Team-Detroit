@@ -322,7 +322,6 @@ public class AppFrame extends JFrame {
     //Component initialization
     private void jbInit() throws Exception {
         updateThisLanguage();
-
     	// Initialize contact list upon loading of frame Added: Ryan Schultz 2/12/2016
     	ContactListStorage cls = new ContactListStorage();
        	
@@ -542,6 +541,7 @@ public class AppFrame extends JFrame {
         //  Add Email jMenuItem item to menuBar Added:  Ryan Schultz 2/10/2016
         menuBar.add(jMenuEmail);
         
+        menuBar.add(jMenuHelp);
         this.setJMenuBar(menuBar);
         //contentPane.add(toolBar, BorderLayout.NORTH);
         contentPane.add(statusBar, BorderLayout.SOUTH);

@@ -43,8 +43,8 @@ public class SerializationUtil {
 		catch (IOException e) {
             e.printStackTrace();
             return false;
-        }
-	}
+		}
+    }
 	
 	/**
 	  Method:	deserializeList
