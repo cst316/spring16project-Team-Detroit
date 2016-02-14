@@ -72,7 +72,9 @@ public class ContactListStorage implements Serializable {
 	    	new ExceptionDialog(e, "Failed to save a contactList file:<br>"+ getContactPath(), "");
 	    	return false;
 	    }
-		return true;
+			return true;
+	    }
+
 	}
 	
 	/**

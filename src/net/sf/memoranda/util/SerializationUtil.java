@@ -44,6 +44,13 @@ public class SerializationUtil {
             e.printStackTrace();
             return false;
         }
+        } 
+		catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } 
+		catch (IOException e) {
+            e.printStackTrace();
+        }		
 	}
 	
 	/**

@@ -61,5 +61,6 @@ public class Emailer {
 			return false;
 		}
 		return true;
+		}			
 	}
 }
