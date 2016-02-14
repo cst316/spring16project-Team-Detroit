@@ -73,8 +73,6 @@ public class ContactListStorage implements Serializable {
 	    	return false;
 	    }
 			return true;
-	    }
-
 	}
 	
 	/**
