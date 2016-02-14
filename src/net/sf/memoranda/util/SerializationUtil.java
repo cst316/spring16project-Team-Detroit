@@ -43,13 +43,6 @@ public class SerializationUtil {
 		catch (IOException e) {
             e.printStackTrace();
             return false;
-        }
-        } 
-		catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } 
-		catch (IOException e) {
-            e.printStackTrace();
         }		
 	}
 	
