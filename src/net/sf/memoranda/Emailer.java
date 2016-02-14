@@ -42,7 +42,7 @@ public class Emailer {
 
 	  Description: Sends email to recipient
 	*/
-	public static void sendEmail() {
+	public static boolean sendEmail() {
 		Email email = new SimpleEmail();
 		email.setHostName("smtp.googlemail.com");
 		email.setSmtpPort(465);
@@ -58,6 +58,8 @@ public class Emailer {
 		}
 		catch (EmailException e) {
 			System.out.println(e);
-		}			
+			return false;
+		}
+		return true;
 	}
 }

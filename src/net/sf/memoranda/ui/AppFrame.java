@@ -48,7 +48,6 @@ import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.htmleditor.HTMLEditor;
 import net.sf.memoranda.util.Configuration;
-import net.sf.memoranda.util.ContactList;
 import net.sf.memoranda.util.ContactListStorage;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.CurrentStorage;

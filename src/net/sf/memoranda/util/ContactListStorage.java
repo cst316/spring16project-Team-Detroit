@@ -52,7 +52,6 @@ public class ContactListStorage implements Serializable {
 	  Description: Adds user contact to the contact list ArrayList
 	*/
 	public static void addUserToList(EmailContact user) {
-		//contactList = new ArrayList<EmailContact>();
 		contactList.add(user);
 		ContactList.addUserToMap("USER", user);
 	}
@@ -64,14 +63,16 @@ public class ContactListStorage implements Serializable {
 
 	  Description: Calls SerializationUtil methods to save contact list ArrayList
 	*/
-	public static void saveList() {
+	public static boolean saveList() {
 		try {
 			SerializationUtil.serilaizeList(contactList);
 			System.out.println("[DEBUG] Save contacts list: " + getContactPath());
 	    }
 	    catch (Exception e) {
 	    	new ExceptionDialog(e, "Failed to save a contactList file:<br>"+ getContactPath(), "");
+	    	return false;
 	    }
+		return true;
 	}
 	
 	/**
