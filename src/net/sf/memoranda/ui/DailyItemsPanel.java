@@ -65,8 +65,8 @@ public class DailyItemsPanel extends JPanel {
     public EditorPanel editorPanel = new EditorPanel(this);
     JLabel currentDateLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
-    TaskPanel tasksPanel = new TaskPanel(this);
-    EventsPanel eventsPanel = new EventsPanel(this);
+    public TaskPanel tasksPanel = new TaskPanel(this);
+    public EventsPanel eventsPanel = new EventsPanel(this);
     AgendaPanel agendaPanel = new AgendaPanel(this);
     ImageIcon expIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_right.png"));
     ImageIcon collIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_left.png"));
@@ -80,12 +80,12 @@ public class DailyItemsPanel extends JPanel {
     boolean dateChangedByCalendar = false;
     boolean changedByHistory = false;
     JPanel cmainPanel = new JPanel();
-    JNCalendarPanel calendar = new JNCalendarPanel();
+    public JNCalendarPanel calendar = new JNCalendarPanel();
     JToolBar toggleToolBar = new JToolBar();
     BorderLayout borderLayout5 = new BorderLayout();
     Border border1;
     JButton toggleButton = new JButton();
-    WorkPanel parentPanel = null;
+    public WorkPanel parentPanel = null;
     
     boolean addedToHistory = false;
     JPanel indicatorsPanel = new JPanel();
@@ -495,5 +495,19 @@ public class DailyItemsPanel extends JPanel {
 
     void alarmB_actionPerformed(ActionEvent e) {
         parentPanel.eventsB_actionPerformed(null);
+    }
+    
+    public void updateLanguage() {
+    	taskB.setToolTipText(Local.getString("Active to-do tasks"));
+    	alarmB.setToolTipText(Local.getString("Active events"));
+    	
+		tasksPanel.updateLanguage();
+		calendar.updateLanguage();
+		eventsPanel.updateLanguage();
+		editorPanel.updateLanguage();
+		notesControlPane.updateLanguage();
+		notesControlPane.searchPanel.updateLanguage();
+    	
+    	this.repaint();
     }
 }

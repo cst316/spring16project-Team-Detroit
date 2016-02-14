@@ -52,6 +52,12 @@ public class ResourcesTable extends JTable {
             }
         });
     }
+    
+    public void updateLanguage() {
+    	sorter = new TableSorter(new ResourcesTableModel());
+    	setModel(sorter);
+    	tableChanged();
+    }
 
     void initColumsWidth() {
         for (int i = 0; i < 4; i++) {
@@ -168,20 +174,19 @@ public class ResourcesTable extends JTable {
         }
 
         
-public Class getColumnClass(int col) {
-            try {
-            switch (col) {
-                case 0 :
-                case 1 :
-                case 3 :
-                    return Class.forName("java.lang.String");
-                case 2 :
-                    return Class.forName("java.util.Date");
-            }
-            }
-            catch (Exception ex) {new ExceptionDialog(ex);}
-            return null;
-        }
-    }
-
+	    public Class getColumnClass(int col) {
+	        try {
+	        switch (col) {
+	            case 0 :
+	            case 1 :
+	            case 3 :
+	                return Class.forName("java.lang.String");
+	            case 2 :
+	                return Class.forName("java.util.Date");
+	        }
+	        }
+	        catch (Exception ex) {new ExceptionDialog(ex);}
+	        return null;
+	        }
+	    }
 }

@@ -179,5 +179,13 @@ public class SearchPanel extends JPanel {
         //this.remove(progressBar);
         this.notesList.update(found);
     }
+    
+    public void updateLanguage() {
+    	titledBorder1 = new TitledBorder(BorderFactory.createEmptyBorder(), Local.getString("Search") + ":");
+    	caseSensCB.setText(Local.getString("Case sensitive"));
+    	regexpCB.setText(Local.getString("Regular expressions"));
+        wholeWCB.setText(Local.getString("Whole words only"));
+        searchB.setText(Local.getString("Search"));
+    }
 
 }

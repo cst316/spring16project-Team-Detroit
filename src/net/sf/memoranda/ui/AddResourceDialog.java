@@ -34,7 +34,7 @@ public class AddResourceDialog extends JDialog {
     JPanel areaPanel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc;
     public JRadioButton localFileRB = new JRadioButton();
-    public JCheckBox projectFileCB = new JCheckBox("Copy file to memoranda", false);
+    public JCheckBox projectFileCB = new JCheckBox(Local.getString("Copy file to memoranda"), false);
     JLabel jLabel1 = new JLabel();
     public JTextField pathField = new JTextField();
     JButton browseB = new JButton();
@@ -321,5 +321,19 @@ public class AddResourceDialog extends JDialog {
 		 
 		 urlField.setEnabled(inetShortcutRB.isSelected());
 		 jLabel2.setEnabled(inetShortcutRB.isSelected());
+	}
+	
+	public void updateLanguages() {
+		header.setText(Local.getString("New resource"));
+		localFileRB.setText(Local.getString("Local file"));
+		jLabel1.setText(Local.getString("Path")+": ");
+		browseB.setText(Local.getString("Browse"));
+		inetShortcutRB.setText(Local.getString("Internet shortcut"));
+		jLabel2.setText(Local.getString("URL")+":  ");
+		okB.setText(Local.getString("Ok"));
+		cancelB.setText(Local.getString("Cancel"));
+		JCheckBox projectFileCB = new JCheckBox(Local.getString("Copy file to memoranda"), false);
+		
+		this.repaint();
 	}
 }

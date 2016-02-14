@@ -75,7 +75,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	JMenuItem ppOpenProject = new JMenuItem();	
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 	JButton ppOpenB = new JButton();
-	ProjectsTablePanel prjTablePanel = new ProjectsTablePanel();
+	public ProjectsTablePanel prjTablePanel = new ProjectsTablePanel();
 
 	public Action newProjectAction =
 		new AbstractAction(
@@ -456,4 +456,17 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		ppProperties.setEnabled(enabled);		
 	}
 
+	public void updateLanguage() {
+		ppNewProject.setText(Local.getString("New project"));
+		ppProperties.setText(Local.getString("Project properties"));
+		ppDeleteProject.setText(Local.getString("Delete project"));
+		ppOpenProject.setText(" " + Local.getString("Open project"));
+		ppShowActiveOnlyChB.setText(
+				Local.getString("Show active projects only"));
+		
+		prjTablePanel.projectsTable.setToolTipText(
+				Local.getString("Double-click to set a current project"));
+		
+		prjTablePanel.updateLanguage();
+	}
 }

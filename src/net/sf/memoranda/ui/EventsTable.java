@@ -53,7 +53,7 @@ public class EventsTable extends JTable {
         events = (Vector)EventsManager.getEventsForDate(d);
         getColumnModel().getColumn(0).setPreferredWidth(60);
         getColumnModel().getColumn(0).setMaxWidth(60);
-	clearSelection();
+        clearSelection();
         updateUI();
     }
 
@@ -98,7 +98,7 @@ public class EventsTable extends JTable {
         String[] columnNames = {
             //Local.getString("Task name"),
             Local.getString("Time"),
-                Local.getString("Text")
+            Local.getString("Text")
         };
 
         EventsTableModel() {
@@ -133,7 +133,17 @@ public class EventsTable extends JTable {
         }
 
         public String getColumnName(int col) {
+        	columnNames[0] = Local.getString("Time");
+        	columnNames[1] = Local.getString("Text");
+
             return columnNames[col];
         }
+    }
+    
+    public void updateLanguage() {
+    	setModel(new EventsTableModel());
+        getColumnModel().getColumn(0).setPreferredWidth(60);
+        getColumnModel().getColumn(0).setMaxWidth(60);
+    	this.repaint();
     }
 }

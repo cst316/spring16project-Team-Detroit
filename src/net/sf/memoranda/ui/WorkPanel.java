@@ -314,4 +314,17 @@ public class WorkPanel extends JPanel {
 		currentB.setBackground(new Color(215, 225, 250));
 		currentB.setOpaque(true);
 	}
+	
+	public void updateLanguage() {
+		agendaB.setText(Local.getString("Agenda"));
+		eventsB.setText(Local.getString("Events"));
+		tasksB.setText(Local.getString("Tasks"));
+		notesB.setText(Local.getString("Notes"));
+		filesB.setText(Local.getString("Resources"));
+		
+		filesPanel.updateLanguage(); //branches complete
+		dailyItemsPanel.updateLanguage();
+		
+		this.repaint();
+	}
 }

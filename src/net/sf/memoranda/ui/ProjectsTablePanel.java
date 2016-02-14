@@ -96,7 +96,7 @@ public class ProjectsTablePanel extends JPanel {
         initProjectsTable();
     }
 
-    void initProjectsTable() {
+    public void initProjectsTable() {
         projectsTable.setModel(new PrjTableModel());
         for (int i = 0; i < 4; i++) {
             TableColumn column = projectsTable.getColumnModel().getColumn(i);
@@ -124,18 +124,34 @@ public class ProjectsTablePanel extends JPanel {
         return (Project) projectsTable.getModel().getValueAt(projectsTable.getSelectedRow(), PROJECT);
     }
 
-    static final int PROJECT = 101;
+    String getStatusString(int status) {
+	    switch (status) {
+	        case Project.ACTIVE :
+	            return Local.getString("Active");
+	        case Project.COMPLETED :
+	            return Local.getString("Completed");
+	        case Project.FAILED :
+	            return Local.getString("Failed");
+	        case Project.FROZEN :
+	            return Local.getString("Frozen");
+	        case Project.SCHEDULED :
+	            return Local.getString("Scheduled");
+	    }
+	    return "";
+	}
+
+	static final int PROJECT = 101;
     static final int PROJECT_ID = 100;
 
     class PrjTableModel extends AbstractTableModel {
 
-        String[] columnNames =
-            {
-                Local.getString("Project title"),
-                Local.getString("Start date"),
-                Local.getString("End date"),
-                //Local.getString("Execution"),
-                Local.getString("Status")};
+	    String[] columnNames = {
+	            Local.getString("Project title"),
+	            Local.getString("Start date"),
+	            Local.getString("End date"),
+	            //Local.getString("Execution"),
+	            Local.getString("Status")
+	    };
 
         PrjTableModel() {
             super();
@@ -184,20 +200,20 @@ public class ProjectsTablePanel extends JPanel {
             return columnNames[col];
         }
     }
-
-    String getStatusString(int status) {
-        switch (status) {
-            case Project.ACTIVE :
-                return Local.getString("Active");
-            case Project.COMPLETED :
-                return Local.getString("Completed");
-            case Project.FAILED :
-                return Local.getString("Failed");
-            case Project.FROZEN :
-                return Local.getString("Frozen");
-            case Project.SCHEDULED :
-                return Local.getString("Scheduled");
+    
+    public void updateLanguage() {
+    	projectsTable.setModel(new PrjTableModel());
+        for (int i = 0; i < 4; i++) {
+            TableColumn column = projectsTable.getColumnModel().getColumn(i);
+            if (i == 0) {
+                column.setPreferredWidth(32767);
+            }
+            else {
+                column.setMinWidth(80);
+                column.setPreferredWidth(80);                
+            }
         }
-        return "";
+        
+    	this.repaint();
     }
 }

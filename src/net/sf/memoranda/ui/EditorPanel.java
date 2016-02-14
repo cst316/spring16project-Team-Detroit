@@ -125,7 +125,7 @@ public class EditorPanel extends JPanel {
 		}
 	};
 
-	public Action previewAction = new AbstractAction(Local.getString("Preview note in default browser"), new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/preview.png"))) {
+	public Action previewAction = new AbstractAction(Local.getString("Preview note in browser"), new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/preview.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			previewB_actionPerformed(e);
 		}
@@ -267,7 +267,7 @@ public class EditorPanel extends JPanel {
 		previewB.setFocusable(false);
 		previewB.setPreferredSize(new Dimension(24, 24));
 		previewB.setRequestFocusEnabled(false);
-		previewB.setToolTipText(previewAction.getValue(Action.NAME).toString());
+		previewB.setToolTipText(Local.getString("Preview note in browser"));
 		previewB.setMinimumSize(new Dimension(24, 24));
 		previewB.setMaximumSize(new Dimension(24, 24));
 		previewB.setText("");
@@ -564,5 +564,48 @@ public class EditorPanel extends JPanel {
 		} catch (IOException ioe) {
 			new ExceptionDialog(ioe, "Cannot create temporary file", null);
 		}
+	}
+	
+	public void updateLanguage() {
+		newB.setToolTipText(Local.getString("New note"));
+		importB.setToolTipText(Local.getString("Insert file"));
+		exportB.setToolTipText(Local.getString("Export note to file"));
+		redoB.setToolTipText(Local.getString("Redo"));
+		copyB.setToolTipText(Local.getString("Copy"));
+		historyBackB.setToolTipText(Local.getString("History back"));
+		historyForwardB.setToolTipText(Local.getString("History forward"));
+		pasteB.setToolTipText(Local.getString("paste"));
+		insDateB.setToolTipText(Local.getString("Insert current date"));
+		insTimeB.setToolTipText(Local.getString("Insert current time"));
+		undoB.setToolTipText(Local.getString("Undo"));
+		cutB.setToolTipText(Local.getString("Cut"));
+		previewB.setToolTipText(Local.getString("Preview note in browser"));
+		titleLabel.setText(Local.getString("Title") + "  ");
+		
+		jPanel1.remove(editor);
+		editor = new HTMLEditor();
+		redoB.setAction(editor.redoAction);
+		copyB.setAction(editor.copyAction);
+		pasteB.setAction(editor.pasteAction);
+		undoB.setAction(editor.undoAction);
+		cutB.setAction(editor.cutAction);
+		editor.editToolbar.setFloatable(false);
+		editor.editor.setAntiAlias(Configuration.get("ANTIALIAS_TEXT").toString().equalsIgnoreCase("yes"));
+		titleField.addKeyListener(new KeyListener() {
+
+			public void keyPressed(KeyEvent ke) {
+				if (ke.getKeyCode() == KeyEvent.VK_ENTER)
+					editor.editor.requestFocus();
+			}
+
+			public void keyReleased(KeyEvent arg0) {
+			}
+
+			public void keyTyped(KeyEvent arg0) {
+			}
+		});
+		jPanel1.add(editor, BorderLayout.CENTER);
+		
+		this.repaint();
 	}
 }

@@ -346,4 +346,17 @@ public class NotesControlPanel extends JPanel {
     ppOpenNote.setEnabled(enbl);
     ppClearNote.setEnabled(enbl);
     }
+    
+    public void updateLanguage() {
+        ppAddBkmrk.setText(Local.getString("Set bookmark"));
+        ppClearNote.setText(Local.getString("Clear note"));
+        ppOpenNote.setText(Local.getString("Go to note"));
+        ppInvertSort.setText(Local.getString("Invert Sort Order"));
+        ppRemoveBkmrk.setText(Local.getString("Remove bookmark"));
+    	
+    	tabbedPane.removeAll();
+        tabbedPane.add(notesListPanel, Local.getString("Notes"));
+        tabbedPane.add(bookmarksListPanel, Local.getString("Bookmarks"));
+        tabbedPane.add(searchPanel, Local.getString("Search"));
+    }
 }

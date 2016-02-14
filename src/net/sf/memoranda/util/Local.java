@@ -19,30 +19,43 @@ public class Local {
     static Locale currentLocale = Locale.getDefault();
     static LoadableProperties messages = new LoadableProperties();
     static boolean disabled = false;
+    static String fn = "";
 
     static {
     	if (!Configuration.get("DISABLE_L10N").equals("yes")) {
-	    	String fn = "messages_"
-	                    + currentLocale.getLanguage()
-	                    + ".properties";
+	    	setMessages(currentLocale.getLanguage());
+	    	
 	        if (Configuration.get("LOCALES_DIR") != "") {
 	        	System.out.print("Look "+fn+" at: "+Configuration.get("LOCALES_DIR")+" ");
 	        	try {
-	        		messages.load(new FileInputStream(
-	        			Configuration.get("LOCALES_DIR")+File.separator+fn));
+	        		fn = "messages_"
+	        			+ Configuration.get("LOCALES_DIR")
+	        			+ ".properties";
+	        		
+	        		messages.load(Local.class.getResourceAsStream(
+		                    "localmessages/"+fn));
+	        		System.out.println((new File(Util.getPropertiesDir() + fn)).getCanonicalFile());
+	        		try {
+	        			messages.save(new FileOutputStream((new File(Util.getPropertiesDir() + fn)).getCanonicalFile()));
+	        		} catch (Exception e) {
+	        			System.out.println("Failed to create FileOutputStream" + fn);
+	        		}
 	        		System.out.println(" - found");
+	        		
+	        		Local.setCurrentLocale(Locale.forLanguageTag(fn.substring(9, 11)));
 	        	}
 	        	catch (IOException ex) {
 	        		// Do nothing ...
 	        		System.out.println(" - not found");
+	        		Local.setCurrentLocale(Locale.forLanguageTag("en"));
+	        		
 	        		ex.printStackTrace();
 	        	}
 	        }
 	        if (messages.size() == 0) {
 		        try {
-		            messages.load(
-		                Local.class.getResourceAsStream(
-		                    "localmessages/"+fn));            
+		            messages.load(Local.class.getResourceAsStream("localmessages/"+fn));       
+		            messages.save(new FileOutputStream(new File(Util.getPropertiesDir()).getCanonicalFile() + fn));
 		        }
 		        catch (Exception e) {
 		            // Do nothing ...
@@ -77,9 +90,36 @@ public class Local {
     public static Hashtable getMessages() {
         return messages;
     }
+    
+    public static void setMessages(String languageTag) {
+		fn = "messages_" + languageTag + ".properties";
+		messages.clear();
+		
+		//System.out.println(fn);
+		
+        try {
+            messages.load(Local.class.getResourceAsStream("localmessages/" + fn));
+            System.out.println("Translation File is now:" + fn);
+        } catch (IOException e) {
+            System.out.println("Language Change Failed!");
+        }
+        
+    	try {
+			messages.save(new FileOutputStream((new File(Util.getPropertiesDir() + fn)).getCanonicalFile()));
+		} catch (IOException e) {
+			System.out.println("Failed to create FileOutputStream" + fn);
+		}
+    	
+    	setCurrentLocale(Locale.forLanguageTag(languageTag));
+    }
+    
 
     public static Locale getCurrentLocale() {
         return currentLocale;
+    }
+    
+    public static void setCurrentLocale(Locale newLocale) {
+    	currentLocale = newLocale;
     }
 
     static String monthnames[] =
@@ -100,16 +140,17 @@ public class Local {
     static String weekdaynames[] =
         { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
-    public static String getString(String key) {
-        if ((messages == null) || (disabled)) {
+    public static String getString(String key) {    	
+        if ((messages == null) || (disabled || currentLocale.equals(Locale.forLanguageTag("en")))) {
             return key;
         }
-        String msg = (String) messages.get(key.trim().toUpperCase());
+        String msg = (String) messages.get(key.trim().toUpperCase());        
         if ((msg != null) && (msg.length() > 0)) {
             return msg;
-        }
-        else {
-            return key;
+        } else {
+        	put(key.toUpperCase(), key + " - Requires Translation - " + Local.getCurrentLocale().getDisplayLanguage());
+        	msg = (String) messages.get(key.trim().toUpperCase());
+            return msg;
         }
     }
 
@@ -255,5 +296,19 @@ public class Local {
         }
         return time;
     }
+    
+    //Obtained from StackOverflow user "Joop Eggan"
+    public static String toLanguageTag(String name) {
+        for (Locale locale : Locale.getAvailableLocales()) {
+            if (name.equals(locale.getDisplayLanguage())) {
+                return locale.getLanguage();
+            }
+        }
+        throw new IllegalArgumentException("No language found: " + name);
+    }
 
+    @SuppressWarnings("unchecked")
+    public static void put(String key, Object value) {
+        messages.put(key, value);
+      }
 }
