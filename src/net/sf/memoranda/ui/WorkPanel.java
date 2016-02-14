@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import net.sf.memoranda.Calculator;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
 
@@ -38,6 +39,7 @@ public class WorkPanel extends JPanel {
 	public JButton tasksB = new JButton();
 	public JButton eventsB = new JButton();
 	public JButton filesB = new JButton();
+	public JButton calcB = new JButton();
 	JButton currentB = null;
 	Border border1;
 
@@ -196,6 +198,35 @@ public class WorkPanel extends JPanel {
 		filesB.setOpaque(false);
 		filesB.setMaximumSize(new Dimension(60, 80));
 		filesB.setBackground(Color.white);
+		//CFroke Add calculator Button
+		calcB.setFont(new java.awt.Font("Dialog", 1, 10));
+		calcB.setBackground(Color.white);
+		calcB.setBorder(null);
+		calcB.setMaximumSize(new Dimension(60, 80));
+		calcB.setMinimumSize(new Dimension(30, 30));
+		calcB.setOpaque(false);
+		calcB.setPreferredSize(new Dimension(60, 50));
+		calcB.setBorderPainted(false);
+		calcB.setContentAreaFilled(false);
+		calcB.setFocusPainted(false);
+		calcB.setHorizontalTextPosition(SwingConstants.CENTER);
+		calcB.setText(Local.getString("Calculator"));
+		calcB.setVerticalAlignment(SwingConstants.TOP);
+		calcB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		calcB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				calcB_actionPerformed(e);
+			}
+		});
+		calcB.setIcon(
+			new ImageIcon(
+				net.sf.memoranda.ui.AppFrame.class.getResource(
+					"resources/icons/calculator.png")));
+		calcB.setMargin(new Insets(0, 0, 0, 0));
+		calcB.setSelected(true);
+		
+		
+		this.setPreferredSize(new Dimension(1073, 300));
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(panel, BorderLayout.CENTER);
 		panel.add(dailyItemsPanel, "DAILYITEMS");
@@ -205,6 +236,8 @@ public class WorkPanel extends JPanel {
 		toolBar.add(tasksB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
+		//CFroke Add new Calculator button
+		toolBar.add(calcB, null);
 		currentB = agendaB;
 		// Default blue color
 		currentB.setBackground(new Color(215, 225, 250));
@@ -227,6 +260,8 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
+			else if (pan.equals("CALCULATOR"))
+				calcB_actionPerformed(null);
 		}
 	}
 
@@ -262,6 +297,13 @@ public class WorkPanel extends JPanel {
 		cardLayout1.show(panel, "FILES");
 		setCurrentButton(filesB);
 		Context.put("CURRENT_PANEL", "FILES");
+	}
+	
+	//CFroke 02/2016 added calculator function
+	public void calcB_actionPerformed(ActionEvent e){
+		if(e.getSource() == calcB){
+			Calculator.openCalc();
+		}
 	}
 
 	void setCurrentButton(JButton cb) {
