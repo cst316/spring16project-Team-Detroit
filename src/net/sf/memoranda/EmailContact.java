@@ -29,7 +29,7 @@ public class EmailContact implements Serializable {
 	public EmailContact() {		
 	}
 	
-	// User contstructor
+	// User constructor
 	public EmailContact(String name, String email) {
 		this.name = name;
 		this.email = email;

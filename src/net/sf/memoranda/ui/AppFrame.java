@@ -134,38 +134,10 @@ public class AppFrame extends JFrame {
 
 	  Description: Handles click event of Set Up User Email from Email drop down menu
 	*/
-
-    /**
-	  Method:	userEmailSetUpAction
-	  @param:	N/A
-	  @return: 	N/A
-
-	  Description: Handles click event of Set Up User Email from Email drop down menu
-	*/
     public Action userEmailSetUpAction = new AbstractAction("Set Up User Email") {
         public void actionPerformed(ActionEvent e) {
             showUserEmailSetUp();
         }
-    };
-    
-    /**
-	  Method:	addContactAction
-	  @param:	N/A
-	  @return: 	N/A
-
-	  Description: Handles click event of Add Contact from Email drop down menu, forces user to set 
-	               up their own email first.
-	*/
-    public Action addContactAction = new AbstractAction("Add Contact") {
-    	public void actionPerformed(ActionEvent e) {
-    		if (ContactListStorage.getSize() == 0) {
-    			JOptionPane.showMessageDialog(null, "You must set up user email first!", "Error", JOptionPane.INFORMATION_MESSAGE);
-    			showUserEmailSetUp();   			
-    		}
-    		else {
-    			showAddContact();
-    		}   		
-    	}
     };
     
     /**

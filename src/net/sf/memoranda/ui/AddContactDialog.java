@@ -183,5 +183,4 @@ public class AddContactDialog extends JDialog {
     void cancelB_actionPerformed(ActionEvent e) {
         this.dispose();
     }
-
 }

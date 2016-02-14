@@ -64,7 +64,5 @@ public class ContactList {
 	*/
 	public static void addUserToMap(String key, EmailContact ec) {
 		contactList.put(key,ec);
-	}
-
-  		
+	}  		
 }
