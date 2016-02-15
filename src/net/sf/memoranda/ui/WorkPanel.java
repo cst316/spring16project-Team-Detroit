@@ -321,6 +321,7 @@ public class WorkPanel extends JPanel {
 		tasksB.setText(Local.getString("Tasks"));
 		notesB.setText(Local.getString("Notes"));
 		filesB.setText(Local.getString("Resources"));
+		calcB.setText(Local.getString("Calculator"));
 		
 		filesPanel.updateLanguage(); //branches complete
 		dailyItemsPanel.updateLanguage();

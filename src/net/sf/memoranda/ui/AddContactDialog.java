@@ -43,7 +43,7 @@ public class AddContactDialog extends JDialog {
 		
 	JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JButton okB = new JButton();
-	JButton cancelB = new JButton("Cancel");
+	JButton cancelB = new JButton();
 		
 	public AddContactDialog(Frame frame) {
 		super(frame, Local.getString("Add Contact"), true);
@@ -65,10 +65,10 @@ public class AddContactDialog extends JDialog {
 	*/
 	void jbInit() throws Exception {
 		this.setResizable(false);
-		nameLabel.setText("Name:  ");
-		emailLabel.setText("Email:  ");
-		phoneLabel.setText("Phone:  ");
-		notesLabel.setText("Notes:  ");
+		nameLabel.setText(Local.getString("Name") + ":  ");
+		emailLabel.setText(Local.getString("Email") + ":  ");
+		phoneLabel.setText(Local.getString("Phone") + ":  ");
+		notesLabel.setText(Local.getString("Notes") + ":  ");
 		
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		inputPanel1.add(nameLabel);
@@ -133,41 +133,48 @@ public class AddContactDialog extends JDialog {
 				    		if (ContactList.getContact(name.toUpperCase()) == null) {
 				    			ContactListStorage.addContactToList(new EmailContact(name,email,phone,notes));
 				    			this.dispose();
-				    			JOptionPane.showMessageDialog(null, name + " added to contacts!", "Successfully Added", JOptionPane.INFORMATION_MESSAGE);
+				    			JOptionPane.showMessageDialog(null, name + " " + Local.getString("added to contacts!"), 
+				    					"Successfully Added", JOptionPane.INFORMATION_MESSAGE);
 				    		}
 				    		else {
-				    			JOptionPane.showMessageDialog(null, "Contact already exists!", "Invalid Contact", JOptionPane.INFORMATION_MESSAGE);
+				    			JOptionPane.showMessageDialog(null, Local.getString("Contact already exists!"), 
+				    					"Invalid Contact", JOptionPane.INFORMATION_MESSAGE);
 				    			//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 				    			cancelB.transferFocus();
 				    		}
 				    	}
 				    	else {
-				    		JOptionPane.showMessageDialog(null, "You entered an invalid email!" + "\n" + "Example:  abcd@gmail.com", "Invalid Email", JOptionPane.INFORMATION_MESSAGE);
+				    		JOptionPane.showMessageDialog(null, Local.getString("You entered an invalid email!") + 
+				    				"\n" + "Example:  abcd@gmail.com", "Invalid Email", JOptionPane.INFORMATION_MESSAGE);
 				    		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 				    		nameTextField.transferFocus();
 				    	}
     				}
     				else {
-                		JOptionPane.showMessageDialog(null, "You left Notes Blank!", "Blank Notes Input", JOptionPane.INFORMATION_MESSAGE);
+                		JOptionPane.showMessageDialog(null, Local.getString("You left Notes Blank!"), 
+                				"Blank Notes Input", JOptionPane.INFORMATION_MESSAGE);
                 		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
                 		phoneTextField.transferFocus();
                 		
                 	}
     			}
     			else {
-            		JOptionPane.showMessageDialog(null, "You entered invalid Phone!\nPlease only enter numbers", "Invalid Phone Input", JOptionPane.INFORMATION_MESSAGE);
+            		JOptionPane.showMessageDialog(null, Local.getString("You entered an invalid phone number!") + "\n" +
+            				Local.getString("Please only enter numbers"), "Invalid Phone Input", JOptionPane.INFORMATION_MESSAGE);
             		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
             		emailTextField.transferFocus();
             	}
     		}
     		else {
-        		JOptionPane.showMessageDialog(null, "You left Email Blank!", "Blank Email Input", JOptionPane.INFORMATION_MESSAGE);
+        		JOptionPane.showMessageDialog(null, Local.getString("You left Email Blank!"), 
+        				"Blank Email Input", JOptionPane.INFORMATION_MESSAGE);
         		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
         		nameTextField.transferFocus();
         	}
     	}
     	else {
-    		JOptionPane.showMessageDialog(null, "You left Name Blank!", "Blank Name Input", JOptionPane.INFORMATION_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Local.getString("You left Name Blank!"), 
+    				"Blank Name Input", JOptionPane.INFORMATION_MESSAGE);
     		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
     		cancelB.transferFocus();
     	}
