@@ -134,7 +134,7 @@ public class AppFrame extends JFrame {
 
 	  Description: Handles click event of Set Up User Email from Email drop down menu
 	*/
-    public Action userEmailSetUpAction = new AbstractAction("Set Up User Email") {
+    public Action userEmailSetUpAction = new AbstractAction(Local.getString("Set Up User Email")) {
         public void actionPerformed(ActionEvent e) {
             showUserEmailSetUp();
         }
@@ -148,10 +148,10 @@ public class AppFrame extends JFrame {
 	  Description: Handles click event of Add Contact from Email drop down menu, forces user to set 
 	               up their own email first.
 	*/
-    public Action addContactAction = new AbstractAction("Add Contact") {
+    public Action addContactAction = new AbstractAction(Local.getString("Add Contact")) {
     	public void actionPerformed(ActionEvent e) {
     		if (ContactListStorage.getSize() == 0) {
-    			JOptionPane.showMessageDialog(null, "You must set up user email first!", "Error", JOptionPane.INFORMATION_MESSAGE);
+    			JOptionPane.showMessageDialog(null, Local.getString("You must set up user email first!"), "Error", JOptionPane.INFORMATION_MESSAGE);
     			showUserEmailSetUp();   			
     		}
     		else {
@@ -1387,7 +1387,11 @@ public class AppFrame extends JFrame {
 	        jMenuInsertHR.setText(Local.getString("Horizontal rule"));
 	        jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
 			
-			
+	        jMenuEmail.setText(Local.getString("Email"));
+	        jMenuUserEmailSetUp.setText(Local.getString("Set Up User Email"));
+	        jMenuUserEmailSetUp.setToolTipText(Local.getString("Set Up User Email"));
+	        jMenuAddContact.setText(Local.getString("Add Contact"));
+	        jMenuAddContact.setToolTipText(Local.getString("Add Contact"));
 		}
 		
 		public void updateLanguage() {

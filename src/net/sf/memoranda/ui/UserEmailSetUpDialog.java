@@ -34,7 +34,7 @@ public class UserEmailSetUpDialog extends JDialog {
 	
 	JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JButton okB = new JButton();
-	JButton cancelB = new JButton("Cancel");
+	JButton cancelB = new JButton();
 		
 	public UserEmailSetUpDialog(Frame frame) {
 		super(frame, Local.getString("Email Set Up"), true);
@@ -56,8 +56,8 @@ public class UserEmailSetUpDialog extends JDialog {
 	*/
 	void jbInit() throws Exception {
 		this.setResizable(false);
-		nameLabel.setText("Name:  ");
-		emailLabel.setText("Email:  ");
+		nameLabel.setText(Local.getString("Name") + ":  ");
+		emailLabel.setText(Local.getString("Email") + ":  ");
 		
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		inputPanel1.add(nameLabel);
@@ -112,23 +112,28 @@ public class UserEmailSetUpDialog extends JDialog {
 	    			//user = new EmailContact(name,email);
 	    			ContactListStorage.addUserToList(new EmailContact(name,email));
 	    			this.dispose();
-	    			JOptionPane.showMessageDialog(null, "User Email Set Up!", "Successful Setup", JOptionPane.INFORMATION_MESSAGE);
+	    			JOptionPane.showMessageDialog(null,Local.getString("User Email Set Up!"), 
+	    					"Successful Setup", JOptionPane.INFORMATION_MESSAGE);
 	    			//this.setVisible(true);
 	    		}
 	    		else { 
 	    			this.dispose();
-	    			JOptionPane.showMessageDialog(null, "User email already exists!", "Invalid Email", JOptionPane.INFORMATION_MESSAGE);
+	    			JOptionPane.showMessageDialog(null, Local.getString("User email already exists!"), 
+	    					"Invalid Email", JOptionPane.INFORMATION_MESSAGE);
 	    		}
     		}
 	    	else {
-	    		JOptionPane.showMessageDialog(null, "You entered an invalid email!" + "\n" + "Example:  abcd@gmail.com", "Invalid Email", JOptionPane.INFORMATION_MESSAGE);
+	    		JOptionPane.showMessageDialog(null, Local.getString("You entered an invalid email!") + 
+	    				"\n" + Local.getString("Example") + ":  abcd@gmail.com", 
+	    				"Invalid Email", JOptionPane.INFORMATION_MESSAGE);
 	    		this.setVisible(true);
 	    		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 	    		nameTextField.transferFocus();
 	    	}
     	}
 		else {
-			JOptionPane.showMessageDialog(null, "Please enter a name!", "Name Not Entered", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, Local.getString("Please enter a name!"), 
+					"Name Not Entered", JOptionPane.INFORMATION_MESSAGE);
 			this.setVisible(true);
 			//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 			cancelB.transferFocus();			
