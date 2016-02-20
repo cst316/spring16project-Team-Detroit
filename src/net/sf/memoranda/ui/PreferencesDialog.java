@@ -43,6 +43,7 @@ public class PreferencesDialog extends JDialog {
 	JLabel classNameLabel = new JLabel();
 	JTextField lfClassName = new JTextField();
 	JLabel jLabel4 = new JLabel();
+	JCheckBox militaryTimeChB = new JCheckBox();
 	JCheckBox enSystrayChB = new JCheckBox();
 	JCheckBox startMinimizedChB = new JCheckBox();
 	JCheckBox enSplashChB = new JCheckBox();
@@ -302,6 +303,20 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 10, 0, 15);
 		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(jLabel4, gbc);
+		
+		militaryTimeChB.setText(Local.getString("Military Time"));
+		militaryTimeChB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				enSystrayChB_actionPerformed(e);
+			}
+		});
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 9;
+		gbc.insets = new Insets(2, 0, 0, 10);
+		gbc.anchor = GridBagConstraints.WEST;
+		GeneralPanel.add(militaryTimeChB, gbc);
+		
 		enSystrayChB.setText(Local.getString("Enable system tray icon"));
 		enSystrayChB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -486,10 +501,15 @@ public class PreferencesDialog extends JDialog {
 	}
 
 	void setValues() {
+		languagesListCB.setSelectedItem(Local.getCurrentLocale()
+				.getDisplayLanguage(Local.getCurrentLocale()));
+		
 		enL10nChB.setSelected(!Configuration.get("DISABLE_L10N").toString()
 				.equalsIgnoreCase("yes"));
 		enSplashChB.setSelected(!Configuration.get("SHOW_SPLASH").toString()
 				.equalsIgnoreCase("no"));
+		militaryTimeChB.setSelected(!Configuration.get("MILITARY_TIME").toString()
+				.equals("no"));
 		enSystrayChB.setSelected(!Configuration.get("DISABLE_SYSTRAY")
 				.toString().equalsIgnoreCase("yes"));
 		startMinimizedChB.setSelected(Configuration.get("START_MINIMIZED")
@@ -603,6 +623,11 @@ public class PreferencesDialog extends JDialog {
 		else
 			Configuration.put("SHOW_SPLASH", "no");
 
+		if (this.militaryTimeChB.isSelected())
+			Configuration.put("MILITARY_TIME", "yes");
+		else
+			Configuration.put("MILITARY_TIME", "no");
+			
 		if (this.enSystrayChB.isSelected())
 			Configuration.put("DISABLE_SYSTRAY", "no");
 		else
