@@ -282,15 +282,15 @@ public class PreferencesDialog extends JDialog {
 		classNameLabel.setEnabled(false);
 		classNameLabel.setText(Local.getString("L&F class name:"));
 		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
+		gbc.gridx = 0;
 		gbc.gridy = 8;
 		gbc.insets = new Insets(2, 20, 0, 10);
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(classNameLabel, gbc);
 		lfClassName.setEnabled(false);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
-		gbc.gridy = 9;
+		gbc.gridy = 8;
 		gbc.insets = new Insets(7, 20, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -299,7 +299,7 @@ public class PreferencesDialog extends JDialog {
 		jLabel4.setText(Local.getString("Startup:"));
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
-		gbc.gridy = 10;
+		gbc.gridy = 9;
 		gbc.insets = new Insets(2, 10, 0, 15);
 		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(jLabel4, gbc);

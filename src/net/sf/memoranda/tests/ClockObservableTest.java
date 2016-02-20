@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import net.sf.memoranda.util.ClockObservable;
+import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.MultiThreadedRunner;
 
 @RunWith(MultiThreadedRunner.class)
@@ -62,7 +63,11 @@ public class ClockObservableTest implements Observer {
 		} else {
 			//firstValue = parseTime("23:59:59");
 			//secondValue = parseTime("00:00:01");
-			assertTrue(firstValue == 24 * 3600 - secondValue);
+			if (Configuration.get("MILITARY_TIME").equals("yes")){
+				assertTrue(firstValue == 24 * 3600 - secondValue);
+			} else {
+				assertTrue(firstValue == 12 * 3600 - secondValue);
+			}
 		}
 	}
 
