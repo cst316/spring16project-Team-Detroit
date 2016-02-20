@@ -19,6 +19,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.sf.memoranda.util.Local;
+
 
 /**
 Class: Calculator
@@ -84,7 +86,7 @@ public class Calculator extends JFrame implements ActionListener {
 		jbButtons[21] = new JButton("MR");
 		jbButtons[22] = new JButton("MS");
 		jbButtons[23] = new JButton("M+");
-		jbButtons[24] = new JButton("Backspace");
+		jbButtons[24] = new JButton(Local.getString("Backspace"));
 		jbButtons[25] = new JButton("CE");
 		jbButtons[26] = new JButton("C");
 
@@ -470,7 +472,7 @@ public class Calculator extends JFrame implements ActionListener {
 
 	public static void openCalc() {
 		Calculator calc = new Calculator();
-		calc.setTitle("Calculator");
+		calc.setTitle(Local.getString("Calculator"));
 		calc.setSize(240, 200);
 		calc.pack();
 		calc.setLocation(400, 300);
