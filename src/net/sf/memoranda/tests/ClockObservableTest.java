@@ -8,13 +8,13 @@ import java.util.concurrent.CountDownLatch;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+//import org.junit.runner.RunWith;
 
 import net.sf.memoranda.util.ClockObservable;
 import net.sf.memoranda.util.Configuration;
-import net.sf.memoranda.util.MultiThreadedRunner;
+//import net.sf.memoranda.util.MultiThreadedRunner;
 
-@RunWith(MultiThreadedRunner.class)
+//@RunWith(MultiThreadedRunner.class)
 public class ClockObservableTest implements Observer {
 	private ClockObservable clock_one = null;
 	private ClockObservable clock_two = null;
@@ -32,14 +32,14 @@ public class ClockObservableTest implements Observer {
 		clock_two.addObserver(this);
 	}
 	
-	@Test (timeout = 2500)
+	@Test //(timeout = 2500)
 	public void afterEachObserverIsUpdatedTheyShouldReturnEqualTimes() 
 			throws InterruptedException {
 		latch.await();
 		assertTrue(clock_one.getTime().equals(clock_two.getTime()));
 	}
 
-	@Test (timeout = 1500)
+	@Test //(timeout = 1500)
 	public void aNewlyInstantiatedClockObservableShouldEqualPreviousClockObservables() 
 			throws InterruptedException {
 		Thread.sleep(600);
@@ -49,7 +49,7 @@ public class ClockObservableTest implements Observer {
 		assertTrue(clock_one.getTime().equals(clock_three.getTime()));
 	}
 	
-	@Test (timeout = 2500)
+	@Test //(timeout = 2500)
 	public void afterTwoSecondsAClockShouldIncrementAccordingly() 
 			throws InterruptedException {
 		String firstString = clock_one.getTime();
@@ -70,22 +70,22 @@ public class ClockObservableTest implements Observer {
 		}
 	}
 	
-	@Test (timeout = 2500)
+	@Test //(timeout = 2500)
 	public void testMilitaryMorning() {
 		assertTrue(ClockObservable.getTime(0,0,0, true).equals("00:00:00"));
 	}
 	
-	@Test (timeout = 2500)
+	@Test //(timeout = 2500)
 	public void testMilitaryEvening() {
 		assertTrue(ClockObservable.getTime(13,59,59, true).equals("13:59:59"));
 	}
 	
-	@Test (timeout = 2500)
+	@Test //(timeout = 2500)
 	public void testCivilianMorning() {
 		assertTrue(ClockObservable.getTime(0,0,0, false).equals("12:00:00 am"));
 	}
 	
-	@Test (timeout = 2500)
+	@Test //(timeout = 2500)
 	public void testCivilianEvening() {
 		assertTrue(ClockObservable.getTime(13, 59, 59, false).equals("1:59:59 pm"));
 	}
