@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.CountDownLatch;
+//import java.util.concurrent.CountDownLatch;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class ClockObservableTest implements Observer {
 	private ClockObservable clock_two = null;
 	private ClockObservable clock_three = null;
 	
-	private static final CountDownLatch latch = new CountDownLatch(3);
+	//private static final CountDownLatch latch = new CountDownLatch(3);
 	
 	@Before
 	public void setUp() throws Exception {
@@ -35,7 +35,7 @@ public class ClockObservableTest implements Observer {
 	@Test //(timeout = 2500)
 	public void afterEachObserverIsUpdatedTheyShouldReturnEqualTimes() 
 			throws InterruptedException {
-		latch.await();
+		//latch.await();
 		assertTrue(clock_one.getTime().equals(clock_two.getTime()));
 	}
 
@@ -117,7 +117,7 @@ public class ClockObservableTest implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (clock_one == o) {
-			latch.countDown();
+			//latch.countDown();
 		}
 		
 		/*System.out.println(latch.getCount() + " " + arg +
