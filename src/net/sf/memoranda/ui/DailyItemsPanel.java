@@ -10,6 +10,8 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
@@ -41,6 +43,7 @@ import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.util.ClockObservable;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
@@ -50,7 +53,9 @@ import net.sf.memoranda.util.Util;
  */
 
 /*$Id: DailyItemsPanel.java,v 1.22 2005/02/13 03:06:10 rawsushi Exp $*/
-public class DailyItemsPanel extends JPanel {
+public class DailyItemsPanel extends JPanel implements Observer{
+	ClockObservable clockObservable = new ClockObservable();
+			
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
@@ -64,6 +69,7 @@ public class DailyItemsPanel extends JPanel {
     CardLayout cardLayout1 = new CardLayout();
     public EditorPanel editorPanel = new EditorPanel(this);
     JLabel currentDateLabel = new JLabel();
+    JLabel clockLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
     public TaskPanel tasksPanel = new TaskPanel(this);
     public EventsPanel eventsPanel = new EventsPanel(this);
@@ -107,6 +113,7 @@ public class DailyItemsPanel extends JPanel {
 
     public DailyItemsPanel(WorkPanel _parentPanel) {
         try {
+        	clockObservable.addObserver(this);
             parentPanel = _parentPanel;
             jbInit();
         }
@@ -131,12 +138,15 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.setLayout(cardLayout1);
         statusPanel.setBackground(Color.black);
         statusPanel.setForeground(Color.white);
-        statusPanel.setMinimumSize(new Dimension(14, 24));
-        statusPanel.setPreferredSize(new Dimension(14, 24));
+        statusPanel.setMinimumSize(new Dimension(14, 42));
+        statusPanel.setPreferredSize(new Dimension(14, 42));
         statusPanel.setLayout(borderLayout4);
         currentDateLabel.setFont(new java.awt.Font("Dialog", 0, 16));
         currentDateLabel.setForeground(Color.white);
         currentDateLabel.setText(CurrentDate.get().getFullDateString());
+        clockLabel.setFont(new java.awt.Font("Dialog", 0, 16));
+        clockLabel.setForeground(Color.white);
+        clockLabel.setText(clockObservable.getTime());
         borderLayout4.setHgap(4);
         controlPanel.setBackground(new Color(230, 230, 230));
         controlPanel.setBorder(border2);
@@ -214,6 +224,7 @@ public class DailyItemsPanel extends JPanel {
         
         statusPanel.add(currentDateLabel, BorderLayout.CENTER);
         statusPanel.add(indicatorsPanel, BorderLayout.EAST);
+        statusPanel.add(clockLabel, BorderLayout.SOUTH);
         
         editorsPanel.add(agendaPanel, "AGENDA");
         editorsPanel.add(eventsPanel, "EVENTS");
@@ -510,4 +521,10 @@ public class DailyItemsPanel extends JPanel {
     	
     	this.repaint();
     }
+	@Override
+	public void update(Observable o, Object arg) {
+		if (clockObservable == o) {
+			clockLabel.setText(Local.getString("Current time is: ") + (String)arg);
+		}
+	}
 }
