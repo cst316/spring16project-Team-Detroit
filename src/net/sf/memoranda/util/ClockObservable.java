@@ -21,9 +21,34 @@ public class ClockObservable extends Observable implements ActionListener{
 		notifyObservers(this.getTime());
 	}
 	
-	public String getTime() {
+	public static String getTime(int hour, int minute, int second, boolean isMilitaryTime) {
 		String time = "";
 		
+		if (isMilitaryTime && hour < 10) {
+			time += "0";
+		}
+			
+		if (hour > 12) {
+			time += ((isMilitaryTime) ? hour : hour - 12) + ":";
+		} else if (hour == 0 && !isMilitaryTime) {
+			time += (hour + 12) + ":";
+		} else {
+			time += hour + ":";
+		}
+		
+		time += ((minute < 10) ? "0" : "") + minute + ":";
+		time += ((second < 10) ? "0" : "") + second;
+		
+		if (!isMilitaryTime && hour > 12) {
+			time += " pm";
+		} else if (!isMilitaryTime) {
+			time += " am";
+		}
+		
+		return time;
+	}
+	
+	public String getTime() {
 		GregorianCalendar calendar = new GregorianCalendar();
 		
 		int h = calendar.get(GregorianCalendar.HOUR_OF_DAY);
@@ -32,46 +57,7 @@ public class ClockObservable extends Observable implements ActionListener{
 		
 		boolean militaryTime = Configuration.get("MILITARY_TIME").equals("yes");
 		
-		if (militaryTime && h < 0) {
-			time += "0";
-		}
-		time += ((militaryTime) ? h : h - 12) + ":";
-		time += ((m < 10) ? "0" : "") + m + ":";
-		time += ((s < 10) ? "0" : "") + s;
-		
-		if (!militaryTime && h > 12) {
-			time += " pm";
-		} else if (!militaryTime) {
-			time += " am";
-		}
-		
-		return time;
-	}
-	
-	public static int parseTime(String aTime) {
-		int result = 0;
-		
-		boolean militaryTime = Configuration.get("MILITARY_TIME").equals("yes");
-		
-		if (militaryTime) {
-			result += Integer.parseInt(aTime.substring(0, 2)) * 3600;
-			result += Integer.parseInt(aTime.substring(3, 5)) * 60;
-			result += Integer.parseInt(aTime.substring(6, 8));
-		} else {
-			if (aTime.substring(1) != ":") {
-				result += Integer.parseInt(aTime.substring(0, 2)) * 3600;
-				result += Integer.parseInt(aTime.substring(3, 5)) * 60;
-				result += Integer.parseInt(aTime.substring(6, 8));
-			} else {
-				result += Integer.parseInt(aTime.substring(0, 1)) * 3600;
-				result += Integer.parseInt(aTime.substring(2, 4)) * 60;
-				result += Integer.parseInt(aTime.substring(5, 7));
-			}
-		}
-		
-		//System.out.println(result);
-		
-		return result;
+		return getTime(h, m, s, militaryTime);
 	}
 	
 	public void startClock() {

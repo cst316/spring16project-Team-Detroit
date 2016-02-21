@@ -24,6 +24,7 @@ public class ClockObservableTest implements Observer {
 	
 	@Before
 	public void setUp() throws Exception {
+		//System.out.println(Runtime.getRuntime().availableProcessors());
 		clock_one = new ClockObservable();
 		clock_one.addObserver(this);
 		Thread.sleep(600);
@@ -48,27 +49,69 @@ public class ClockObservableTest implements Observer {
 		assertTrue(clock_one.getTime().equals(clock_three.getTime()));
 	}
 	
-	@Test
+	@Test (timeout = 2500)
 	public void afterTwoSecondsAClockShouldIncrementAccordingly() 
 			throws InterruptedException {
 		String firstString = clock_one.getTime();
 		Thread.sleep(2000);
 		String secondString = clock_two.getTime();
 		
-		int firstValue = ClockObservable.parseTime(firstString);
-		int secondValue = ClockObservable.parseTime(secondString);
+		int firstValue = parseTime(firstString);
+		int secondValue = parseTime(secondString);
 		
 		if (secondValue > 1) {
 			assertTrue(secondValue == firstValue + 2);
 		} else {
-			//firstValue = parseTime("23:59:59");
-			//secondValue = parseTime("00:00:01");
 			if (Configuration.get("MILITARY_TIME").equals("yes")){
 				assertTrue(firstValue == 24 * 3600 - secondValue);
 			} else {
 				assertTrue(firstValue == 12 * 3600 - secondValue);
 			}
 		}
+	}
+	
+	@Test (timeout = 2500)
+	public void testMilitaryMorning() {
+		assertTrue(ClockObservable.getTime(0,0,0, true).equals("00:00:00"));
+	}
+	
+	@Test (timeout = 2500)
+	public void testMilitaryEvening() {
+		assertTrue(ClockObservable.getTime(13,59,59, true).equals("13:59:59"));
+	}
+	
+	@Test (timeout = 2500)
+	public void testCivilianMorning() {
+		assertTrue(ClockObservable.getTime(0,0,0, false).equals("12:00:00 am"));
+	}
+	
+	@Test (timeout = 2500)
+	public void testCivilianEvening() {
+		assertTrue(ClockObservable.getTime(13, 59, 59, false).equals("1:59:59 pm"));
+	}
+	
+	public static int parseTime(String aTime) {
+		int result = 0;
+		
+		boolean militaryTime = Configuration.get("MILITARY_TIME").equals("yes");
+		
+		if (militaryTime) {
+			result += Integer.parseInt(aTime.substring(0, 2)) * 3600;
+			result += Integer.parseInt(aTime.substring(3, 5)) * 60;
+			result += Integer.parseInt(aTime.substring(6, 8));
+		} else if (aTime.substring(1) != ":") {
+			result += Integer.parseInt(aTime.substring(0, 2)) * 3600;
+			result += Integer.parseInt(aTime.substring(3, 5)) * 60;
+			result += Integer.parseInt(aTime.substring(6, 8));
+		} else {
+			result += Integer.parseInt(aTime.substring(0, 1)) * 3600;
+			result += Integer.parseInt(aTime.substring(2, 4)) * 60;
+			result += Integer.parseInt(aTime.substring(5, 7));
+		}
+		
+		//System.out.println(result);
+		
+		return result;
 	}
 
 	@Override
@@ -82,5 +125,4 @@ public class ClockObservableTest implements Observer {
 				((clock_two != null) ? clock_two.getTime() : "") + " 3-" + 
 				((clock_three != null) ? clock_two.getTime() : ""));*/
 	}
-
 }
