@@ -16,7 +16,7 @@ import net.sf.memoranda.util.MultiThreadedRunner;
 
 @RunWith(MultiThreadedRunner.class)
 public class ClockObservableTest implements Observer {
-	private ClockObservable clock_one = null;
+	/*private ClockObservable clock_one = null;
 	private ClockObservable clock_two = null;
 	private ClockObservable clock_three = null;
 	
@@ -68,7 +68,7 @@ public class ClockObservableTest implements Observer {
 				assertTrue(firstValue == 12 * 3600 - secondValue);
 			}
 		}
-	}
+	}*/
 	
 	@Test //(timeout = 2500)
 	public void testMilitaryMorning() {
@@ -90,7 +90,7 @@ public class ClockObservableTest implements Observer {
 		assertTrue(ClockObservable.getTime(13, 59, 59, false).equals("1:59:59 pm"));
 	}
 	
-	public static int parseTime(String aTime) {
+	/*public static int parseTime(String aTime) {
 		int result = 0;
 		
 		boolean militaryTime = Configuration.get("MILITARY_TIME").equals("yes");
@@ -112,13 +112,13 @@ public class ClockObservableTest implements Observer {
 		//System.out.println(result);
 		
 		return result;
-	}
+	}*/
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (clock_one == o) {
-			latch.countDown();
-		}
+		//if (clock_one == o) {
+		//	latch.countDown();
+		//}
 		
 		/*System.out.println(latch.getCount() + " " + arg +
 				" " + clock_one.getTime() + " 2-" + 
