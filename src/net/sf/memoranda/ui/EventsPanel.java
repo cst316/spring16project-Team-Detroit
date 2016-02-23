@@ -38,6 +38,7 @@ import net.sf.memoranda.Print;
 
 
 /*$Id: EventsPanel.java,v 1.25 2005/02/19 10:06:25 rawsushi Exp $*/
+@SuppressWarnings("serial")
 public class EventsPanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     JButton historyBackB = new JButton();
@@ -395,7 +396,7 @@ public class EventsPanel extends JPanel {
             ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
         if (dlg.dailyRepeatRB.isSelected()) {
             rtype = EventsManager.REPEAT_DAILY;
-            period = ((Integer) dlg.daySpin.getModel().getValue()).intValue();
+            period = ((Integer) dlg.daySpin.getModel().getValue());
         }
         else if (dlg.weeklyRepeatRB.isSelected()) {
             rtype = EventsManager.REPEAT_WEEKLY;
@@ -412,7 +413,7 @@ public class EventsPanel extends JPanel {
 	}
         else {
             rtype = EventsManager.REPEAT_MONTHLY;
-            period = ((Integer) dlg.dayOfMonthSpin.getModel().getValue()).intValue();
+            period = ((Integer) dlg.dayOfMonthSpin.getModel().getValue());
         }
         EventsManager.createRepeatableEvent(rtype, sd, ed, period, hh, mm, text, dlg.workingDaysOnlyCB.isSelected());
     }

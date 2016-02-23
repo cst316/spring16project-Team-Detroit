@@ -1,9 +1,7 @@
 package net.sf.memoranda;
 
 import java.awt.Desktop;
-import java.util.*;
-import java.awt.*;
-import java.text.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.*;
 import java.net.URI;
 import java.net.URL;

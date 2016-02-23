@@ -9,6 +9,7 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
+import java.util.Random;
 import java.util.Vector;
 import java.util.Calendar;
 
@@ -23,7 +24,7 @@ import nu.xom.Node;
  *
  */
 /*$Id: TaskImpl.java,v 1.15 2005/12/01 08:12:26 alexeya Exp $*/
-public class TaskImpl implements Task, Comparable {
+public class TaskImpl implements Task, Comparable<Object> {
 
     private Element _element = null;
     private TaskList _tl = null;
@@ -50,7 +51,7 @@ public class TaskImpl implements Task, Comparable {
 
     public CalendarDate getEndDate() {
 		String ed = _element.getAttribute("endDate").getValue();
-		if (ed != "")
+		if (!ed.equals(""))
 			return new CalendarDate(_element.getAttribute("endDate").getValue());
 		Task parent = this.getParentTask();
 		if (parent != null)
@@ -63,8 +64,10 @@ public class TaskImpl implements Task, Comparable {
     }
 
     public void setEndDate(CalendarDate date) {
-		if (date == null)
+		if (date == null) {
 			setAttr("endDate", "");
+		}
+		
 		setAttr("endDate", date.toString());
     }
 
@@ -225,8 +228,8 @@ public class TaskImpl implements Task, Comparable {
     /**
      * @see net.sf.memoranda.Task#getDependsFrom()
      */
-    public Collection getDependsFrom() {
-        Vector v = new Vector();
+    public Collection<Task> getDependsFrom() {
+        Vector<Task> v = new Vector<Task>();
         Elements deps = _element.getChildElements("dependsFrom");
         for (int i = 0; i < deps.size(); i++) {
             String id = deps.get(i).getAttribute("idRef").getValue();
@@ -261,14 +264,14 @@ public class TaskImpl implements Task, Comparable {
      * @see net.sf.memoranda.Task#getProgress()
      */
     public int getProgress() {
-        return new Integer(_element.getAttribute("progress").getValue()).intValue();
+        return new Integer(_element.getAttribute("progress").getValue());
     }
     /**
      * @see net.sf.memoranda.Task#setProgress(int)
      */
     public void setProgress(int p) {
         if ((p >= 0) && (p <= 100))
-            setAttr("progress", new Integer(p).toString());
+            setAttr("progress", Integer.valueOf(p).toString());
     }
     /**
      * @see net.sf.memoranda.Task#getPriority()
@@ -277,7 +280,7 @@ public class TaskImpl implements Task, Comparable {
         Attribute pa = _element.getAttribute("priority");
         if (pa == null)
             return Task.PRIORITY_NORMAL;
-        return new Integer(pa.getValue()).intValue();
+        return Integer.valueOf(pa.getValue());
     }
     /**
      * @see net.sf.memoranda.Task#setPriority(int)
@@ -347,17 +350,22 @@ public class TaskImpl implements Task, Comparable {
 	 public boolean equals(Object o) {
 	     return ((o instanceof Task) && (((Task)o).getID().equals(this.getID())));
 	 }
-
+	 
+	 public int hashCode() {
+		 int result = new Random().nextInt();
+	     return result;
+	 }
+	 
 	/* 
 	 * @see net.sf.memoranda.Task#getSubTasks()
 	 */
-	public Collection getSubTasks() {
+	public Collection<Task> getSubTasks() {
 		Elements subTasks = _element.getChildElements("task");
             return convertToTaskObjects(subTasks);
 	}
 
-	private Collection convertToTaskObjects(Elements tasks) {
-        Vector v = new Vector();
+	private Collection<Task> convertToTaskObjects(Elements tasks) {
+        Vector<Task> v = new Vector<Task>();
         for (int i = 0; i < tasks.size(); i++) {
             Task t = new TaskImpl(tasks.get(i), _tl);
             v.add(t);

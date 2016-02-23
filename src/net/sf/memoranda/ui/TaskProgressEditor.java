@@ -1,8 +1,6 @@
 package net.sf.memoranda.ui;
 
 import net.sf.memoranda.*;
-import net.sf.memoranda.util.*;
-
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
@@ -13,6 +11,7 @@ import java.awt.event.*;
 /**
  * Editor for task progress
  */
+@SuppressWarnings("serial")
 public class TaskProgressEditor extends JPanel implements TableCellEditor{
 	
 	JTable table;
@@ -21,20 +20,19 @@ public class TaskProgressEditor extends JPanel implements TableCellEditor{
 	int row;
 	int column;
 	
-	java.util.List listeners = new java.util.ArrayList();
+	java.util.List<CellEditorListener> listeners = new java.util.ArrayList<CellEditorListener>();
 	
 	JLabel label = new JLabel();
 	
 	public TaskProgressEditor(){
 		addMouseListener(new java.awt.event.MouseAdapter(){
 			public void mousePressed(java.awt.event.MouseEvent e){
-				if(e instanceof MouseEvent){
-					MouseEvent me = (MouseEvent) e;
-					if(me.getButton() != MouseEvent.BUTTON1){
-						stopEditing();
-						return;
-					}
+				MouseEvent me = (MouseEvent) e;
+				if(me.getButton() != MouseEvent.BUTTON1){
+					stopEditing();
+					return;
 				}
+				
 				int w = getWidth()/2;
 				if(e.getX() > w){
 					current.setProgress( current.getProgress()+5 );
@@ -77,7 +75,7 @@ public class TaskProgressEditor extends JPanel implements TableCellEditor{
 	
 	private void stopEditing(){
 		for(int i=0; i<listeners.size(); i++){
-			CellEditorListener cel = (CellEditorListener) listeners.get(i);
+			CellEditorListener cel = listeners.get(i);
 			cel.editingStopped(null);
 		}
 	}

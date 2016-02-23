@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /*$Id: BookmarksPanel.java,v 1.4 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class BookmarksPanel extends JPanel {
   BorderLayout borderLayout1 = new BorderLayout();
   JScrollPane scrollPane = new JScrollPane();

@@ -20,6 +20,7 @@ import nu.xom.Element;
  * 
  */
 /*$Id: EventImpl.java,v 1.9 2004/10/06 16:00:11 ivanrise Exp $*/
+@SuppressWarnings("rawtypes")
 public class EventImpl implements Event, Comparable {
     
     private Element _elem = null;
@@ -36,14 +37,14 @@ public class EventImpl implements Event, Comparable {
      * @see net.sf.memoranda.Event#getHour()
      */
     public int getHour() {
-        return new Integer(_elem.getAttribute("hour").getValue()).intValue();
+        return Integer.valueOf(_elem.getAttribute("hour").getValue());
     }
 
     /**
      * @see net.sf.memoranda.Event#getMinute()
      */
     public int getMinute() {
-        return new Integer(_elem.getAttribute("min").getValue()).intValue();
+        return Integer.valueOf(_elem.getAttribute("min").getValue());
     }
     
     public String getTimeString() {
@@ -91,7 +92,7 @@ public class EventImpl implements Event, Comparable {
      */
     public int getPeriod() {
         Attribute a = _elem.getAttribute("period");
-        if (a != null) return new Integer(a.getValue()).intValue();
+        if (a != null) return new Integer(a.getValue());
         return 0;
     }
     /**
@@ -107,7 +108,7 @@ public class EventImpl implements Event, Comparable {
      */
     public int getRepeat() {
         Attribute a = _elem.getAttribute("repeat-type");
-        if (a != null) return new Integer(a.getValue()).intValue();
+        if (a != null) return new Integer(a.getValue());
         return 0;
     }
     /**

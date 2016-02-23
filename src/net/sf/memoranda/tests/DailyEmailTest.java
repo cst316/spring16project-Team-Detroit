@@ -16,6 +16,7 @@ import net.sf.memoranda.util.ContactListStorage;
 public class DailyEmailTest {
 
 	private static EmailContact userEmailTest = null;
+	@SuppressWarnings("unused")
 	private static DailyEmail testEmail = null;
 
 	@BeforeClass

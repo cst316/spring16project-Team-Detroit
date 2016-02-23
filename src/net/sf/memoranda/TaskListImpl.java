@@ -20,10 +20,6 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
 import nu.xom.Node;
-import nu.xom.Nodes;
-//import nu.xom.converters.*;
-//import org.apache.xerces.dom.*;
-//import nux.xom.xquery.XQueryUtil;
 
 /**
  * 
@@ -39,7 +35,7 @@ public class TaskListImpl implements TaskList {
 	 * Hastable of "task" XOM elements for quick searching them by ID's
 	 * (ID => element) 
 	 */
-	private Hashtable elements = new Hashtable();
+	private Hashtable<String, Element> elements = new Hashtable<String, Element>();
     
     /**
      * Constructor for TaskListImpl.
@@ -77,20 +73,20 @@ public class TaskListImpl implements TaskList {
      * All methods to obtain list of tasks are consolidated under getAllSubTasks and getActiveSubTasks.
      * If a root task is required, just send a null taskId
      */
-    public Collection getAllSubTasks(String taskId) {
+    public Collection<Task> getAllSubTasks(String taskId) {
     	if ((taskId == null) || (taskId.length() == 0)) {
     		return getAllRootTasks();
     	}
     	else {
             Element task = getTaskElement(taskId);
             if (task == null)
-                return new Vector();
+                return new Vector<Task>();
             Elements subTasks = task.getChildElements("task");
             return convertToTaskObjects(subTasks);    	    		
     	}
     }
     
-    public Collection getTopLevelTasks() {
+    public Collection<Task> getTopLevelTasks() {
         return getAllRootTasks();
     }
 
@@ -98,8 +94,8 @@ public class TaskListImpl implements TaskList {
      * All methods to obtain list of tasks are consolidated under getAllSubTasks and getActiveSubTasks.
      * If a root task is required, just send a null taskId
      */
-    public Collection getActiveSubTasks(String taskId,CalendarDate date) {
-        Collection allTasks = getAllSubTasks(taskId);        
+    public Collection<Task> getActiveSubTasks(String taskId,CalendarDate date) {
+        Collection<Task> allTasks = getAllSubTasks(taskId);        
         return filterActiveTasks(allTasks,date);
     }
 
@@ -203,8 +199,8 @@ public class TaskListImpl implements TaskList {
     public long calculateTotalEffortFromSubTasks(Task t) {
         long totalEffort = 0;
         if (hasSubTasks(t.getID())) {
-            Collection subTasks = getAllSubTasks(t.getID());
-            for (Iterator iter = subTasks.iterator(); iter.hasNext();) {
+            Collection<Task> subTasks = getAllSubTasks(t.getID());
+            for (Iterator<Task> iter = subTasks.iterator(); iter.hasNext();) {
             	Task e = (Task) iter.next();
             	totalEffort = totalEffort + calculateTotalEffortFromSubTasks(e);
             }
@@ -225,8 +221,8 @@ public class TaskListImpl implements TaskList {
     public CalendarDate getEarliestStartDateFromSubTasks(Task t) {
         CalendarDate d = t.getStartDate();
         if (hasSubTasks(t.getID())) {
-	        Collection subTasks = getAllSubTasks(t.getID());
-	        for (Iterator iter = subTasks.iterator(); iter.hasNext();) {
+	        Collection<Task> subTasks = getAllSubTasks(t.getID());
+	        for (Iterator<Task> iter = subTasks.iterator(); iter.hasNext();) {
 	        	Task e = (Task) iter.next();
 	        	CalendarDate dd = getEarliestStartDateFromSubTasks(e);
 	        	if(dd.before(d)) {
@@ -250,8 +246,8 @@ public class TaskListImpl implements TaskList {
     public CalendarDate getLatestEndDateFromSubTasks(Task t) {
         CalendarDate d = t.getEndDate();
         if (hasSubTasks(t.getID())) {
-	        Collection subTasks = getAllSubTasks(t.getID());
-	        for (Iterator iter = subTasks.iterator(); iter.hasNext();) {
+	        Collection<Task> subTasks = getAllSubTasks(t.getID());
+	        for (Iterator<Task> iter = subTasks.iterator(); iter.hasNext();) {
 	        	Task e = (Task) iter.next();
 	        	CalendarDate dd = getLatestEndDateFromSubTasks(e);
 	        	if(dd.after(d)) {
@@ -279,8 +275,8 @@ public class TaskListImpl implements TaskList {
         long expendedEffort = 0; // milliseconds
         long totalEffort = 0; // milliseconds
         if (hasSubTasks(t.getID())) {
-            Collection subTasks = getAllSubTasks(t.getID());
-            for (Iterator iter = subTasks.iterator(); iter.hasNext();) {
+            Collection<Task> subTasks = getAllSubTasks(t.getID());
+            for (Iterator<Task> iter = subTasks.iterator(); iter.hasNext();) {
             	Task e = (Task) iter.next();
             	long[] subTaskCompletion = calculateCompletionFromSubTasks(e);
             	expendedEffort = expendedEffort + subTaskCompletion[0];
@@ -330,13 +326,13 @@ public class TaskListImpl implements TaskList {
 		return el;
     }
     
-    private Collection getAllRootTasks() {
+    private Collection<Task> getAllRootTasks() {
         Elements tasks = _root.getChildElements("task");
         return convertToTaskObjects(tasks);    	    		
     }
     
-    private Collection convertToTaskObjects(Elements tasks) {
-        Vector v = new Vector();
+    private Collection<Task> convertToTaskObjects(Elements tasks) {
+        Vector<Task> v = new Vector<Task>();
 
         for (int i = 0; i < tasks.size(); i++) {
             Task t = new TaskImpl(tasks.get(i), this);
@@ -345,9 +341,9 @@ public class TaskListImpl implements TaskList {
         return v;
     }
 
-    private Collection filterActiveTasks(Collection tasks,CalendarDate date) {
-        Vector v = new Vector();
-        for (Iterator iter = tasks.iterator(); iter.hasNext();) {
+    private Collection<Task> filterActiveTasks(Collection<Task> tasks,CalendarDate date) {
+        Vector<Task> v = new Vector<Task>();
+        for (Iterator<Task> iter = tasks.iterator(); iter.hasNext();) {
             Task t = (Task) iter.next();
             if(isActive(t,date)) {
                 v.add(t);

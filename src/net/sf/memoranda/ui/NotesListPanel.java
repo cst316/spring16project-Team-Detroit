@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /*$Id: NotesListPanel.java,v 1.5 2005/01/29 13:55:26 rawsushi Exp $*/
+@SuppressWarnings("serial")
 public class NotesListPanel extends JPanel {
   BorderLayout borderLayout1 = new BorderLayout();
   JScrollPane scrollPane = new JScrollPane();

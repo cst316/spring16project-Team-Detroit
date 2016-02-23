@@ -6,6 +6,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JEditorPane;
 
+@SuppressWarnings("serial")
 public class HTMLEditorPane extends JEditorPane {
 
 	boolean antiAlias = true;

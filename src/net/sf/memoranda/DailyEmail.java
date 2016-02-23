@@ -68,13 +68,13 @@ public class DailyEmail extends Emailer {
 	*/
 	private static String message() {
 		CalendarDate c = new CalendarDate();
-		c = c.tomorrow();				
+		c = CalendarDate.tomorrow();				
 
 		String evlist = "Dear " + ContactList.getContact("USER").getName() + ",\n\n" + "Here is your schedule for tomorrow:\n\n"
 		                        + new SimpleDateFormat("EEEE, MMMM, dd yyyy").format(tomorrow()) + "\n";
 		                        
 
-		for (Iterator it = EventsManager.getEventsForDate(c).iterator(); it.hasNext();) {
+		for (Iterator<Event> it = EventsManager.getEventsForDate(c).iterator(); it.hasNext();) {
 			net.sf.memoranda.Event ev = (net.sf.memoranda.Event)it.next();   
 		    evlist += ev.getTimeString()+" - "+ev.getText()+"\n";
 		}
@@ -92,6 +92,7 @@ public class DailyEmail extends Emailer {
 	*/
 	private static Date tomorrow() {
 		Calendar calendar = Calendar.getInstance();
+		@SuppressWarnings("unused")
 		Date today = calendar.getTime();
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		Date tomorrow = calendar.getTime();

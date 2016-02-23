@@ -25,7 +25,7 @@ public class ContactList {
 		if (cl.size() != 0) {
 			contactList.put("USER", cl.get(0));
 			for (int i=1; i < cl.size(); i++) {
-			    contactList.put(cl.get(i).getName().toUpperCase(),cl.get(i));
+			    contactList.put(cl.get(i).getName().toUpperCase(Locale.forLanguageTag("en")) , cl.get(i));
 			}
 		}		
 	}

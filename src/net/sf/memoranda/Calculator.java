@@ -367,7 +367,7 @@ public class Calculator extends JFrame implements ActionListener {
 		}
 		String inputString = getDisplayString();
 		if (inputString.indexOf(".") < 0) {
-			setDisplayString(new String(inputString + "."));
+			setDisplayString(inputString + ".");
 		}
 	}
 

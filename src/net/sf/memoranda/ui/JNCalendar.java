@@ -28,10 +28,11 @@ import net.sf.memoranda.util.Configuration;
  *  
  */
 /*$Id: JNCalendar.java,v 1.8 2004/11/05 07:38:10 pbielen Exp $*/
+@SuppressWarnings("serial")
 public class JNCalendar extends JTable {
 	private CalendarDate _date = null;
 	private boolean ignoreChange = false;
-	private Vector selectionListeners = new Vector();
+	private Vector<ActionListener> selectionListeners = new Vector<ActionListener>();
 	CalendarDate startPeriod = null;
 	CalendarDate endPeriod = null;
 	public JNCalendarCellRenderer renderer = new JNCalendarCellRenderer();
@@ -67,11 +68,11 @@ public class JNCalendar extends JTable {
 				if (val != null) {
 					if (val
 						.toString()
-						.equals(new Integer(_date.getDay()).toString()))
+						.equals(Integer.valueOf(_date.getDay()).toString()))
 						return;
 					_date =
 						new CalendarDate(
-							new Integer(val.toString()).intValue(),
+							Integer.valueOf(val.toString()),
 							_date.getMonth(),
 							_date.getYear());
 					notifyListeners();
@@ -132,13 +133,13 @@ public class JNCalendar extends JTable {
 		Object d = this.getModel().getValueAt(row, column);
 		/*
 		 * if (d != null) return new JNCalendarCellRenderer( new
-		 * CalendarDate(new Integer(d.toString()).intValue(), _date.getMonth(),
+		 * CalendarDate(new Integer(d.toString()), _date.getMonth(),
 		 * _date.getYear()));
 		 */
 		if (d != null)
 			renderer.setDate(
 				new CalendarDate(
-					new Integer(d.toString()).intValue(),
+					new Integer(d.toString()),
 					_date.getMonth(),
 					_date.getYear()));
 		else

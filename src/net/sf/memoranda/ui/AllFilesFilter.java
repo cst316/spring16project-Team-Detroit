@@ -92,7 +92,7 @@ public class AllFilesFilter extends FileFilter {
         String s = f.getName();
         int i = s.lastIndexOf('.');
         if (i > 0 && i < s.length() - 1) {
-            ext = s.substring(i + 1).toLowerCase();
+            ext = s.substring(i + 1).toLowerCase(Local.getCurrentLocale());
         }
         return ext;
     }

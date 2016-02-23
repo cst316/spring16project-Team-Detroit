@@ -7,14 +7,12 @@
  */
 package net.sf.memoranda;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.Map;
 import java.util.Collections;
-
 
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.CurrentStorage;
@@ -64,9 +62,8 @@ public class EventsManager {
 		_root.appendChild(el);
 	}
 
-	@SuppressWarnings("unchecked")
-	public static Map getStickers() {
-		Map m = new HashMap();
+	public static Map<String, Element> getStickers() {
+		Map<String, Element> m = new HashMap<String, Element>();
 		Elements els = _root.getChildElements("sticker");
 		for (int i = 0; i < els.size(); i++) {
 			Element se = els.get(i);
@@ -95,7 +92,9 @@ public class EventsManager {
 		return false;
 	}
 
-	public static Collection getEventsForDate(CalendarDate date) {
+	@SuppressWarnings("unchecked")
+	public static Collection<Event> getEventsForDate(CalendarDate date) {
+		@SuppressWarnings("rawtypes")
 		Vector v = new Vector();
 		Day d = getDay(date);
 		if (d != null) {
@@ -103,6 +102,7 @@ public class EventsManager {
 			for (int i = 0; i < els.size(); i++)
 				v.add(new EventImpl(els.get(i)));
 		}
+		@SuppressWarnings("rawtypes")
 		Collection r = getRepeatableEventsForDate(date);
 		if (r.size() > 0)
 			v.addAll(r);
@@ -158,8 +158,8 @@ public class EventsManager {
 		return new EventImpl(el);
 	}
 
-	public static Collection getRepeatableEvents() {
-		Vector v = new Vector();
+	public static Collection<EventImpl> getRepeatableEvents() {
+		Vector<EventImpl> v = new Vector<EventImpl>();
 		Element rep = _root.getFirstChildElement("repeatable");
 		if (rep == null)
 			return v;
@@ -169,9 +169,9 @@ public class EventsManager {
 		return v;
 	}
 
-	public static Collection getRepeatableEventsForDate(CalendarDate date) {
-		Vector reps = (Vector) getRepeatableEvents();
-		Vector v = new Vector();
+	public static Collection<Event> getRepeatableEventsForDate(CalendarDate date) {
+		Vector<EventImpl> reps = (Vector<EventImpl>) getRepeatableEvents();
+		Vector<Event> v = new Vector<Event>();
 		for (int i = 0; i < reps.size(); i++) {
 			Event ev = (Event) reps.get(i);
 			
@@ -219,7 +219,7 @@ public class EventsManager {
 		return v;
 	}
 
-	public static Collection getActiveEvents() {
+	public static Collection<Event> getActiveEvents() {
 		return getEventsForDate(CalendarDate.today());
 	}
 
@@ -230,9 +230,9 @@ public class EventsManager {
 		Elements els = d.getElement().getChildElements("event");
 		for (int i = 0; i < els.size(); i++) {
 			Element el = els.get(i);
-			if ((new Integer(el.getAttribute("hour").getValue()).intValue()
+			if ((new Integer(el.getAttribute("hour").getValue())
 				== hh)
-				&& (new Integer(el.getAttribute("min").getValue()).intValue()
+				&& (new Integer(el.getAttribute("min").getValue())
 					== mm))
 				return new EventImpl(el);
 		}
@@ -241,8 +241,7 @@ public class EventsManager {
 
 	public static void removeEvent(CalendarDate date, int hh, int mm) {
 		Day d = getDay(date);
-		if (d == null)
-			d.getElement().removeChild(getEvent(date, hh, mm).getContent());
+		d.getElement().removeChild(getEvent(date, hh, mm).getContent());
 	}
 
 	public static void removeEvent(Event ev) {
@@ -299,12 +298,12 @@ public class EventsManager {
 
 		public int getValue() {
 			return new Integer(yearElement.getAttribute("year").getValue())
-				.intValue();
+				;
 		}
 
 		public Month getMonth(int m) {
 			Elements ms = yearElement.getChildElements("month");
-			String mm = new Integer(m).toString();
+			String mm = Integer.valueOf(m).toString();
 			for (int i = 0; i < ms.size(); i++)
 				if (ms.get(i).getAttribute("month").getValue().equals(mm))
 					return new Month(ms.get(i));
@@ -314,13 +313,13 @@ public class EventsManager {
 
 		private Month createMonth(int m) {
 			Element el = new Element("month");
-			el.addAttribute(new Attribute("month", new Integer(m).toString()));
+			el.addAttribute(new Attribute("month", Integer.valueOf(m).toString()));
 			yearElement.appendChild(el);
 			return new Month(el);
 		}
 
-		public Vector getMonths() {
-			Vector v = new Vector();
+		public Vector<Month> getMonths() {
+			Vector<Month> v = new Vector<Month>();
 			Elements ms = yearElement.getChildElements("month");
 			for (int i = 0; i < ms.size(); i++)
 				v.add(new Month(ms.get(i)));
@@ -342,14 +341,14 @@ public class EventsManager {
 
 		public int getValue() {
 			return new Integer(mElement.getAttribute("month").getValue())
-				.intValue();
+				;
 		}
 
 		public Day getDay(int d) {
 			if (mElement == null)
 				return null;
 			Elements ds = mElement.getChildElements("day");
-			String dd = new Integer(d).toString();
+			String dd = Integer.valueOf(d).toString();
 			for (int i = 0; i < ds.size(); i++)
 				if (ds.get(i).getAttribute("day").getValue().equals(dd))
 					return new Day(ds.get(i));
@@ -359,7 +358,7 @@ public class EventsManager {
 
 		private Day createDay(int d) {
 			Element el = new Element("day");
-			el.addAttribute(new Attribute("day", new Integer(d).toString()));
+			el.addAttribute(new Attribute("day", Integer.valueOf(d).toString()));
 			el.addAttribute(
 				new Attribute(
 					"date",
@@ -370,17 +369,17 @@ public class EventsManager {
 							((Element) mElement.getParent())
 								.getAttribute("year")
 								.getValue())
-							.intValue())
+							)
 						.toString()));
 
 			mElement.appendChild(el);
 			return new Day(el);
 		}
 
-		public Vector getDays() {
+		public Vector<Day> getDays() {
 			if (mElement == null)
 				return null;
-			Vector v = new Vector();
+			Vector<Day> v = new Vector<Day>();
 			Elements ds = mElement.getChildElements("day");
 			for (int i = 0; i < ds.size(); i++)
 				v.add(new Day(ds.get(i)));
@@ -401,7 +400,7 @@ public class EventsManager {
 		}
 
 		public int getValue() {
-			return new Integer(dEl.getAttribute("day").getValue()).intValue();
+			return Integer.valueOf(dEl.getAttribute("day").getValue());
 		}
 
 		/*

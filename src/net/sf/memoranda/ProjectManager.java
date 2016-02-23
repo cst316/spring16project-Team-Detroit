@@ -57,9 +57,9 @@ public class ProjectManager {
         return null;
     }
 
-    public static Vector getAllProjects() {
+    public static Vector<ProjectImpl> getAllProjects() {
         Elements prjs = _root.getChildElements("project");
-        Vector v = new Vector();
+        Vector<ProjectImpl> v = new Vector<ProjectImpl>();
         for (int i = 0; i < prjs.size(); i++)
             v.add(new ProjectImpl((Element) prjs.get(i)));
         return v;
@@ -76,9 +76,9 @@ public class ProjectManager {
 		return i;
     }
 
-    public static Vector getActiveProjects() {
+    public static Vector<Project> getActiveProjects() {
         Elements prjs = _root.getChildElements("project");
-        Vector v = new Vector();
+        Vector<Project> v = new Vector<Project>();
         for (int i = 0; i < prjs.size(); i++) {
             Project prj = new ProjectImpl((Element) prjs.get(i));
             if (prj.getStatus() == Project.ACTIVE)

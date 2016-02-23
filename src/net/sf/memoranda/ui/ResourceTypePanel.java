@@ -31,6 +31,7 @@ import net.sf.memoranda.util.MimeTypesList;
 import net.sf.memoranda.util.Util;
 
 /*$Id: ResourceTypePanel.java,v 1.8 2004/10/18 19:09:10 ivanrise Exp $*/
+@SuppressWarnings("serial")
 public class ResourceTypePanel extends JPanel {
     Border border1;
     TitledBorder titledBorder1;
@@ -48,7 +49,7 @@ public class ResourceTypePanel extends JPanel {
   JButton editB = new JButton();
   JButton deleteB = new JButton();
   BorderLayout borderLayout1 = new BorderLayout();
-  public JList typesList = new JList();
+  public JList<Object> typesList = new JList<Object>();
   BorderLayout borderLayout3 = new BorderLayout();
   Border border3;
 
@@ -249,14 +250,14 @@ public class ResourceTypePanel extends JPanel {
     }
 
 
-    class TypesListRenderer extends JLabel implements ListCellRenderer {
+    class TypesListRenderer extends JLabel implements ListCellRenderer<Object> {
 
         public TypesListRenderer() {
             super();
         }
 
         public Component getListCellRendererComponent(
-            JList list,
+            JList<?> list,
             Object value,
             int index,
             boolean isSelected,

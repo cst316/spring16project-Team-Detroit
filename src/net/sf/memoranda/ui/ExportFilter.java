@@ -12,6 +12,8 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
+import net.sf.memoranda.util.Local;
+
 /**
  * 
  */
@@ -66,7 +68,7 @@ public class ExportFilter extends FileFilter {
         String s = f.getName();
         int i = s.lastIndexOf('.');
         if (i > 0 && i < s.length() - 1) {
-            ext = s.substring(i + 1).toLowerCase();
+            ext = s.substring(i + 1).toLowerCase(Local.getCurrentLocale());
         }
         return ext;
     }

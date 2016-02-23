@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,6 +23,7 @@ import javax.swing.tree.TreeCellRenderer;
 /**
  * 
  */
+@SuppressWarnings("serial")
 public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implements TreeCellRenderer, TableCellRenderer {
     static ImageIcon PR_HIGHEST_ICON = new ImageIcon(net.sf.memoranda.ui.AppFrame.class
             .getResource("resources/icons/pr_highest.png"));
@@ -134,7 +134,8 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
     /**
      * Component used to render tree cells in treetable
      */
-    private Component getTaskTreeCellRenderer(Task t, boolean selected, boolean hasFocus) {
+    @SuppressWarnings("unused")
+	private Component getTaskTreeCellRenderer(Task t, boolean selected, boolean hasFocus) {
         JLabel tree_label = new JLabel();       
         tree_label.setText(t.getText());
         // XXX [alexeya] Disabled coz a bug with tooltips in TreeTables:

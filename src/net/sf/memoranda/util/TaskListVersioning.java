@@ -23,7 +23,7 @@ import nu.xom.Elements;
  */
 public class TaskListVersioning {
     
-    public static final String[] VERSIONS = new String[]{
+    private static final String[] VERSIONS = new String[]{
             "-//Memoranda//DTD Tasklist 1.0//EN",
             "-//Memoranda//DTD Tasklist 1.1d1//EN"
     };
@@ -59,10 +59,10 @@ public class TaskListVersioning {
         }
         else {
             // get all projects
-            Vector projects = ProjectManager.getAllProjects();
+            Vector<?> projects = ProjectManager.getAllProjects();
             String[] projectIds = new String[projects.size()];
             int c = 0;
-            for (Iterator iter = projects.iterator(); iter.hasNext();) {
+            for (Iterator<?> iter = projects.iterator(); iter.hasNext();) {
                 Project prj = (Project) iter.next();
                 projectIds[c++] = prj.getID();
             }
@@ -106,7 +106,7 @@ public class TaskListVersioning {
 //                }
                 
                 Attribute parentAttr = task.getAttribute("parent");
-            	if ((parentAttr == null) || (parentAttr.getValue() == "")) {
+            	if ((parentAttr.getValue()).equals("")) {
             		// no parent, do nothing here
             	}
             	else {

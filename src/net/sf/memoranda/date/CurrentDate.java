@@ -17,7 +17,7 @@ import java.util.Vector;
 public class CurrentDate {
 
     private static CalendarDate _date = new CalendarDate();
-    private static Vector dateListeners = new Vector();
+    private static Vector<DateListener> dateListeners = new Vector<DateListener>();
 
     public static CalendarDate get() {
         return _date;
@@ -37,7 +37,7 @@ public class CurrentDate {
         dateListeners.add(dl);
     }
 
-    public static Collection getChangeListeners() {
+    public static Collection<DateListener> getChangeListeners() {
         return dateListeners;
     }
 

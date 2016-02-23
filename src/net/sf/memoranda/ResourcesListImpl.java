@@ -23,6 +23,7 @@ import nu.xom.Elements;
 /*$Id: ResourcesListImpl.java,v 1.5 2007/03/20 06:21:46 alexeya Exp $*/
 public class ResourcesListImpl implements ResourcesList {
     
+	@SuppressWarnings("unused")
 	private Project _project = null;
     private Document _doc = null;
     private Element _root = null;
@@ -42,8 +43,8 @@ public class ResourcesListImpl implements ResourcesList {
             _project = prj;
     }
 
-    public Vector getAllResources() {
-        Vector v = new Vector();
+    public Vector<Resource> getAllResources() {
+        Vector<Resource> v = new Vector<Resource>();
         Elements rs = _root.getChildElements("resource");
         for (int i = 0; i < rs.size(); i++)
             v.add(new Resource(rs.get(i).getAttribute("path").getValue(), rs.get(i).getAttribute("isInetShortcut") != null, rs.get(i).getAttribute("isProjectFile") != null));

@@ -6,7 +6,7 @@ import java.util.Vector;
 public class CurrentNote {
 
 	private static Note currentNote = null;
-    private static Vector noteListeners = new Vector();
+    private static Vector<NoteListener> noteListeners = new Vector<NoteListener>();
 
     public static Note get() {
         return currentNote;
@@ -26,7 +26,7 @@ public class CurrentNote {
         noteListeners.add(nl);
     }
 
-    public static Collection getChangeListeners() {
+    public static Collection<NoteListener> getChangeListeners() {
         return noteListeners;
     }
 

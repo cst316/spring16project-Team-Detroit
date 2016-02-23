@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.Locale;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import net.sf.memoranda.util.Configuration;
@@ -27,10 +25,12 @@ public class LocalTest {
 	@Test
 	public void settingMessagesShouldSetFileIO() {
 		testLocal.setMessages("es");
-		assertTrue(testLocal.getString("Test Random").equals("Test Random - Requires Translation - Spanish"));
+		assertTrue(testLocal.getString("Test Random")
+				.equals("Test Random - Requires Translation - " + Locale.forLanguageTag("es")
+						.getDisplayLanguage(Locale.forLanguageTag("es"))));
 		
 		testLocal.setMessages("de");
-		assertTrue(testLocal.getString("Test Random").equals("Test Random - Requires Translation - German"));
+		assertTrue(testLocal.getString("Test Random").equals("Test Random - Requires Translation - Deutsch"));
 		
 	}
 

@@ -12,7 +12,6 @@ import net.sf.memoranda.ui.htmleditor.AltHTMLWriter;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
-import java.util.Collections;
 
 import javax.swing.text.html.HTMLDocument;
 
@@ -20,6 +19,7 @@ import javax.swing.text.html.HTMLDocument;
  *  
  */
 /* $Id: ProjectExporter.java,v 1.7 2005/07/05 08:17:28 alexeya Exp $ */
+
 public class ProjectExporter {
 
     static boolean _chunked = false;
@@ -33,7 +33,8 @@ public class ProjectExporter {
     
     static String charsetString = "\n";
 
-    public static void export(Project prj, File f, String charset,
+    @SuppressWarnings("unchecked")
+	public static void export(Project prj, File f, String charset,
             boolean xhtml, boolean chunked, boolean navigation, boolean num,
             boolean titlesAsHeaders, boolean copyImages) {
 
@@ -49,7 +50,8 @@ public class ProjectExporter {
         else
             output = f;
         NoteList nl = CurrentStorage.get().openNoteList(prj);
-        Vector notes = (Vector) nl.getAllNotes();
+        @SuppressWarnings("rawtypes")
+		Vector notes = (Vector) nl.getAllNotes();
         //NotesVectorSorter.sort(notes);
         Collections.sort(notes);
 
@@ -95,12 +97,13 @@ public class ProjectExporter {
         }
     }
 
-    private static void generateToc(Writer w, Vector notes) {
+    private static void generateToc(Writer w, Vector<Note> notes) {
         write(w, "<div class=\"toc\"><ul>\n");
-        for (Iterator i = notes.iterator(); i.hasNext(); ) {
+        for (Iterator<Note> i = notes.iterator(); i.hasNext(); ) {
             Note note = (Note) i.next();
             String link = "";
-            CalendarDate d = note.getDate();
+            @SuppressWarnings("unused")
+			CalendarDate d = note.getDate();
             String id = note.getId();
             if (!_chunked)
                 link = "#" + id;
@@ -178,11 +181,12 @@ public class ProjectExporter {
         return s;
     }
 
-    private static void generateChunks(Writer w, Vector notes) {
+    private static void generateChunks(Writer w, Vector<Note> notes) {
         Object[] n = notes.toArray();
         for (int i = 0; i < n.length; i++) {
             Note note = (Note) n[i];
-            CalendarDate d = note.getDate();
+            @SuppressWarnings("unused")
+			CalendarDate d = note.getDate();
             if (_chunked) {
                 File f = new File(output.getParentFile().getPath() + "/"
                         + note.getId()

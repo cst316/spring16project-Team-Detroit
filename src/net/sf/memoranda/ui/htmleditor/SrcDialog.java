@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
  * @version 1.0
  */
 
+@SuppressWarnings("serial")
 public class SrcDialog extends JDialog {
 	JPanel panel1 = new JPanel();
 	BorderLayout borderLayout1 = new BorderLayout();
