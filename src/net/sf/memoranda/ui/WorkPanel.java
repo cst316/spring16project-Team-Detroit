@@ -35,7 +35,6 @@ public class WorkPanel extends JPanel {
 
 	public JButton notesB = new JButton();
 	public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
-	public ResourcesPanel filesPanel = new ResourcesPanel();
 	public JButton agendaB = new JButton();
 	public JButton tasksB = new JButton();
 	public JButton eventsB = new JButton();
@@ -231,7 +230,7 @@ public class WorkPanel extends JPanel {
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(panel, BorderLayout.CENTER);
 		panel.add(dailyItemsPanel, "DAILYITEMS");
-		panel.add(filesPanel, "FILES");
+		panel.add(dailyItemsPanel, "FILES");
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
@@ -247,8 +246,6 @@ public class WorkPanel extends JPanel {
 		toolBar.setBorder(null);
 		panel.setBorder(null);
 		dailyItemsPanel.setBorder(null);
-		filesPanel.setBorder(null);
-
 	}
 
 	public void selectPanel(String pan) {
@@ -295,7 +292,8 @@ public class WorkPanel extends JPanel {
 	}
 
 	public void filesB_actionPerformed(ActionEvent e) {
-		cardLayout1.show(panel, "FILES");
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("FILES");
 		setCurrentButton(filesB);
 		Context.put("CURRENT_PANEL", "FILES");
 	}
@@ -322,7 +320,6 @@ public class WorkPanel extends JPanel {
 		filesB.setText(Local.getString("Resources"));
 		calcB.setText(Local.getString("Calculator"));
 		
-		filesPanel.updateLanguage(); //branches complete
 		dailyItemsPanel.updateLanguage();
 		
 		this.repaint();
