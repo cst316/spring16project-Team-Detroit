@@ -5,8 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.util.Vector;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -14,6 +12,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+@SuppressWarnings("serial")
 public class CharTablePanel extends JPanel {
 
     JEditorPane editor;
@@ -51,7 +50,7 @@ public class CharTablePanel extends JPanel {
             "\u263A",
             "\u00A0" };
 
-    Vector buttons = new Vector();
+    //Vector buttons = new Vector();
 
     public CharTablePanel(JEditorPane ed) {
         try {

@@ -26,9 +26,10 @@ import net.sf.memoranda.util.MimeType;
 import net.sf.memoranda.util.MimeTypesList;
 
 /*$Id: ResourcesTable.java,v 1.4 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class ResourcesTable extends JTable {
 
-    Vector files = null;
+    Vector<Resource> files = null;
     TableSorter sorter = null;
     
     ImageIcon inetIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/mimetypes/inetshortcut.png"));
@@ -80,8 +81,8 @@ public class ResourcesTable extends JTable {
     }
 
     public void initTable() {
-        Vector v = CurrentProject.getResourcesList().getAllResources();
-        files = new Vector();
+        Vector<?> v = CurrentProject.getResourcesList().getAllResources();
+        files = new Vector<Resource>();
         for (int i = 0; i < v.size(); i++) {
             Resource r = (Resource)v.get(i);
             if (!r.isInetShortcut()) {
@@ -174,7 +175,8 @@ public class ResourcesTable extends JTable {
         }
 
         
-	    public Class getColumnClass(int col) {
+	    @SuppressWarnings({ })
+		public Class<?> getColumnClass(int col) {
 	        try {
 	        switch (col) {
 	            case 0 :

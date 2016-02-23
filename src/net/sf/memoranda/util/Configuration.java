@@ -72,8 +72,7 @@ public class Configuration {
   
   
 
-  @SuppressWarnings("unchecked")
-public static void put(String key, Object value) {
+  public static void put(String key, Object value) {
     config.put(key, value);
   }
 }

@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,6 +40,7 @@ import net.sf.memoranda.util.Util;
 import nu.xom.Element;
 
 /*$Id: AgendaPanel.java,v 1.11 2005/02/15 16:58:02 rawsushi Exp $*/
+@SuppressWarnings("serial")
 public class AgendaPanel extends JPanel {
 	BorderLayout borderLayout1 = new BorderLayout();
 	JButton historyBackB = new JButton();
@@ -56,7 +56,7 @@ public class AgendaPanel extends JPanel {
 	//	JPopupMenu agendaPPMenu = new JPopupMenu();
 	//	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 
-	Collection expandedTasks;
+	Collection<String> expandedTasks;
 	String gotoTask = null;
 
 	boolean isActive = true;
@@ -72,7 +72,7 @@ public class AgendaPanel extends JPanel {
 	}
 	
 	void jbInit() throws Exception {
-		expandedTasks = new ArrayList();
+		expandedTasks = new ArrayList<String>();
 
 		toolBar.setFloatable(false);
 		viewer.setEditable(false);
@@ -138,7 +138,7 @@ public class AgendaPanel extends JPanel {
 						refresh(CurrentDate.get());
 					} else if (d.startsWith("memoranda:expandsticker")) {
 						String id = d.split("#")[1];
-						Element pre_sticker=(Element)((Map)EventsManager.getStickers()).get(id);
+						Element pre_sticker=(Element)((Map<?, ?>)EventsManager.getStickers()).get(id);
 						String sticker = pre_sticker.getValue();
 						int first=sticker.indexOf(">");
 						int last=sticker.lastIndexOf("<");
@@ -160,7 +160,7 @@ public class AgendaPanel extends JPanel {
 						dlg.setVisible(true);
 					}else if (d.startsWith("memoranda:editsticker")) {
 						String id = d.split("#")[1];
-						Element pre_sticker=(Element)((Map)EventsManager.getStickers()).get(id);
+						Element pre_sticker=(Element)((Map<?, ?>)EventsManager.getStickers()).get(id);
 						String sticker = pre_sticker.getValue();
 						sticker=sticker.replaceAll("<br>","\n");
 						int first=sticker.indexOf(">");

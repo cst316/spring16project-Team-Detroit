@@ -3,7 +3,6 @@ package net.sf.memoranda.util;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.Locale;
 import java.io.*;
 
@@ -25,7 +24,7 @@ public class Local {
     	if (!Configuration.get("DISABLE_L10N").equals("yes")) {
 	    	setMessages(currentLocale.getLanguage());
 	    	
-	        if (Configuration.get("LOCALES_DIR") != "") {
+	        if (!(Configuration.get("LOCALES_DIR")).equals("")) {
 	        	System.out.print("Look "+fn+" at: "+Configuration.get("LOCALES_DIR")+" ");
 	        	try {
 	        		fn = "messages_"
@@ -87,7 +86,7 @@ public class Local {
         /**********************/
     }
 
-    public static Hashtable getMessages() {
+    public static LoadableProperties getMessages() {
         return messages;
     }
     
@@ -141,15 +140,16 @@ public class Local {
         { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
     public static String getString(String key) {    	
-        if ((messages == null) || (disabled || currentLocale.equals(Locale.forLanguageTag("en")))) {
+        if ((messages == null) || disabled || currentLocale.equals(Locale.forLanguageTag("en"))) {
             return key;
         }
-        String msg = (String) messages.get(key.trim().toUpperCase());        
+        String msg = (String) messages.get(key.trim().toUpperCase(Locale.forLanguageTag("en")));        
         if ((msg != null) && (msg.length() > 0)) {
             return msg;
         } else {
-        	put(key.toUpperCase(), key + " - Requires Translation - " + Local.getCurrentLocale().getDisplayLanguage());
-        	msg = (String) messages.get(key.trim().toUpperCase());
+        	put(key.toUpperCase(Locale.forLanguageTag("en")), key + " - Requires Translation - " + Local
+        			.getCurrentLocale().getDisplayLanguage(Local.getCurrentLocale()));
+        	msg = (String) messages.get(key.trim().toUpperCase(Locale.forLanguageTag("en")));
             return msg;
         }
     }
@@ -277,7 +277,7 @@ public class Local {
         }
         int[] time = new int[2];
         try {
-            time[0] = new Integer(h).intValue();
+            time[0] = Integer.valueOf(h);
             if ((time[0] < 0) || (time[0] > 23)) {
                 time[0] = 0;
             }
@@ -286,7 +286,7 @@ public class Local {
             return null;
         }
         try {
-            time[1] = new Integer(m).intValue();
+            time[1] = new Integer(m);
             if ((time[1] < 0) || (time[1] > 59)) {
                 time[1] = 0;
             }
@@ -307,7 +307,6 @@ public class Local {
         throw new IllegalArgumentException("No language found: " + name);
     }
 
-    @SuppressWarnings("unchecked")
     public static void put(String key, Object value) {
         messages.put(key, value);
       }

@@ -16,11 +16,11 @@ import net.sf.memoranda.date.CalendarDate;
 /*$Id: NoteList.java,v 1.5 2004/10/07 21:33:36 ivanrise Exp $*/
 public interface NoteList {
     
-    Collection getAllNotes();
+    Collection<Note> getAllNotes();
     
-    Collection getMarkedNotes();
+    Collection<Note> getMarkedNotes();
 
-    Collection getNotesForPeriod(CalendarDate startDate, CalendarDate endDate);
+    Collection<Note> getNotesForPeriod(CalendarDate startDate, CalendarDate endDate);
 
     Note getNoteForDate(CalendarDate date);
     

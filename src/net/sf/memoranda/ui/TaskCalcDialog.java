@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import net.sf.memoranda.util.Local;
 
 /*$Id: TaskCalcDialog.java,v 1.3 2005/06/10 18:36:24 velhonoja Exp $*/
+@SuppressWarnings("serial")
 public class TaskCalcDialog extends JDialog {
 	JPanel topPanel = new JPanel(new BorderLayout());
 	JPanel generalPanel = new JPanel(new GridBagLayout());

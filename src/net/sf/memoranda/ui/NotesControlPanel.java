@@ -34,6 +34,7 @@ import net.sf.memoranda.util.Configuration;
 //import net.sf.memoranda.ui.AppFrame;
 
 /*$Id: NotesControlPanel.java,v 1.16 2005/05/05 16:19:16 ivanrise Exp $*/
+@SuppressWarnings("serial")
 public class NotesControlPanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     SearchPanel searchPanel = new SearchPanel();

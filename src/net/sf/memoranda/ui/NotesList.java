@@ -29,6 +29,7 @@ import net.sf.memoranda.util.Configuration;
 //import net.sf.memoranda.util.NotesVectorSorter;
 
 /*$Id: NotesList.java,v 1.9 2005/05/05 16:19:16 ivanrise Exp $*/
+@SuppressWarnings({ "serial", "rawtypes" })
 public class NotesList extends JList {
 
     public static final int EMPTY = 0;    
@@ -40,7 +41,8 @@ public class NotesList extends JList {
 
     int _type = ALL;
 
-    public NotesList(int type) {
+    @SuppressWarnings("unchecked")
+	public NotesList(int type) {
         super();
 		if(Configuration.get("NOTES_SORT_ORDER").toString().equalsIgnoreCase("true")) {
 			sortOrderDesc = true;
@@ -74,7 +76,8 @@ public class NotesList extends JList {
         this(ALL);
     }
 
-    public void update() {
+    @SuppressWarnings("unchecked")
+	public void update() {
         if (_type != EMPTY) {
             update(CurrentProject.getNoteList());
 		}
@@ -83,7 +86,8 @@ public class NotesList extends JList {
 		}
     }
 
-    public void update(NoteList nl) {
+    @SuppressWarnings("unchecked")
+	public void update(NoteList nl) {
         if (_type == ALL)
             notes = (Vector) nl.getAllNotes();
         else
@@ -98,7 +102,8 @@ public class NotesList extends JList {
         updateUI();
     }
 
-    public void update(Vector ns) {
+	@SuppressWarnings("unchecked")
+	public void update(Vector<Note> ns) {
         notes = ns;
         // NotesVectorSorter.sort(notes);
 		Collections.sort(notes);
@@ -118,7 +123,7 @@ public class NotesList extends JList {
 
 
     /*$Id: NotesList.java,v 1.9 2005/05/05 16:19:16 ivanrise Exp $*/
-public class NotesListModel extends AbstractListModel {
+public class NotesListModel extends AbstractListModel<Object> {
 
         public NotesListModel() {
             update();

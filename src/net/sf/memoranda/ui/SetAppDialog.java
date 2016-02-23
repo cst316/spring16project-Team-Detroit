@@ -16,6 +16,7 @@ import javax.swing.event.CaretEvent;
 import net.sf.memoranda.util.Local;
 
 /*$Id: SetAppDialog.java,v 1.6 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class SetAppDialog extends JDialog {
   FlowLayout flowLayout1 = new FlowLayout();
   JButton cancelB = new JButton();

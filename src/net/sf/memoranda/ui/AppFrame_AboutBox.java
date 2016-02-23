@@ -22,6 +22,7 @@ import net.sf.memoranda.util.Local;
  */
 
 /*$Id: AppFrame_AboutBox.java,v 1.13 2005/11/09 22:38:07 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class AppFrame_AboutBox extends JDialog implements ActionListener {
 
   JButton button1 = new JButton();

@@ -9,6 +9,7 @@ import net.sf.memoranda.Emailer;
 
 public class EmailerTest {
 	
+	@SuppressWarnings("unused")
 	private static Emailer emailerTest = null;
 
 	@BeforeClass

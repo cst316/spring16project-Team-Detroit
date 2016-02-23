@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import net.sf.memoranda.util.Local;
 
 /*$Id: ResourceTypeDialog.java,v 1.11 2004/07/01 14:44:10 pbielen Exp $*/
+@SuppressWarnings("serial")
 public class ResourceTypeDialog extends JDialog {
     JButton cancelB = new JButton();
     JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -97,7 +98,7 @@ public class ResourceTypeDialog extends JDialog {
         this.dispose();
     }
 
-    public JList getTypesList() {
+    public JList<?> getTypesList() {
       return areaPanel.typesList;
     }
 

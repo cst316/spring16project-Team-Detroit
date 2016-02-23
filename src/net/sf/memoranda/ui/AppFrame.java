@@ -75,6 +75,7 @@ import nu.xom.Elements;
 
 /*$Id: AppFrame.java,v 1.33 2005/07/05 08:17:24 alexeya Exp $*/
 
+@SuppressWarnings("serial")
 public class AppFrame extends JFrame {
 
     JPanel contentPane;
@@ -100,9 +101,9 @@ public class AppFrame extends JFrame {
     public WorkPanel workPanel = new WorkPanel();
     HTMLEditor editor = workPanel.dailyItemsPanel.editorPanel.editor;
 
-    static Vector exitListeners = new Vector();
+    static Vector<ActionListener> exitListeners = new Vector<ActionListener>();
 
-    public Action prjPackAction = new AbstractAction(Local.getString("Pack current project")) {
+	public Action prjPackAction = new AbstractAction(Local.getString("Pack current project")) {
         public void actionPerformed(ActionEvent e) {
             doPrjPack();
         }
@@ -323,7 +324,8 @@ public class AppFrame extends JFrame {
     private void jbInit() throws Exception {
         updateThisLanguage();
     	// Initialize contact list upon loading of frame Added: Ryan Schultz 2/12/2016
-    	ContactListStorage cls = new ContactListStorage();
+    	@SuppressWarnings("unused")
+		ContactListStorage cls = new ContactListStorage();
        	
         this.setIconImage(new ImageIcon(AppFrame.class.getResource(
                 "resources/icons/jnotes16.png"))
@@ -676,8 +678,8 @@ public class AppFrame extends JFrame {
         Object fwo = Context.get("FRAME_WIDTH");
         Object fho = Context.get("FRAME_HEIGHT");
         if ((fwo != null) && (fho != null)) {
-            int w = new Integer((String) fwo).intValue();
-            int h = new Integer((String) fho).intValue();
+            int w = Integer.valueOf((String) fwo);
+            int h = new Integer((String) fho);
             this.setSize(w, h);
         }
         else
@@ -686,8 +688,8 @@ public class AppFrame extends JFrame {
         Object xo = Context.get("FRAME_XPOS");
         Object yo = Context.get("FRAME_YPOS");
         if ((xo != null) && (yo != null)) {
-            int x = new Integer((String) xo).intValue();
-            int y = new Integer((String) yo).intValue();
+            int x = new Integer((String) xo);
+            int y = new Integer((String) yo);
             this.setLocation(x, y);
         }
 
@@ -740,7 +742,8 @@ public class AppFrame extends JFrame {
         Context.put("FRAME_YPOS", new Integer(this.getLocation().y));
         //  Upon exit checks if user set up email, if so sets up daily events email Added:  Ryan Schultz 2/12/2016
         if (ContactListStorage.getSize() != 0) {
-        	DailyEmail de = new DailyEmail();
+        	@SuppressWarnings("unused")
+			DailyEmail de = new DailyEmail();
         } 
         exitNotify();
         System.exit(0);
@@ -784,7 +787,6 @@ public class AppFrame extends JFrame {
     	try {
     	    tray.add(trayIcon);
     	} catch (AWTException e) {
-    	    // TODO Auto-generated catch block
     	    e.printStackTrace();
     	}
     }
@@ -820,7 +822,7 @@ public class AppFrame extends JFrame {
         exitListeners.add(al);
     }
 
-    public static Collection getExitListeners() {
+    public static Collection<ActionListener> getExitListeners() {
         return exitListeners;
     }
 
@@ -1072,15 +1074,16 @@ public class AppFrame extends JFrame {
                 Context.put(
                         "LAST_SELECTED_EXPORT_FILE",
                         chooser.getSelectedFile().getPath());
-                Context.put("EXPORT_SPLIT_NOTES", new Boolean(dlg.splitChB.isSelected()).toString());
-                Context.put("EXPORT_TITLES_AS_HEADERS", new Boolean(dlg.titlesAsHeadersChB.isSelected()).toString());
+                Context.put("EXPORT_SPLIT_NOTES", Boolean.valueOf(dlg.splitChB.isSelected()).toString());
+                Context.put("EXPORT_TITLES_AS_HEADERS", Boolean.valueOf(dlg.titlesAsHeadersChB.isSelected()).toString());
         
         int ei = dlg.encCB.getSelectedIndex();
         enc = null;
         if (ei == 1)
                 enc = "UTF-8";
         boolean nument = (ei == 2);
-        File f = chooser.getSelectedFile();
+        @SuppressWarnings("unused")
+		File f = chooser.getSelectedFile();
         boolean xhtml =
                 chooser.getFileFilter().getDescription().indexOf("XHTML") > -1;
          CurrentProject.save();
@@ -1239,7 +1242,6 @@ public class AppFrame extends JFrame {
             content = content.substring(content.indexOf("\n", content.indexOf("-")));
             content = content.replace("<p>","").replace("</p>","\n");
             name = f.getName().substring(0,f.getName().lastIndexOf("."));	
-            Element item;
             id=Util.generateId();
             System.out.println(id+" "+name+" "+content);
             notesName.put(id, name);

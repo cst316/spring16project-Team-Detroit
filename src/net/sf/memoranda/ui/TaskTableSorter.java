@@ -2,16 +2,12 @@ package net.sf.memoranda.ui;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import javax.swing.tree.*;
-import javax.swing.event.*;
-
 import java.awt.*;
 import java.awt.event.*;
 
 import java.util.*;
 
 import net.sf.memoranda.*;
-import net.sf.memoranda.util.*;
 import net.sf.memoranda.date.*;
 
 public class TaskTableSorter extends TaskTableModel{
@@ -22,7 +18,7 @@ public class TaskTableSorter extends TaskTableModel{
 	// sort opposite direction
 	boolean opposite = false;
 	
-	Comparator comparator = new Comparator(){
+	Comparator<Object> comparator = new Comparator<Object>(){
 		public int compare(Object o1, Object o2){
 			if(sorting_column == -1) return 0;
 			if( (o1 instanceof Task) == false) return 0;
@@ -54,7 +50,7 @@ public class TaskTableSorter extends TaskTableModel{
 	}
 	
 	public Object getChild(Object parent, int index) {
-		Collection c = null;
+		Collection<?> c = null;
 		
 		if (parent instanceof Project){
 			if( activeOnly() ) c = CurrentProject.getTaskList().getActiveSubTasks(null, CurrentDate.get());

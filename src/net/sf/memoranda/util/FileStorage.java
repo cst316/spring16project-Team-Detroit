@@ -33,7 +33,6 @@ import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.ui.ExceptionDialog;
 import net.sf.memoranda.ui.htmleditor.AltHTMLWriter;
 import nu.xom.Builder;
-import nu.xom.DocType;
 import nu.xom.Document;
 
 
@@ -43,7 +42,7 @@ import nu.xom.Document;
 /*$Id: FileStorage.java,v 1.15 2006/10/09 23:31:58 alexeya Exp $*/
 public class FileStorage implements Storage {
 
-    public static String JN_DOCPATH = Util.getEnvDir();
+    static String JN_DOCPATH = Util.getEnvDir();
     private HTMLEditorKit editorKit = new HTMLEditorKit();
 
     public FileStorage() {
@@ -113,7 +112,8 @@ public class FileStorage implements Storage {
         doc.putProperty(
             javax.swing.text.Document.TitleProperty,
             note.getTitle());        
-        CalendarDate d = note.getDate();
+        @SuppressWarnings("unused")
+		CalendarDate d = note.getDate();
 
         filename += note.getId();//d.getDay() + "-" + d.getMonth() + "-" + d.getYear();
         /*DEBUG*/System.out.println("[DEBUG] Save note: "+ filename);
@@ -256,8 +256,10 @@ public class FileStorage implements Storage {
         String id = prj.getID();
         File f = new File(JN_DOCPATH + id);
         File[] files = f.listFiles();
-        for (int i = 0; i < files.length; i++)
-            files[i].delete();
+        if (files != null) {
+	        for (int i = 0; i < files.length; i++)
+	            files[i].delete();
+        }
         f.delete();
     }
 

@@ -32,6 +32,7 @@ import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 
 /*$Id: SearchPanel.java,v 1.5 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class SearchPanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     NotesList notesList = new NotesList(NotesList.EMPTY);
@@ -115,7 +116,7 @@ public class SearchPanel extends JPanel {
         jPanel3.add(searchB, BorderLayout.SOUTH);
         CurrentProject.addProjectListener(new ProjectListener() {
             public void projectChange(Project p, NoteList nl, TaskList tl, ResourcesList rl) {
-                notesList.update(new Vector());
+                notesList.update(new Vector<Note>());
             }
             public void projectWasChanged() {}
         });
@@ -157,8 +158,8 @@ public class SearchPanel extends JPanel {
         }
         /*progressBar.setMinimum(0);
         progressBar.setStringPainted(true);*/
-        Vector notes = (Vector) CurrentProject.getNoteList().getAllNotes();
-        Vector found = new Vector();
+        Vector<Note> notes = (Vector<Note>) CurrentProject.getNoteList().getAllNotes();
+        Vector<Note> found = new Vector<Note>();
         /*progressBar.setMaximum(notes.size()-1);
         progressBar.setIndeterminate(false);
         this.add(progressBar, BorderLayout.SOUTH);*/

@@ -21,6 +21,7 @@ Class:	UserEmailSetUpDialog
 
 Description:  Creates User Email Set Up dialog box and handles action events to set up user email or cancel
 */
+@SuppressWarnings("serial")
 public class UserEmailSetUpDialog extends JDialog {
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());

@@ -8,6 +8,8 @@
  */
 package net.sf.memoranda;
 
+import java.util.Random;
+
 import net.sf.memoranda.date.CalendarDate;
 
 /**
@@ -39,8 +41,17 @@ public class HistoryItem {
        return _project;
     }
     
-    public boolean equals(HistoryItem i) {
-       return i.getDate().equals(_date) && i.getProject().getID().equals(_project.getID());
+    public boolean equals(Object i) {
+       if (i == null || !i.getClass().equals(HistoryItem.class)) {
+    	   return false;
+       } else {
+    	   return ((HistoryItem) i).getDate().equals(_date) && ((HistoryItem) i)
+    			   .getProject().getID().equals(_project.getID());
+       } 
     } 
-
+    
+    public int hashCode() {
+    	int result = new Random().nextInt();
+    	return result;
+    }
 }

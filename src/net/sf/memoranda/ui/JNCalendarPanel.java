@@ -43,6 +43,7 @@ import net.sf.memoranda.util.Local;
  */
 
 /*$Id: JNCalendarPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class JNCalendarPanel extends JPanel {
 
   CalendarDate _date = CurrentDate.get();
@@ -55,8 +56,8 @@ public class JNCalendarPanel extends JPanel {
   JPanel todayBPanel = new JPanel();
   JPanel dayBackBPanel = new JPanel();
   JButton dayBackB = new JButton();
-  JComboBox monthsCB = new JComboBox();
-  MutableComboBoxModel model = (MutableComboBoxModel)monthsCB.getModel();
+  JComboBox<String> monthsCB = new JComboBox<String>();
+  MutableComboBoxModel<String> model = (MutableComboBoxModel<String>)monthsCB.getModel();
   BorderLayout borderLayout4 = new BorderLayout();
   JNCalendar jnCalendar = new JNCalendar(CurrentDate.get());
   JPanel jnCalendarPanel = new JPanel();
@@ -67,7 +68,7 @@ public class JNCalendarPanel extends JPanel {
 
   boolean ignoreChange = false;
 
-  private Vector selectionListeners = new Vector();
+  private Vector<ActionListener> selectionListeners = new Vector<ActionListener>();
 
   Border border1;
   Border border2;
@@ -253,8 +254,8 @@ public class JNCalendarPanel extends JPanel {
     }
 
   private void notifyListeners() {
-        for (Enumeration en = selectionListeners.elements(); en.hasMoreElements();)
-             ((ActionListener) en.nextElement()).actionPerformed(new ActionEvent(this, 0, "Calendar event"));
+        for (Enumeration<ActionListener> en = selectionListeners.elements(); en.hasMoreElements();)
+             en.nextElement().actionPerformed(new ActionEvent(this, 0, "Calendar event"));
   }
 
   private void setCurrentDateDay(CalendarDate dt, int d) {
@@ -267,7 +268,7 @@ public class JNCalendarPanel extends JPanel {
   private void refreshView() {
     ignoreChange = true;
     jnCalendar.set(_date);
-    monthsCB.setSelectedIndex(new Integer(_date.getMonth()));
+    monthsCB.setSelectedIndex(Integer.valueOf(_date.getMonth()));
     yearSpin.setValue(new Integer(_date.getYear()));
     ignoreChange = false;
   }
@@ -281,7 +282,7 @@ public class JNCalendarPanel extends JPanel {
 
   void yearSpin_actionPerformed() {
     if (ignoreChange) return;
-    _date = new CalendarDate(_date.getDay(), _date.getMonth(), ((Integer)yearSpin.getValue()).intValue());
+    _date = new CalendarDate(_date.getDay(), _date.getMonth(), ((Integer)yearSpin.getValue()));
     jnCalendar.set(_date);
     notifyListeners();
   }

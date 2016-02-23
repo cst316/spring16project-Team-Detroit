@@ -20,6 +20,7 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Locale;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -27,7 +28,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JEditorPane;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -56,11 +56,13 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
-import net.sf.memoranda.ui.htmleditor.util.Local;
+import net.sf.memoranda.ui.htmleditor.util.HTMLLocal;
+import net.sf.memoranda.util.Local;
 
 /**
  *  
  */
+@SuppressWarnings("serial")
 public class HTMLEditor extends JPanel {
 	public HTMLEditorPane editor = new HTMLEditorPane("");
 
@@ -79,7 +81,7 @@ public class HTMLEditor extends JPanel {
 
 	Border border1, border2;
 
-	Class cl = net.sf.memoranda.ui.htmleditor.HTMLEditor.class;
+	Class<HTMLEditor> cl = net.sf.memoranda.ui.htmleditor.HTMLEditor.class;
 
 	String imagesDir = null;
 	String imagesPath = null;
@@ -105,7 +107,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action boldAction =
 		new HTMLEditorAction(
-			Local.getString("Bold"),
+			HTMLLocal.getString("Bold"),
 			new ImageIcon(cl.getResource("resources/icons/bold.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			boldActionB_actionPerformed(e);
@@ -114,7 +116,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action italicAction =
 		new HTMLEditorAction(
-			Local.getString("Italic"),
+			HTMLLocal.getString("Italic"),
 			new ImageIcon(cl.getResource("resources/icons/italic.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			italicActionB_actionPerformed(e);
@@ -123,7 +125,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action underAction =
 		new HTMLEditorAction(
-			Local.getString("Underline"),
+			HTMLLocal.getString("Underline"),
 			new ImageIcon(cl.getResource("resources/icons/underline.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			underActionB_actionPerformed(e);
@@ -132,7 +134,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action ulAction =
 		new HTMLEditorAction(
-			Local.getString("Unordered list"),
+			HTMLLocal.getString("Unordered list"),
 			new ImageIcon(
 				cl.getResource("resources/icons/listunordered.png"))) {
 		public void actionPerformed(ActionEvent e) {
@@ -142,7 +144,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action olAction =
 		new HTMLEditorAction(
-			Local.getString("Ordered list"),
+			HTMLLocal.getString("Ordered list"),
 			new ImageIcon(cl.getResource("resources/icons/listordered.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			olActionB_actionPerformed(e);
@@ -151,7 +153,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action lAlignAction =
 		new HTMLEditorAction(
-			Local.getString("Align left"),
+			HTMLLocal.getString("Align left"),
 			new ImageIcon(cl.getResource("resources/icons/alignleft.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			lAlignActionB_actionPerformed(e);
@@ -160,7 +162,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action cAlignAction =
 		new HTMLEditorAction(
-			Local.getString("Align center"),
+			HTMLLocal.getString("Align center"),
 			new ImageIcon(cl.getResource("resources/icons/aligncenter.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			cAlignActionB_actionPerformed(e);
@@ -169,7 +171,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action rAlignAction =
 		new HTMLEditorAction(
-			Local.getString("Align right"),
+			HTMLLocal.getString("Align right"),
 			new ImageIcon(cl.getResource("resources/icons/alignright.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			rAlignActionB_actionPerformed(e);
@@ -182,7 +184,7 @@ public class HTMLEditor extends JPanel {
 	 */
 	public Action imageAction =
 		new HTMLEditorAction(
-			Local.getString("Insert image"),
+			HTMLLocal.getString("Insert image"),
 			new ImageIcon(cl.getResource("resources/icons/image.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			imageActionB_actionPerformed(e);
@@ -191,7 +193,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action tableAction =
 		new HTMLEditorAction(
-			Local.getString("Insert table"),
+			HTMLLocal.getString("Insert table"),
 			new ImageIcon(cl.getResource("resources/icons/table.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			tableActionB_actionPerformed(e);
@@ -200,7 +202,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action linkAction =
 		new HTMLEditorAction(
-			Local.getString("Insert hyperlink"),
+			HTMLLocal.getString("Insert hyperlink"),
 			new ImageIcon(cl.getResource("resources/icons/link.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			linkActionB_actionPerformed(e);
@@ -209,7 +211,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action propsAction =
 		new HTMLEditorAction(
-			Local.getString("Object properties"),
+			HTMLLocal.getString("Object properties"),
 			new ImageIcon(cl.getResource("resources/icons/properties.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			propsActionB_actionPerformed(e);
@@ -217,7 +219,7 @@ public class HTMLEditor extends JPanel {
 	};
 
 	public Action selectAllAction =
-		new HTMLEditorAction(Local.getString("Select all")) {
+		new HTMLEditorAction(HTMLLocal.getString("Select all")) {
 		public void actionPerformed(ActionEvent e) {
 			editor.selectAll();
 		}
@@ -225,14 +227,14 @@ public class HTMLEditor extends JPanel {
 
 	public Action insertHRAction =
 		new HTMLEditorAction(
-			Local.getString("Insert horizontal rule"),
+			HTMLLocal.getString("Insert horizontal rule"),
 			new ImageIcon(cl.getResource("resources/icons/hr.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			/*
 			 * String elName =
 			 * document.getParagraphElement(editor.getCaretPosition()).getName();
 			 * HTML.Tag tag = HTML.getTag(elName); if
-			 * (elName.toUpperCase().equals("P-IMPLIED")) tag =
+			 * (elName.toUpperCase(Locale.forLanguageTag("en")).equals("P-IMPLIED")) tag =
 			 * HTML.Tag.IMPLIED; HTMLEditorKit.InsertHTMLTextAction hta = new
 			 * HTMLEditorKit.InsertHTMLTextAction("insertHR", " <hr> ", tag,
 			 * HTML.Tag.HR);
@@ -275,7 +277,7 @@ public class HTMLEditor extends JPanel {
 
 	void addCharTablePanel() {
 		showToolsPanel();
-		toolsPanel.addTab(Local.getString("Characters"), charTablePanel);
+		toolsPanel.addTab(HTMLLocal.getString("Characters"), charTablePanel);
 	}
 
 	void removeCharTablePanel() {
@@ -286,7 +288,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action insCharAction =
 		new HTMLEditorAction(
-			Local.getString("Insert character"),
+			HTMLLocal.getString("Insert character"),
 			new ImageIcon(cl.getResource("resources/icons/char.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			if (!charTableShow) {
@@ -304,7 +306,7 @@ public class HTMLEditor extends JPanel {
 
 	public Action findAction =
 		new HTMLEditorAction(
-			Local.getString("Find & Replace"),
+			HTMLLocal.getString("Find & Replace"),
 			new ImageIcon(cl.getResource("resources/icons/find.png"))) {
 		public void actionPerformed(ActionEvent e) {
 			doFind();
@@ -345,6 +347,7 @@ public class HTMLEditor extends JPanel {
 		}
 	};
 
+	@SuppressWarnings("unused")
 	private void doCopy() {
 		/*
 		 * java.awt.datatransfer.Clipboard clip =
@@ -356,7 +359,7 @@ public class HTMLEditor extends JPanel {
 		 * null); } catch (Exception e) { e.printStackTrace();
 		 */
 		Element el = document.getParagraphElement(editor.getSelectionStart());
-		if (el.getName().toUpperCase().equals("P-IMPLIED"))
+		if (el.getName().toUpperCase(Locale.forLanguageTag("en")).equals("P-IMPLIED"))
 			el = el.getParentElement();
 		String elName = el.getName();
 		StringWriter sw = new StringWriter();
@@ -470,17 +473,17 @@ public class HTMLEditor extends JPanel {
 
 	String[] elementTypes =
 		{
-			Local.getString("Paragraph"),
-			Local.getString("Header") + " 1",
-			Local.getString("Header") + " 2",
-			Local.getString("Header") + " 3",
-			Local.getString("Header") + " 4",
-			Local.getString("Header") + " 5",
-			Local.getString("Header") + " 6",
-			Local.getString("Preformatted"),
+			HTMLLocal.getString("Paragraph"),
+			HTMLLocal.getString("Header") + " 1",
+			HTMLLocal.getString("Header") + " 2",
+			HTMLLocal.getString("Header") + " 3",
+			HTMLLocal.getString("Header") + " 4",
+			HTMLLocal.getString("Header") + " 5",
+			HTMLLocal.getString("Header") + " 6",
+			HTMLLocal.getString("Preformatted"),
 		//"Address",
-		Local.getString("Blockquote")};
-	public JComboBox blockCB = new JComboBox(elementTypes);
+		HTMLLocal.getString("Blockquote")};
+	public JComboBox<?> blockCB = new JComboBox<Object>(elementTypes);
 	boolean blockCBEventsLock = false;
 
 	public final int I_NORMAL = 0;
@@ -494,15 +497,15 @@ public class HTMLEditor extends JPanel {
 
 	String[] inlineTypes =
 		{
-			Local.getString("Normal"),
-			Local.getString("Emphasis"),
-			Local.getString("Strong"),
-			Local.getString("Code"),
-			Local.getString("Cite"),
-			Local.getString("Superscript"),
-			Local.getString("Subscript"),
-			Local.getString("Custom style") + "..." };
-	public JComboBox inlineCB = new JComboBox(inlineTypes);
+			HTMLLocal.getString("Normal"),
+			HTMLLocal.getString("Emphasis"),
+			HTMLLocal.getString("Strong"),
+			HTMLLocal.getString("Code"),
+			HTMLLocal.getString("Cite"),
+			HTMLLocal.getString("Superscript"),
+			HTMLLocal.getString("Subscript"),
+			HTMLLocal.getString("Custom style") + "..." };
+	public JComboBox<?> inlineCB = new JComboBox<Object>(inlineTypes);
 	boolean inlineCBEventsLock = false;
 
 	JButton boldActionB = new JButton();
@@ -549,8 +552,8 @@ public class HTMLEditor extends JPanel {
 		cutAction.putValue(
 			Action.ACCELERATOR_KEY,
 			KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_MASK));
-		cutAction.putValue(Action.NAME, Local.getString("Cut"));
-		cutAction.putValue(Action.SHORT_DESCRIPTION, Local.getString("Cut"));
+		cutAction.putValue(Action.NAME, HTMLLocal.getString("Cut"));
+		cutAction.putValue(Action.SHORT_DESCRIPTION, HTMLLocal.getString("Cut"));
 
 		copyAction.putValue(
 			Action.SMALL_ICON,
@@ -558,8 +561,8 @@ public class HTMLEditor extends JPanel {
 		copyAction.putValue(
 			Action.ACCELERATOR_KEY,
 			KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
-		copyAction.putValue(Action.NAME, Local.getString("Copy"));
-		copyAction.putValue(Action.SHORT_DESCRIPTION, Local.getString("Copy"));
+		copyAction.putValue(Action.NAME, HTMLLocal.getString("Copy"));
+		copyAction.putValue(Action.SHORT_DESCRIPTION, HTMLLocal.getString("Copy"));
 
 		pasteAction.putValue(
 			Action.SMALL_ICON,
@@ -567,10 +570,10 @@ public class HTMLEditor extends JPanel {
 		pasteAction.putValue(
 			Action.ACCELERATOR_KEY,
 			KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_MASK));
-		pasteAction.putValue(Action.NAME, Local.getString("Paste"));
+		pasteAction.putValue(Action.NAME, HTMLLocal.getString("Paste"));
 		pasteAction.putValue(
 			Action.SHORT_DESCRIPTION,
-			Local.getString("Paste"));
+			HTMLLocal.getString("Paste"));
 
 		stylePasteAction.putValue(
 			Action.ACCELERATOR_KEY,
@@ -579,10 +582,10 @@ public class HTMLEditor extends JPanel {
 				KeyEvent.CTRL_MASK + KeyEvent.SHIFT_MASK));
 		stylePasteAction.putValue(
 			Action.NAME,
-			Local.getString("Paste special"));
+			HTMLLocal.getString("Paste special"));
 		stylePasteAction.putValue(
 			Action.SHORT_DESCRIPTION,
-			Local.getString("Paste special"));
+			HTMLLocal.getString("Paste special"));
 
 		selectAllAction.putValue(
 			Action.ACCELERATOR_KEY,
@@ -600,10 +603,10 @@ public class HTMLEditor extends JPanel {
 		breakAction.putValue(
 			Action.ACCELERATOR_KEY,
 			KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.SHIFT_MASK));
-		breakAction.putValue(Action.NAME, Local.getString("Insert Break"));
+		breakAction.putValue(Action.NAME, HTMLLocal.getString("Insert Break"));
 		breakAction.putValue(
 			Action.SHORT_DESCRIPTION,
-			Local.getString("Insert Break"));
+			HTMLLocal.getString("Insert Break"));
 
 		findAction.putValue(
 			Action.ACCELERATOR_KEY,
@@ -1026,7 +1029,7 @@ public class HTMLEditor extends JPanel {
 
 	class UndoAction extends AbstractAction {
 		public UndoAction() {
-			super(Local.getString("Undo"));
+			super(HTMLLocal.getString("Undo"));
 			setEnabled(false);
 			putValue(
 				Action.SMALL_ICON,
@@ -1055,14 +1058,14 @@ public class HTMLEditor extends JPanel {
 					undo.getUndoPresentationName());
 			} else {
 				setEnabled(false);
-				putValue(Action.SHORT_DESCRIPTION, Local.getString("Undo"));
+				putValue(Action.SHORT_DESCRIPTION, HTMLLocal.getString("Undo"));
 			}
 		}
 	}
 
 	class RedoAction extends AbstractAction {
 		public RedoAction() {
-			super(Local.getString("Redo"));
+			super(HTMLLocal.getString("Redo"));
 			setEnabled(false);
 			putValue(
 				Action.SMALL_ICON,
@@ -1093,7 +1096,7 @@ public class HTMLEditor extends JPanel {
 					undo.getRedoPresentationName());
 			} else {
 				setEnabled(false);
-				putValue(Action.SHORT_DESCRIPTION, Local.getString("Redo"));
+				putValue(Action.SHORT_DESCRIPTION, HTMLLocal.getString("Redo"));
 			}
 		}
 	}
@@ -1184,7 +1187,7 @@ public class HTMLEditor extends JPanel {
 		/*
 		 * currentParaElement =
 		 * document.getParagraphElement(editor.getCaretPosition());
-		 * currentTagName = currentParaElement.getName().toUpperCase();
+		 * currentTagName = currentParaElement.getName().toUpperCase(Locale.forLanguageTag("en"));
 		 */
 
 		AttributeSet charattrs = null;
@@ -1205,8 +1208,9 @@ public class HTMLEditor extends JPanel {
 					.getCharacterElement(editor.getCaretPosition())
 					.getAttributes();
 
-		if (charattrs
-			.containsAttribute(StyleConstants.Bold, new Boolean(true))) {
+		boolean containsAttribute = charattrs
+			.containsAttribute(StyleConstants.Bold, new Boolean(true));
+		if (containsAttribute) {
 			boldActionB.setBorder(border2);
 			bold = true;
 		} else if (bold) {
@@ -1260,10 +1264,10 @@ public class HTMLEditor extends JPanel {
 		inlineCBEventsLock = false;
 
 		Element pEl = document.getParagraphElement(editor.getCaretPosition());
-		String pName = pEl.getName().toUpperCase();
+		String pName = pEl.getName().toUpperCase(net.sf.memoranda.util.Local.getCurrentLocale());
 		blockCBEventsLock = true;
 		if (pName.equals("P-IMPLIED"))
-			pName = pEl.getParentElement().getName().toUpperCase();
+			pName = pEl.getParentElement().getName().toUpperCase(Locale.forLanguageTag("en"));
 
 		if (pName.equals("P"))
 			blockCB.setSelectedIndex(T_P);
@@ -1291,7 +1295,7 @@ public class HTMLEditor extends JPanel {
 		this.insertTableRowAction.update();
 		/*
 		 * String ppName =
-		 * document.getParagraphElement(editor.getCaretPosition()).getParentElement().getName().toUpperCase();
+		 * document.getParagraphElement(editor.getCaretPosition()).getParentElement().getName().toUpperCase(Locale.forLanguageTag("en"));
 		 * System.out.print(ppName+"->"+pName+":");
 		 * 
 		 * AbstractDocument.BranchElement pEl =
@@ -1372,12 +1376,12 @@ public class HTMLEditor extends JPanel {
 
 			Element elem =
 				document.getParagraphElement(editor.getCaretPosition());
-			String elName = elem.getName().toUpperCase();
+			String elName = elem.getName().toUpperCase(Locale.forLanguageTag("en"));
 			String parentname = elem.getParentElement().getName();
 			HTML.Tag parentTag = HTML.getTag(parentname);
-			if (parentname.toUpperCase().equals("P-IMPLIED"))
+			if (parentname.toUpperCase(Local.getCurrentLocale()).equals("P-IMPLIED"))
 				parentTag = HTML.Tag.IMPLIED;
-			if (parentname.toLowerCase().equals("li")) {
+			if (parentname.toLowerCase(Locale.forLanguageTag("en")).equals("li")) {
 				// HTML.Tag listTag =
 				// HTML.getTag(elem.getParentElement().getParentElement().getName());
 				if (elem.getEndOffset() - elem.getStartOffset() > 1) {
@@ -1409,7 +1413,7 @@ public class HTMLEditor extends JPanel {
 					HTML.Tag listParentTag =
 						HTML.getTag(listParentElement.getName());
 					String listParentTagName = listParentTag.toString();
-					if (listParentTagName.toLowerCase().equals("li")) {
+					if (listParentTagName.toLowerCase(Locale.forLanguageTag("en")).equals("li")) {
 						Element listAncEl =
 							listParentElement.getParentElement();
 						try {
@@ -1493,7 +1497,7 @@ public class HTMLEditor extends JPanel {
 	class BreakAction extends AbstractAction {
 		BreakAction() {
 			super(
-				Local.getString("Insert break"),
+				HTMLLocal.getString("Insert break"),
 				new ImageIcon(cl.getResource("resources/icons/break.png")));
 		}
 		public void actionPerformed(ActionEvent e) {
@@ -1502,12 +1506,12 @@ public class HTMLEditor extends JPanel {
 					.getParagraphElement(editor.getCaretPosition())
 					.getName();
 			/*
-			 * if ((elName.toUpperCase().equals("PRE")) ||
-			 * (elName.toUpperCase().equals("P-IMPLIED"))) {
+			 * if ((elName.toUpperCase(Locale.forLanguageTag("en")).equals("PRE")) ||
+			 * (elName.toUpperCase(Locale.forLanguageTag("en")).equals("P-IMPLIED"))) {
 			 * editor.replaceSelection("\r"); return;
 			 */
 			HTML.Tag tag = HTML.getTag(elName);
-			if (elName.toUpperCase().equals("P-IMPLIED"))
+			if (elName.toUpperCase(net.sf.memoranda.util.Local.getCurrentLocale()).equals("P-IMPLIED"))
 				tag = HTML.Tag.IMPLIED;
 
 			HTMLEditorKit.InsertHTMLTextAction hta =
@@ -1525,7 +1529,7 @@ public class HTMLEditor extends JPanel {
 
 	class InsertTableRowAction extends AbstractAction {
 		InsertTableRowAction() {
-			super(Local.getString("Insert table row"));
+			super(HTMLLocal.getString("Insert table row"));
 			this.putValue(
 				Action.ACCELERATOR_KEY,
 				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.CTRL_MASK));
@@ -1538,7 +1542,7 @@ public class HTMLEditor extends JPanel {
 					.getParentElement()
 					.getParentElement();
 			for (int i = 0; i < tr.getElementCount(); i++)
-				if (tr.getElement(i).getName().toUpperCase().equals("TD"))
+				if (tr.getElement(i).getName().toUpperCase(Locale.forLanguageTag("en")).equals("TD"))
 					trTag += "<td><p></p></td>";
 			trTag += "</tr>";
 
@@ -1563,7 +1567,7 @@ public class HTMLEditor extends JPanel {
 				.getParagraphElement(editor.getCaretPosition())
 				.getParentElement()
 				.getName()
-				.toUpperCase()
+				.toUpperCase(Locale.forLanguageTag("en"))
 				.equals("TD");
 		}
 
@@ -1574,7 +1578,7 @@ public class HTMLEditor extends JPanel {
 
 	class InsertTableCellAction extends AbstractAction {
 		InsertTableCellAction() {
-			super(Local.getString("Insert table cell"));
+			super(HTMLLocal.getString("Insert table cell"));
 			this.putValue(
 				Action.ACCELERATOR_KEY,
 				KeyStroke.getKeyStroke(
@@ -1601,7 +1605,7 @@ public class HTMLEditor extends JPanel {
 				.getParagraphElement(editor.getCaretPosition())
 				.getParentElement()
 				.getName()
-				.toUpperCase()
+				.toUpperCase(Locale.forLanguageTag("en"))
 				.equals("TD");
 		}
 
@@ -1678,6 +1682,7 @@ public class HTMLEditor extends JPanel {
 		dlg.setVisible(true);
 
 		if (!dlg.CANCELLED) {
+			@SuppressWarnings("unused")
 			String parentname =
 				document
 					.getParagraphElement(editor.getCaretPosition())
@@ -1827,12 +1832,12 @@ public class HTMLEditor extends JPanel {
 		int cols = 1;
 		int rows = 1;
 		try {
-			cols = ((Integer) dlg.columns.getValue()).intValue();
+			cols = ((Integer) dlg.columns.getValue());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		try {
-			rows = ((Integer) dlg.rows.getValue()).intValue();
+			rows = ((Integer) dlg.rows.getValue());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -1934,9 +1939,9 @@ public class HTMLEditor extends JPanel {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		dlg.chkNewWin.setSelected(target.toUpperCase().equals("_BLANK"));
-		dlg.header.setText(Local.getString("Hyperlink properties"));
-		dlg.setTitle(Local.getString("Hyperlink properties"));
+		dlg.chkNewWin.setSelected(target.toUpperCase(Locale.forLanguageTag("en")).equals("_BLANK"));
+		dlg.header.setText(HTMLLocal.getString("Hyperlink properties"));
+		dlg.setTitle(HTMLLocal.getString("Hyperlink properties"));
 		dlg.setVisible(true);
 		if (dlg.CANCELLED)
 			return;
@@ -1988,7 +1993,7 @@ public class HTMLEditor extends JPanel {
 		ImageDialog dlg = new ImageDialog(null);
 		dlg.setLocation(imageActionB.getLocationOnScreen());
 		dlg.setModal(true);
-		dlg.setTitle(Local.getString("Image properties"));
+		dlg.setTitle(HTMLLocal.getString("Image properties"));
 		dlg.fileField.setText(src);
 		dlg.altField.setText(alt);
 		dlg.widthField.setText(width);
@@ -2068,7 +2073,7 @@ public class HTMLEditor extends JPanel {
 			(frmSize.width - dlgSize.width) / 2 + loc.x,
 			(frmSize.height - dlgSize.height) / 2 + loc.y);
 		dlg.setModal(true);
-		dlg.setTitle(Local.getString("Object properties"));
+		dlg.setTitle(HTMLLocal.getString("Object properties"));
 		dlg.idField.setText(id);
 		dlg.classField.setText(cls);
 		dlg.styleField.setText(sty);
@@ -2094,7 +2099,7 @@ public class HTMLEditor extends JPanel {
 		TdDialog dlg = new TdDialog(null);
 		dlg.setLocation(editor.getLocationOnScreen());
 		dlg.setModal(true);
-		dlg.setTitle(Local.getString("Table properties"));
+		dlg.setTitle(HTMLLocal.getString("Table properties"));
 
 		/** **********PARSE ELEMENTS*********** */
 		// TD***
@@ -2133,13 +2138,13 @@ public class HTMLEditor extends JPanel {
 				tda
 					.getAttribute(HTML.Attribute.ALIGN)
 					.toString()
-					.toLowerCase());
+					.toLowerCase(Locale.forLanguageTag("en")));
 		if (tda.isDefined(HTML.Attribute.VALIGN))
 			dlg.tdValignCB.setSelectedItem(
 				tda
 					.getAttribute(HTML.Attribute.VALIGN)
 					.toString()
-					.toLowerCase());
+					.toLowerCase(Local.getCurrentLocale()));
 		dlg.tdNowrapChB.setSelected((tda.isDefined(HTML.Attribute.NOWRAP)));
 
 		//TR ****
@@ -2154,13 +2159,13 @@ public class HTMLEditor extends JPanel {
 				tra
 					.getAttribute(HTML.Attribute.ALIGN)
 					.toString()
-					.toLowerCase());
+					.toLowerCase(Locale.forLanguageTag("en")));
 		if (tra.isDefined(HTML.Attribute.VALIGN))
 			dlg.trValignCB.setSelectedItem(
 				tra
 					.getAttribute(HTML.Attribute.VALIGN)
 					.toString()
-					.toLowerCase());
+					.toLowerCase(Locale.forLanguageTag("en")));
 
 		//TABLE ****
 		AttributeSet ta = table.getAttributes();
@@ -2177,13 +2182,13 @@ public class HTMLEditor extends JPanel {
 				ta.getAttribute(HTML.Attribute.HEIGHT).toString());
 		if (ta.isDefined(HTML.Attribute.ALIGN))
 			dlg.alignCB.setSelectedItem(
-				ta.getAttribute(HTML.Attribute.ALIGN).toString().toLowerCase());
+				ta.getAttribute(HTML.Attribute.ALIGN).toString().toLowerCase(Locale.forLanguageTag("en")));
 		if (ta.isDefined(HTML.Attribute.VALIGN))
 			dlg.vAlignCB.setSelectedItem(
 				ta
 					.getAttribute(HTML.Attribute.VALIGN)
 					.toString()
-					.toLowerCase());
+					.toLowerCase(Locale.forLanguageTag("en")));
 		if (ta.isDefined(HTML.Attribute.CELLPADDING))
 			try {
 				Integer i =
@@ -2411,7 +2416,7 @@ public class HTMLEditor extends JPanel {
 		}
 
 		Element el = document.getParagraphElement(editor.getCaretPosition());
-		if (el.getName().toUpperCase().equals("P-IMPLIED")) {
+		if (el.getName().toUpperCase(Locale.forLanguageTag("en")).equals("P-IMPLIED")) {
 			Element pEl = el.getParentElement();
 			String pElName = pEl.getName();
 			String newName = tag.toString();
@@ -2480,7 +2485,7 @@ public class HTMLEditor extends JPanel {
 			attrs
 				.getAttribute(StyleConstants.NameAttribute)
 				.toString()
-				.toUpperCase();
+				.toUpperCase(Local.getCurrentLocale());
 		if (elName.equals("IMG")) {
 			String src = "",
 				alt = "",
@@ -2520,7 +2525,7 @@ public class HTMLEditor extends JPanel {
 		}
 
 		Object k = null;
-		for (Enumeration en = attrs.getAttributeNames();
+		for (Enumeration<?> en = attrs.getAttributeNames();
 			en.hasMoreElements();
 			) {
 			k = en.nextElement();
@@ -2542,7 +2547,7 @@ public class HTMLEditor extends JPanel {
 			System.out.println(k + " = '" + attrs.getAttribute(k) + "'");
 		}
 
-		if (pEl.getParentElement().getName().toUpperCase().equals("TD")) {
+		if (pEl.getParentElement().getName().toUpperCase(Locale.forLanguageTag("en")).equals("TD")) {
 			setTableProperties(pEl.getParentElement());
 			return;
 		}

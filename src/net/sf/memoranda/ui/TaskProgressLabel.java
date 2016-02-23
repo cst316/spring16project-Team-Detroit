@@ -41,6 +41,7 @@ import javax.swing.JLabel;
  * 
  */
 
+@SuppressWarnings("serial")
 class TaskProgressLabel extends JLabel{
     TaskTable table;
     int column;
