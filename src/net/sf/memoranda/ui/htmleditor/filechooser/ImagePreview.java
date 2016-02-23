@@ -13,8 +13,9 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.border.TitledBorder;
 
-import net.sf.memoranda.ui.htmleditor.util.Local;
+import net.sf.memoranda.ui.htmleditor.util.HTMLLocal;
 
+@SuppressWarnings("serial")
 public class ImagePreview extends JComponent
                           implements PropertyChangeListener {
     ImageIcon thumbnail = null;
@@ -23,7 +24,7 @@ public class ImagePreview extends JComponent
     public ImagePreview(JFileChooser fc) {
         setPreferredSize(new Dimension(100, 50));
         setBorder(new TitledBorder(BorderFactory.createEtchedBorder(), 
-        Local.getString("Preview"), TitledBorder.CENTER, TitledBorder.ABOVE_TOP));
+        HTMLLocal.getString("Preview"), TitledBorder.CENTER, TitledBorder.ABOVE_TOP));
         fc.addPropertyChangeListener(this);
     }
 

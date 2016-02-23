@@ -25,7 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import net.sf.memoranda.ui.htmleditor.util.Local;
+import net.sf.memoranda.ui.htmleditor.util.HTMLLocal;
 
 /**
  * <p>Title: </p>
@@ -35,6 +35,7 @@ import net.sf.memoranda.ui.htmleditor.util.Local;
  * @author unascribed
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class ImageDialog extends JDialog implements WindowListener {
     JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JLabel header = new JLabel();
@@ -59,7 +60,7 @@ public class ImageDialog extends JDialog implements WindowListener {
     String[] aligns = {"left", "right", "top", "middle", "bottom", "absmiddle",
         "texttop", "baseline"}; 
     // Note: align values are not localized because they are HTML keywords 
-    public JComboBox alignCB = new JComboBox(aligns);
+    public JComboBox<?> alignCB = new JComboBox<Object>(aligns);
     JLabel jLabel9 = new JLabel();
     public JTextField urlField = new JTextField();
     JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
@@ -68,7 +69,7 @@ public class ImageDialog extends JDialog implements WindowListener {
     public boolean CANCELLED = false;
 
     public ImageDialog(Frame frame) {
-        super(frame, Local.getString("Image"), true);
+        super(frame, HTMLLocal.getString("Image"), true);
         try {
             jbInit();
             pack();
@@ -90,7 +91,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         headerPanel.setBackground(Color.WHITE);
         header.setFont(new java.awt.Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
-        header.setText(Local.getString("Image"));
+        header.setText(HTMLLocal.getString("Image"));
         header.setIcon(new ImageIcon(
                 net.sf.memoranda.ui.htmleditor.ImageDialog.class.getResource(
                         "resources/icons/imgbig.png")));
@@ -99,7 +100,7 @@ public class ImageDialog extends JDialog implements WindowListener {
 
         areaPanel.setBorder(new EtchedBorder(Color.white, new Color(142, 142,
                 142)));
-        jLabel1.setText(Local.getString("Image file"));
+        jLabel1.setText(HTMLLocal.getString("Image file"));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -132,7 +133,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         gbc.insets = new Insets(10, 5, 5, 10);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(browseB, gbc);
-        jLabel2.setText(Local.getString("ALT text"));
+        jLabel2.setText(HTMLLocal.getString("ALT text"));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -149,7 +150,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         areaPanel.add(altField, gbc);
-        jLabel3.setText(Local.getString("Width"));
+        jLabel3.setText(HTMLLocal.getString("Width"));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -164,7 +165,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(widthField, gbc);
-        jLabel4.setText(Local.getString("Height"));
+        jLabel4.setText(HTMLLocal.getString("Height"));
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 2;
@@ -179,7 +180,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(heightField, gbc);
-        jLabel5.setText(Local.getString("H. space"));
+        jLabel5.setText(HTMLLocal.getString("H. space"));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -195,7 +196,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(hspaceField, gbc);
-        jLabel6.setText(Local.getString("V. space"));
+        jLabel6.setText(HTMLLocal.getString("V. space"));
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 3;
@@ -211,7 +212,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(vspaceField, gbc);
-        jLabel7.setText(Local.getString("Border"));
+        jLabel7.setText(HTMLLocal.getString("Border"));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -227,7 +228,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(borderField, gbc);
-        jLabel8.setText(Local.getString("Align"));
+        jLabel8.setText(HTMLLocal.getString("Align"));
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 4;
@@ -245,7 +246,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         areaPanel.add(alignCB, gbc);
-        jLabel9.setText(Local.getString("Hyperlink"));
+        jLabel9.setText(HTMLLocal.getString("Hyperlink"));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -267,7 +268,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         okB.setMaximumSize(new Dimension(100, 26));
         okB.setMinimumSize(new Dimension(100, 26));
         okB.setPreferredSize(new Dimension(100, 26));
-        okB.setText(Local.getString("Ok"));
+        okB.setText(HTMLLocal.getString("Ok"));
         okB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okB_actionPerformed(e);
@@ -277,7 +278,7 @@ public class ImageDialog extends JDialog implements WindowListener {
         cancelB.setMaximumSize(new Dimension(100, 26));
         cancelB.setMinimumSize(new Dimension(100, 26));
         cancelB.setPreferredSize(new Dimension(100, 26));
-        cancelB.setText(Local.getString("Cancel"));
+        cancelB.setText(HTMLLocal.getString("Cancel"));
         cancelB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancelB_actionPerformed(e);
@@ -319,7 +320,7 @@ public class ImageDialog extends JDialog implements WindowListener {
     //java.io.File selectedFile = null;
     public void updatePreview() {
         try {
-            if (new java.net.URL(fileField.getText()).getPath() != "")
+            if (!(new java.net.URL(fileField.getText()).getPath()).equals(""))
                 header.setIcon(getPreviewIcon(new java.io.File(
                         new java.net.URL(fileField.getText()).getPath())));
         }
@@ -347,31 +348,31 @@ public class ImageDialog extends JDialog implements WindowListener {
 
     void browseB_actionPerformed(ActionEvent e) {
         // Fix until Sun's JVM supports more locales...
-        UIManager.put("FileChooser.lookInLabelText", Local
+        UIManager.put("FileChooser.lookInLabelText", HTMLLocal
                 .getString("Look in:"));
-        UIManager.put("FileChooser.upFolderToolTipText", Local.getString(
+        UIManager.put("FileChooser.upFolderToolTipText", HTMLLocal.getString(
                 "Up One Level"));
-        UIManager.put("FileChooser.newFolderToolTipText", Local.getString(
+        UIManager.put("FileChooser.newFolderToolTipText", HTMLLocal.getString(
                 "Create New Folder"));
-        UIManager.put("FileChooser.listViewButtonToolTipText", Local
+        UIManager.put("FileChooser.listViewButtonToolTipText", HTMLLocal
                 .getString("List"));
-        UIManager.put("FileChooser.detailsViewButtonToolTipText", Local
+        UIManager.put("FileChooser.detailsViewButtonToolTipText", HTMLLocal
                 .getString("Details"));
-        UIManager.put("FileChooser.fileNameLabelText", Local.getString(
+        UIManager.put("FileChooser.fileNameLabelText", HTMLLocal.getString(
                 "File Name:"));
-        UIManager.put("FileChooser.filesOfTypeLabelText", Local.getString(
+        UIManager.put("FileChooser.filesOfTypeLabelText", HTMLLocal.getString(
                 "Files of Type:"));
-        UIManager.put("FileChooser.openButtonText", Local.getString("Open"));
-        UIManager.put("FileChooser.openButtonToolTipText", Local.getString(
+        UIManager.put("FileChooser.openButtonText", HTMLLocal.getString("Open"));
+        UIManager.put("FileChooser.openButtonToolTipText", HTMLLocal.getString(
                 "Open selected file"));
         UIManager
-                .put("FileChooser.cancelButtonText", Local.getString("Cancel"));
-        UIManager.put("FileChooser.cancelButtonToolTipText", Local.getString(
+                .put("FileChooser.cancelButtonText", HTMLLocal.getString("Cancel"));
+        UIManager.put("FileChooser.cancelButtonToolTipText", HTMLLocal.getString(
                 "Cancel"));
 
         JFileChooser chooser = new JFileChooser();
         chooser.setFileHidingEnabled(false);
-        chooser.setDialogTitle(Local.getString("Choose an image file"));
+        chooser.setDialogTitle(HTMLLocal.getString("Choose an image file"));
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.addChoosableFileFilter(
@@ -386,7 +387,7 @@ public class ImageDialog extends JDialog implements WindowListener {
             chooser.setCurrentDirectory(lastSel);
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
-                fileField.setText(chooser.getSelectedFile().toURL().toString());
+                fileField.setText(chooser.getSelectedFile().toURI().toURL().toString());
                 header.setIcon(getPreviewIcon(chooser.getSelectedFile()));
                 Context
                         .put("LAST_SELECTED_IMG_FILE", chooser
@@ -398,7 +399,7 @@ public class ImageDialog extends JDialog implements WindowListener {
             try {
                 ImageIcon img = new ImageIcon(chooser.getSelectedFile()
                         .getPath());
-                widthField.setText(new Integer(img.getIconWidth()).toString());
+                widthField.setText(Integer.valueOf(img.getIconWidth()).toString());
                 heightField
                         .setText(new Integer(img.getIconHeight()).toString());
             }

@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /*$Id: ProjectExportDialog.java,v 1.3 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class ProjectExportDialog extends JDialog {
 
   BorderLayout borderLayout1 = new BorderLayout();
@@ -27,7 +28,7 @@ public class ProjectExportDialog extends JDialog {
   JPanel jPanel4 = new JPanel();
   JPanel jPanel1 = new JPanel();
   BorderLayout borderLayout2 = new BorderLayout();
-  JComboBox encCB = new JComboBox(new String[]{Local.getString("System default"), "UTF-8", "ANSI"});
+  JComboBox<?> encCB = new JComboBox<Object>(new String[]{Local.getString("System default"), "UTF-8", "ANSI"});
   JLabel jLabel1 = new JLabel();
   GridLayout gridLayout1 = new GridLayout();
   JCheckBox splitChB = new JCheckBox();

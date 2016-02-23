@@ -24,6 +24,7 @@ import java.net.URL;
 
 
 /*$Id: EventNotificationDialog.java,v 1.8 2004/10/18 19:08:56 ivanrise Exp $*/
+@SuppressWarnings("serial")
 public class EventNotificationDialog extends JFrame {
   JPanel panel1 = new JPanel();
   BorderLayout borderLayout1 = new BorderLayout();
@@ -121,7 +122,7 @@ public class EventNotificationDialog extends JFrame {
 			try {
 				url =
 					new File(Configuration.get("NOTIFY_SOUND").toString())
-						.toURL();
+						.toURI().toURL();
 			} catch (Exception ex) {
 				url =
 					EventNotificationDialog.class.getResource(

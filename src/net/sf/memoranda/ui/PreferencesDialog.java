@@ -14,8 +14,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import sun.util.locale.LocaleUtils;
-
 import java.awt.event.*;
 
 /*$Id: PreferencesDialog.java,v 1.16 2006/06/28 22:58:31 alexeya Exp $*/
@@ -43,6 +41,7 @@ public class PreferencesDialog extends JDialog {
 	JLabel classNameLabel = new JLabel();
 	JTextField lfClassName = new JTextField();
 	JLabel jLabel4 = new JLabel();
+	JCheckBox militaryTimeChB = new JCheckBox();
 	JCheckBox enSystrayChB = new JCheckBox();
 	JCheckBox startMinimizedChB = new JCheckBox();
 	JCheckBox enSplashChB = new JCheckBox();
@@ -281,15 +280,15 @@ public class PreferencesDialog extends JDialog {
 		classNameLabel.setEnabled(false);
 		classNameLabel.setText(Local.getString("L&F class name:"));
 		gbc = new GridBagConstraints();
-		gbc.gridx = 1;
+		gbc.gridx = 0;
 		gbc.gridy = 8;
 		gbc.insets = new Insets(2, 20, 0, 10);
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(classNameLabel, gbc);
 		lfClassName.setEnabled(false);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
-		gbc.gridy = 9;
+		gbc.gridy = 8;
 		gbc.insets = new Insets(7, 20, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -298,10 +297,24 @@ public class PreferencesDialog extends JDialog {
 		jLabel4.setText(Local.getString("Startup:"));
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
-		gbc.gridy = 10;
+		gbc.gridy = 9;
 		gbc.insets = new Insets(2, 10, 0, 15);
 		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(jLabel4, gbc);
+		
+		militaryTimeChB.setText(Local.getString("Military Time"));
+		militaryTimeChB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				enSystrayChB_actionPerformed(e);
+			}
+		});
+		gbc = new GridBagConstraints();
+		gbc.gridx = 1;
+		gbc.gridy = 9;
+		gbc.insets = new Insets(2, 0, 0, 10);
+		gbc.anchor = GridBagConstraints.WEST;
+		GeneralPanel.add(militaryTimeChB, gbc);
+		
 		enSystrayChB.setText(Local.getString("Enable system tray icon"));
 		enSystrayChB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -486,10 +499,15 @@ public class PreferencesDialog extends JDialog {
 	}
 
 	void setValues() {
+		languagesListCB.setSelectedItem(Local.getCurrentLocale()
+				.getDisplayLanguage(Local.getCurrentLocale()));
+		
 		enL10nChB.setSelected(!Configuration.get("DISABLE_L10N").toString()
 				.equalsIgnoreCase("yes"));
 		enSplashChB.setSelected(!Configuration.get("SHOW_SPLASH").toString()
 				.equalsIgnoreCase("no"));
+		militaryTimeChB.setSelected(!Configuration.get("MILITARY_TIME").toString()
+				.equals("no"));
 		enSystrayChB.setSelected(!Configuration.get("DISABLE_SYSTRAY")
 				.toString().equalsIgnoreCase("yes"));
 		startMinimizedChB.setSelected(Configuration.get("START_MINIMIZED")
@@ -521,6 +539,7 @@ public class PreferencesDialog extends JDialog {
 			// this.askConfirmChB.setEnabled(false);
 		}
 
+		@SuppressWarnings("unused")
 		String onmin = Configuration.get("ON_MINIMIZE").toString();
 		this.minTaskbarRB.setSelected(true);
 
@@ -576,7 +595,7 @@ public class PreferencesDialog extends JDialog {
 	void apply() {
 		String languageTag = getLanguages().get(0).get(languagesListCB.getSelectedIndex());
 		
-		if (!languageTag.equals(Local.getCurrentLocale())) {
+		if (!languageTag.equals(Local.getCurrentLocale().toLanguageTag())) {
 			//Set the language file
 			Local.setMessages(languageTag);
 			//Save current locale to configuration
@@ -603,6 +622,11 @@ public class PreferencesDialog extends JDialog {
 		else
 			Configuration.put("SHOW_SPLASH", "no");
 
+		if (this.militaryTimeChB.isSelected())
+			Configuration.put("MILITARY_TIME", "yes");
+		else
+			Configuration.put("MILITARY_TIME", "no");
+			
 		if (this.enSystrayChB.isSelected())
 			Configuration.put("DISABLE_SYSTRAY", "no");
 		else
@@ -880,7 +904,7 @@ public class PreferencesDialog extends JDialog {
 		Vector<String> displayLanguage = new Vector<String>();
 		
 		for (File file : files) {
-			if (file.getName().substring(11, 12).equals(".")) {
+			if (file != null && file.getName().substring(11, 12).equals(".")) {
 				languageTag.add(file.getName().substring(9, 11));
 				displayLanguage.add(Locale.forLanguageTag(file.getName().substring(9, 11)).
 						getDisplayLanguage(Local.getCurrentLocale()));

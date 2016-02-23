@@ -14,6 +14,7 @@ import net.sf.memoranda.util.Local;
  *
  * @author  Alex
  */
+@SuppressWarnings("serial")
 public class FileExportDialog extends javax.swing.JDialog {
     
     public boolean CANCELLED = true;
@@ -36,7 +37,7 @@ public class FileExportDialog extends javax.swing.JDialog {
         optionsPanel = new javax.swing.JPanel();
         encPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        encCB = new JComboBox(new String[]{Local.getString("System default"), "UTF-8", "ANSI"});
+        encCB = new JComboBox<Object>(new String[]{Local.getString("System default"), "UTF-8", "ANSI"});
         usetemplChB = new javax.swing.JCheckBox();
         xhtmlChB = new javax.swing.JCheckBox();
         templPanel = new javax.swing.JPanel();
@@ -197,7 +198,7 @@ public class FileExportDialog extends javax.swing.JDialog {
     private javax.swing.JPanel templPanel;
     public javax.swing.JCheckBox usetemplChB;
     public javax.swing.JCheckBox xhtmlChB;
-    public JComboBox encCB;
+    public JComboBox<?> encCB;
     // End of variables declaration//GEN-END:variables
     
 }

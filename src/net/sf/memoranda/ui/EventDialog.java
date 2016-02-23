@@ -40,6 +40,7 @@ import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.Local;
 
 /*$Id: EventDialog.java,v 1.28 2005/02/19 10:06:25 rawsushi Exp $*/
+@SuppressWarnings("serial")
 public class EventDialog extends JDialog implements WindowListener {	
     public boolean CANCELLED = false;
     boolean ignoreStartChanged = false;
@@ -64,7 +65,8 @@ public class EventDialog extends JDialog implements WindowListener {
     public JSpinner startDate = new JSpinner(new SpinnerDateModel());
     JButton setStartDateB = new JButton();
     public JRadioButton weeklyRepeatRB = new JRadioButton();
-    public JComboBox weekdaysCB = new JComboBox(Local.getWeekdayNames());
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public JComboBox weekdaysCB = new JComboBox(Local.getWeekdayNames());
     public JCheckBox enableEndDateCB = new JCheckBox();
 	public JCheckBox workingDaysOnlyCB = new JCheckBox();
     public JSpinner endDate = new JSpinner(new SpinnerDateModel());

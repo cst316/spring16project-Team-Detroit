@@ -48,6 +48,7 @@ public class ContactListTest {
 	public void testConstructorHashMapSetUp() {
 		listTest.add(userTest);
 		listTest.add(contactTest);
+		@SuppressWarnings("unused")
 		ContactList clTest = new ContactList(listTest);		
 	}
 

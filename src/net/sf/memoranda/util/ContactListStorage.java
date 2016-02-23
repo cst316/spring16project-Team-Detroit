@@ -41,7 +41,7 @@ public class ContactListStorage implements Serializable {
 	*/
 	public static void addContactToList(EmailContact ec) {
 		contactList.add(ec);
-		ContactList.addContactToMap(ec.getName().toUpperCase(),ec);
+		ContactList.addContactToMap(ec.getName().toUpperCase(Locale.forLanguageTag("en")) , ec);
 	}
 	
 	/**
@@ -94,7 +94,8 @@ public class ContactListStorage implements Serializable {
 	    	if (check) {
 	    		contactList = SerializationUtil.deserializeList();
 		    	System.out.println("Loaded from: " + getContactPath());
-		    	ContactList cl = new ContactList(contactList);
+		    	@SuppressWarnings("unused")
+				ContactList cl = new ContactList(contactList);
 	    	}
 	    	else {
 	    		File f = new File(getContactPath());

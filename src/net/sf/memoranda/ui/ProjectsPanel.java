@@ -48,6 +48,7 @@ import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.*;
 
 /*$Id: ProjectsPanel.java,v 1.14 2005/01/04 09:59:22 pbielen Exp $*/
+@SuppressWarnings("serial")
 public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	BorderLayout borderLayout1 = new BorderLayout();
 	JToolBar topBar = new JToolBar();
@@ -56,7 +57,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	JPanel buttonsPanel = new JPanel();
 	JButton toggleButton = new JButton();
 	FlowLayout flowLayout1 = new FlowLayout();
-	Vector expListeners = new Vector();
+	Vector<ActionListener> expListeners = new Vector<ActionListener>();
 	boolean expanded = false;
 	ImageIcon expIcon =
 		new ImageIcon(
@@ -351,7 +352,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	void ppDeleteProject_actionPerformed(ActionEvent e) {
 		String msg;
 		Project prj;
-		Vector toremove = new Vector();
+		Vector<String> toremove = new Vector<String>();
 		if (prjTablePanel.projectsTable.getSelectedRows().length > 1)
 			msg =
 				Local.getString("Delete")

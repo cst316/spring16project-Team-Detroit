@@ -67,7 +67,7 @@ public interface Task {
     
     void removeDependsFrom(Task task);*/
             
-    Collection getSubTasks();    
+    Collection<Task> getSubTasks();    
     Task getSubTask(String id);
     
     boolean hasSubTasks(String id);

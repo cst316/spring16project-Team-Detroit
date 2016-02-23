@@ -27,12 +27,13 @@ import net.sf.memoranda.util.Local;
  *
  */
 /*$Id: EventsTable.java,v 1.6 2004/10/11 08:48:20 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class EventsTable extends JTable {
 
     public static final int EVENT = 100;
     public static final int EVENT_ID = 101;
 
-    Vector events = new Vector();
+    Vector<?> events = new Vector<Object>();
     /**
      * Constructor for EventsTable.
      */
@@ -50,7 +51,7 @@ public class EventsTable extends JTable {
     }
 
     public void initTable(CalendarDate d) {
-        events = (Vector)EventsManager.getEventsForDate(d);
+        events = (Vector<?>)EventsManager.getEventsForDate(d);
         getColumnModel().getColumn(0).setPreferredWidth(60);
         getColumnModel().getColumn(0).setMaxWidth(60);
         clearSelection();

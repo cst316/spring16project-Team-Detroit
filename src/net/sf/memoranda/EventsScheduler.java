@@ -19,8 +19,8 @@ import java.util.Vector;
 /*$Id: EventsScheduler.java,v 1.4 2004/01/30 12:17:41 alexeya Exp $*/
 public class EventsScheduler {
 
-    static Vector _timers = new Vector();
-    static Vector _listeners = new Vector();
+    static Vector<EventTimer> _timers = new Vector<EventTimer>();
+    static Vector<EventNotificationListener> _listeners = new Vector<EventNotificationListener>();
 
     static Timer changeDateTimer = new Timer();
 
@@ -31,8 +31,8 @@ public class EventsScheduler {
     public static void init() {
         cancelAll();
         //changeDateTimer.cancel();
-        Vector events = (Vector)EventsManager.getActiveEvents();
-        _timers = new Vector();
+        Vector<Event> events = (Vector<Event>)EventsManager.getActiveEvents();
+        _timers = new Vector<EventTimer>();
         /*DEBUG*/System.out.println("----------");
         for (int i = 0; i < events.size(); i++) {
             Event ev = (Event)events.get(i);
@@ -59,23 +59,23 @@ public class EventsScheduler {
 
     public static void cancelAll() {
         for (int i = 0; i < _timers.size(); i++) {
-            EventTimer t = (EventTimer)_timers.get(i);
+            EventTimer t = _timers.get(i);
             t.cancel();
         }
     }
     
-    public static Vector getScheduledEvents() {
-        Vector v = new Vector();
+    public static Vector<Event> getScheduledEvents() {
+        Vector<Event> v = new Vector<Event>();
         for (int i = 0; i < _timers.size(); i++) 
-            v.add(((EventTimer)_timers.get(i)).getEvent());
+            v.add(_timers.get(i).getEvent());
         return v;
     }
     
     public static Event getFirstScheduledEvent() {
         if (!isEventScheduled()) return null;
-        Event e1 = ((EventTimer)_timers.get(0)).getEvent();
+        Event e1 = _timers.get(0).getEvent();
         for (int i = 1; i < _timers.size(); i++) { 
-            Event ev = ((EventTimer)_timers.get(i)).getEvent();
+            Event ev = _timers.get(i).getEvent();
             if (ev.getTime().before(e1.getTime()))
                 e1 = ev;
         }
@@ -93,12 +93,12 @@ public class EventsScheduler {
         
     private static void notifyListeners(Event ev) {
         for (int i = 0; i < _listeners.size(); i++)
-            ((EventNotificationListener)_listeners.get(i)).eventIsOccured(ev);
+            _listeners.get(i).eventIsOccured(ev);
     }
 
     private static void notifyChanged() {
         for (int i = 0; i < _listeners.size(); i++)
-            ((EventNotificationListener)_listeners.get(i)).eventsChanged();
+            _listeners.get(i).eventsChanged();
     }
 
     private static Date getMidnight() {

@@ -41,6 +41,7 @@ import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.Local;
 
 /*$Id: TaskDialog.java,v 1.25 2005/12/01 08:12:26 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class TaskDialog extends JDialog {
     JPanel mPanel = new JPanel(new BorderLayout());
     JPanel areaPanel = new JPanel(new BorderLayout());
@@ -90,7 +91,7 @@ public class TaskDialog extends JDialog {
 //    JPanel jPanelNotes = new JPanel(new FlowLayout(FlowLayout.LEFT));
     
     JButton setNotifB = new JButton();
-    JComboBox priorityCB = new JComboBox(priority);
+    JComboBox<?> priorityCB = new JComboBox<Object>(priority);
     JLabel jLabel7 = new JLabel();
     // added by rawsushi
     JLabel jLabelEffort = new JLabel();

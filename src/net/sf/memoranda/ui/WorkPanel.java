@@ -26,6 +26,7 @@ import net.sf.memoranda.util.Local;
  */
 
 /*$Id: WorkPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class WorkPanel extends JPanel {
 	BorderLayout borderLayout1 = new BorderLayout();
 	JToolBar toolBar = new JToolBar();
@@ -301,9 +302,7 @@ public class WorkPanel extends JPanel {
 	
 	//CFroke 02/2016 added calculator function
 	public void calcB_actionPerformed(ActionEvent e){
-		if(e.getSource() == calcB){
-			Calculator.openCalc();
-		}
+		Calculator.openCalc();
 	}
 
 	void setCurrentButton(JButton cb) {

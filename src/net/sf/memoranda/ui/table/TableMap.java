@@ -18,6 +18,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 /*$Id: TableMap.java,v 1.3 2004/01/30 12:17:42 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class TableMap extends AbstractTableModel 
                       implements TableModelListener {
     protected TableModel model; 
@@ -55,6 +56,7 @@ public class TableMap extends AbstractTableModel
     }
 
     
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public Class getColumnClass(int aColumn) {
         return model.getColumnClass(aColumn); 
     }

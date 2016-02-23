@@ -27,6 +27,7 @@ import javax.swing.event.CaretEvent;
 import net.sf.memoranda.util.Local;
 
 /*$Id: AddResourceDialog.java,v 1.12 2007/03/20 06:21:46 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class AddResourceDialog extends JDialog {
     JPanel dialogTitlePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JLabel header = new JLabel();
@@ -332,7 +333,8 @@ public class AddResourceDialog extends JDialog {
 		jLabel2.setText(Local.getString("URL")+":  ");
 		okB.setText(Local.getString("Ok"));
 		cancelB.setText(Local.getString("Cancel"));
-		JCheckBox projectFileCB = new JCheckBox(Local.getString("Copy file to memoranda"), false);
+		
+		projectFileCB.setText(Local.getString("Copy file to memoranda"));
 		
 		this.repaint();
 	}
