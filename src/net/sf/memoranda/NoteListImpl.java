@@ -45,18 +45,18 @@ public class NoteListImpl implements NoteList {
         _project = prj;
     }
 
-    public Collection getAllNotes() {
-        Vector v = new Vector();
+    public Collection<Note> getAllNotes() {
+        Vector<Note> v = new Vector<Note>();
         Elements yrs = _root.getChildElements("year");
         for (int yi = 0; yi < yrs.size(); yi++) {
             Year y = new Year(yrs.get(yi));
-            Vector ms = y.getMonths();
+            Vector<Month> ms = y.getMonths();
             for (int mi = 0; mi < ms.size(); mi++) {
                 Month m = (Month) ms.get(mi);
-                Vector ds = m.getDays();
+                Vector<Day> ds = m.getDays();
                 for (int di = 0; di < ds.size(); di++) {
                     Day d = (Day) ds.get(di);
-					Vector ns = d.getNotes();
+					Vector<NoteElement> ns = d.getNotes();
 					for(int ni = 0; ni < ns.size(); ni++) {
 						NoteElement n = (NoteElement) ns.get(ni);
 						v.add(new NoteImpl(n.getElement(), _project));
@@ -70,18 +70,18 @@ public class NoteListImpl implements NoteList {
     /**
      * @see net.sf.memoranda.NoteList#getMarkedNotes()
      */
-    public Collection getMarkedNotes() {
-        Vector v = new Vector();
+    public Collection<Note> getMarkedNotes() {
+        Vector<Note> v = new Vector<Note>();
         Elements yrs = _root.getChildElements("year");
         for (int yi = 0; yi < yrs.size(); yi++) {
             Year y = new Year(yrs.get(yi));
-            Vector ms = y.getMonths();
+            Vector<Month> ms = y.getMonths();
             for (int mi = 0; mi < ms.size(); mi++) {
                 Month m = (Month) ms.get(mi);
-                Vector ds = m.getDays();
+                Vector<Day> ds = m.getDays();
                 for (int di = 0; di < ds.size(); di++) {
                     Day d = (Day) ds.get(di);
-					Vector ns = d.getNotes();
+					Vector<NoteElement> ns = d.getNotes();
 					for(int ni = 0; ni < ns.size(); ni++) {
 						NoteElement ne = (NoteElement) ns.get(ni);
 						Note n = new NoteImpl(ne.getElement(), _project);
@@ -93,23 +93,23 @@ public class NoteListImpl implements NoteList {
 	        return v;
 	}
 
-    public Collection getNotesForPeriod(CalendarDate startDate, CalendarDate endDate) {
-        Vector v = new Vector();
+    public Collection<Note> getNotesForPeriod(CalendarDate startDate, CalendarDate endDate) {
+        Vector<Note> v = new Vector<Note>();
         Elements yrs = _root.getChildElements("year");
         for (int yi = 0; yi < yrs.size(); yi++) {
             Year y = new Year(yrs.get(yi));
             if ((y.getValue() >= startDate.getYear()) && (y.getValue() <= endDate.getYear())) {
-                Vector months = y.getMonths();
+                Vector<Month> months = y.getMonths();
                 for (int mi = 0; mi < months.size(); mi++) {
                     Month m = (Month) months.get(mi);
                     if (!((y.getValue() == startDate.getYear()) && (m.getValue() < startDate.getMonth()))
                         || !((y.getValue() == endDate.getYear()) && (m.getValue() > endDate.getMonth()))) {
-                        Vector days = m.getDays();
+                        Vector<Day> days = m.getDays();
                         for (int di = 0; di < days.size(); di++) {
                             Day d = (Day) days.get(di);
                             if (!((m.getValue() == startDate.getMonth()) && (d.getValue() < startDate.getDay()))
 							|| !((m.getValue() == endDate.getMonth()) && (d.getValue() > endDate.getDay()))) {
-								Vector ns = d.getNotes();
+								Vector<NoteElement> ns = d.getNotes();
 								for(int ni = 0; ni < ns.size(); ni++) {
 									NoteElement n = (NoteElement) ns.get(ni);
 									v.add(new NoteImpl(n.getElement(), _project));
@@ -133,7 +133,7 @@ public class NoteListImpl implements NoteList {
         Day d = getDay(date);
         if (d == null)
             return null;
-		Vector ns = d.getNotes();
+		Vector<NoteElement> ns = d.getNotes();
 		if(ns.size()>0) {
 			NoteElement n = (NoteElement) ns.get(0);
 			Note currentNote = new NoteImpl(n.getElement(), _project);
@@ -169,7 +169,7 @@ public class NoteListImpl implements NoteList {
 	 public void removeNote(CalendarDate date, String id) {
         Day d = getDay(date);
         if (d == null) return;
-		Vector ns = d.getNotes();
+		Vector<NoteElement> ns = d.getNotes();
 		for(int i=0;i<ns.size();i++) {
 			NoteElement n = (NoteElement) ns.get(i);
 			Element ne = n.getElement();
@@ -247,21 +247,22 @@ public class NoteListImpl implements NoteList {
             return new Month(el);
         }
 
-        public Vector getMonths() {
-            Vector v = new Vector();
+        public Vector<Month> getMonths() {
+            Vector<Month> v = new Vector<Month>();
             Elements ms = yearElement.getChildElements("month");
             for (int i = 0; i < ms.size(); i++)
                 v.add(new Month(ms.get(i)));
             return v;
         }
 
-        public Element getElement() {
+        @SuppressWarnings("unused")
+		public Element getElement() {
             return yearElement;
         }
 
     }
 
-    private class Month {
+    public class Month {
         Element mElement = null;
 
         public Month(Element el) {
@@ -300,10 +301,10 @@ public class NoteListImpl implements NoteList {
             return new Day(el);
         }
 
-        public Vector getDays() {
+        public Vector<Day> getDays() {
             if (mElement == null)
                 return null;
-            Vector v = new Vector();
+            Vector<Day> v = new Vector<Day>();
             Elements ds = mElement.getChildElements("day");
             for (int i = 0; i < ds.size(); i++)
                 v.add(new Day(ds.get(i)));
@@ -321,7 +322,7 @@ public class NoteListImpl implements NoteList {
 	 * private class Day
 	 */
 	 
-    private class Day {
+    public class Day {
         Element dEl = null;
 
         public Day(Element el) {
@@ -342,7 +343,7 @@ public class NoteListImpl implements NoteList {
         }
 
         public int getValue() {
-            return new Integer(dEl.getAttribute("day").getValue()).intValue();
+            return Integer.valueOf(dEl.getAttribute("day").getValue()).intValue();
         }
 
         /*public Note getNote() {
@@ -377,10 +378,10 @@ public class NoteListImpl implements NoteList {
             return new NoteElement(el);
         }
 
-        public Vector getNotes() {
+        public Vector<NoteElement> getNotes() {
             if (dEl == null)
                 return null;
-            Vector v = new Vector();
+            Vector<NoteElement> v = new Vector<NoteElement>();
             Elements ds = dEl.getChildElements("note");
             for (int i = 0; i < ds.size(); i++)
                 v.add(new NoteElement(ds.get(i)));                                    
@@ -397,7 +398,7 @@ public class NoteListImpl implements NoteList {
 	 * private class Day
 	 */
 	 
-	private class NoteElement {
+	public class NoteElement {
 		Element nEl;
 		
 		public NoteElement(Element el) {

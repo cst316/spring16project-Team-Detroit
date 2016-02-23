@@ -23,7 +23,7 @@ public class CurrentStorage {
      */
     private static Storage _storage = new FileStorage();
     
-    private static Vector actionListeners = new Vector();
+    private static Vector<ActionListener> actionListeners = new Vector<ActionListener>();
     
     public static Storage get() {
         return _storage;
@@ -38,7 +38,7 @@ public class CurrentStorage {
         actionListeners.add(al);
     }
 
-    public static Collection getChangeListeners() {
+    public static Collection<ActionListener> getChangeListeners() {
         return actionListeners;
     }
     

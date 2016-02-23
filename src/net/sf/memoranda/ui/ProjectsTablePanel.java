@@ -19,6 +19,7 @@ import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.Local;
 
 /*$Id: ProjectsTablePanel.java,v 1.6 2004/04/05 10:05:44 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class ProjectsTablePanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     JScrollPane scrollPane = new JScrollPane();

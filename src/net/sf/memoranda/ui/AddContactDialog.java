@@ -22,6 +22,7 @@ Class:	AddContactDialog
 
 Description:  Creates Add Contact dialog box and handles action events to add contact or cancel
 */
+@SuppressWarnings("serial")
 public class AddContactDialog extends JDialog {
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());
@@ -130,7 +131,7 @@ public class AddContactDialog extends JDialog {
     			if (phone != null && !phone.isEmpty() && phone.matches("^-?\\d+$")) {
     				if (notes != null && !notes.isEmpty()) {
 				    	if (contact.validateEmail(email)) {
-				    		if (ContactList.getContact(name.toUpperCase()) == null) {
+				    		if (ContactList.getContact(name.toUpperCase(Local.getCurrentLocale())) == null) {
 				    			ContactListStorage.addContactToList(new EmailContact(name,email,phone,notes));
 				    			this.dispose();
 				    			JOptionPane.showMessageDialog(null, name + " " + Local.getString("added to contacts!"), 

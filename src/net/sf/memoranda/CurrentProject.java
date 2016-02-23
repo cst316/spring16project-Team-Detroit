@@ -28,7 +28,7 @@ public class CurrentProject {
     private static TaskList _tasklist = null;
     private static NoteList _notelist = null;
     private static ResourcesList _resources = null;
-    private static Vector projectListeners = new Vector();
+    private static Vector<ProjectListener> projectListeners = new Vector<ProjectListener>();
 
         
     static {
@@ -95,7 +95,7 @@ public class CurrentProject {
         projectListeners.add(pl);
     }
 
-    public static Collection getChangeListeners() {
+    public static Collection<ProjectListener> getChangeListeners() {
         return projectListeners;
     }
 

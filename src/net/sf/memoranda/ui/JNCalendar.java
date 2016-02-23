@@ -28,10 +28,11 @@ import net.sf.memoranda.util.Configuration;
  *  
  */
 /*$Id: JNCalendar.java,v 1.8 2004/11/05 07:38:10 pbielen Exp $*/
+@SuppressWarnings("serial")
 public class JNCalendar extends JTable {
 	private CalendarDate _date = null;
 	private boolean ignoreChange = false;
-	private Vector selectionListeners = new Vector();
+	private Vector<ActionListener> selectionListeners = new Vector<ActionListener>();
 	CalendarDate startPeriod = null;
 	CalendarDate endPeriod = null;
 	public JNCalendarCellRenderer renderer = new JNCalendarCellRenderer();
@@ -71,7 +72,7 @@ public class JNCalendar extends JTable {
 						return;
 					_date =
 						new CalendarDate(
-							new Integer(val.toString()).intValue(),
+							Integer.valueOf(val.toString()).intValue(),
 							_date.getMonth(),
 							_date.getYear());
 					notifyListeners();

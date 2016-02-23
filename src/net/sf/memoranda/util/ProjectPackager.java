@@ -8,7 +8,6 @@
  */
 package net.sf.memoranda.util;
 import java.io.BufferedReader;
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -94,7 +93,7 @@ public class ProjectPackager {
             if (pEndD != null)
                 prj.setEndDate(new CalendarDate(pEndD));
             //File prDir = new File(JN_DOCPATH + prj.getID());
-            Enumeration files;           
+            Enumeration<?> files;           
             for (files = zip.entries(); files.hasMoreElements();){
                 ZipEntry ze = (ZipEntry)files.nextElement();
                 if ( ze.isDirectory() )
@@ -139,7 +138,10 @@ public class ProjectPackager {
     {
        File[] theFiles = theDirectory.listFiles();
        File stDirectory = new File(startingDirectory);
-       System.out.println("Path="+stDirectory.getPath()+";length="+stDirectory.getPath().length() + "==>"+theFiles[0]);
+	   System.out.println("Path="+stDirectory.getPath()+";length="+stDirectory
+			   .getPath().length() + "==>"+theFiles[0]);
+       
+       
        int j = stDirectory.getPath().length();
        for ( int i=0 ; i<theFiles.length ; i++ )
        {

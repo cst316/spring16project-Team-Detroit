@@ -32,7 +32,7 @@ public class Print implements Printable {
 	*/
 	public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
 		String evlist = new SimpleDateFormat("EEEE, MMMM, dd yyyy").format(new Date()) + "\n";
-        for (Iterator it = EventsScheduler.getScheduledEvents().iterator(); it.hasNext();) {
+        for (Iterator<Event> it = EventsScheduler.getScheduledEvents().iterator(); it.hasNext();) {
             net.sf.memoranda.Event ev = (net.sf.memoranda.Event)it.next();   
             evlist += ev.getTimeString()+" - "+ev.getText()+"\n";
         }

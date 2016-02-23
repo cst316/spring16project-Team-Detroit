@@ -27,9 +27,9 @@ import net.sf.memoranda.util.Local;
 /*$Id: History.java,v 1.7 2006/10/31 15:34:14 hglas Exp $*/
 public class History {
 
-    static Vector _list = new Vector();
+    static Vector<HistoryItem> _list = new Vector<HistoryItem>();
     static int p = -1;
-    static Vector historyListeners = new Vector();
+    static Vector<HistoryListener> historyListeners = new Vector<HistoryListener>();
     static Object next = null;
     static Object prev = null;     
     
@@ -104,7 +104,7 @@ public class History {
     }
     
     public static void removeProjectHistory(Project prj) {
-        Vector list = new Vector();
+        Vector<HistoryItem> list = new Vector<HistoryItem>();
         String id;
         
         for (int i = 0; i < _list.size(); i++) {
@@ -135,10 +135,11 @@ public class History {
                  ((HistoryListener) historyListeners.get(i)).historyWasRolledTo(n);
     }
 
-    public static HistoryBackAction historyBackAction = new HistoryBackAction();
+    public static final HistoryBackAction historyBackAction = new HistoryBackAction();
     public static HistoryForwardAction historyForwardAction = new HistoryForwardAction();
 
-    static class HistoryBackAction extends AbstractAction {
+	@SuppressWarnings("serial")
+	static class HistoryBackAction extends AbstractAction {
 
         public HistoryBackAction() {
             super(Local.getString("History back"), 
@@ -177,7 +178,8 @@ public class History {
         }
     }
 
-    static class HistoryForwardAction extends AbstractAction {
+    @SuppressWarnings("serial")
+	static class HistoryForwardAction extends AbstractAction {
 
         public HistoryForwardAction() {
             super(Local.getString("History forward"), 

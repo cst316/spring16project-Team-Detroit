@@ -16,7 +16,7 @@ import nu.xom.Element;
  * 
  */
 /*$Id: NoteImpl.java,v 1.6 2004/10/06 19:15:44 ivanrise Exp $*/
-public class NoteImpl implements Note, Comparable {
+public class NoteImpl implements Note, Comparable<Object> {
     
     private Element _el = null; 
     private Project _project;
@@ -39,7 +39,7 @@ public class NoteImpl implements Note, Comparable {
 
      //   return new CalendarDate(day.getAttribute("date").getValue());
 		
-		return new CalendarDate(new Integer(day.getAttribute("day").getValue()).intValue(), 
+		return new CalendarDate(Integer.valueOf(day.getAttribute("day").getValue()).intValue(), 
 								new Integer(month.getAttribute("month").getValue()).intValue(),
 								new Integer(year.getAttribute("year").getValue()).intValue());
 

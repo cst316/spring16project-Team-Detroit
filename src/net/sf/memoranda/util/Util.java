@@ -63,7 +63,7 @@ public class Util {
         int i1 = s.indexOf("/");
         int i2 = s.indexOf("/", i1 + 1);
         int[] date = new int[3];
-        date[0] = new Integer(s.substring(0, i1)).intValue();
+        date[0] = Integer.valueOf(s.substring(0, i1)).intValue();
         date[1] = new Integer(s.substring(i1 + 1, i2)).intValue();
         date[2] = new Integer(s.substring(i2 + 1)).intValue();
         return date;
@@ -151,13 +151,13 @@ public class Util {
     	}
     }
     
-    static Set tempFiles = new HashSet();
+    static Set<File> tempFiles = new HashSet<File>();
     
     static {
     	AppFrame.addExitListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				for (Iterator i = tempFiles.iterator(); i.hasNext();) 
+				for (Iterator<File> i = tempFiles.iterator(); i.hasNext();) 
 					((File)i.next()).delete();				}
 			});
     }

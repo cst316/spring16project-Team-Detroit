@@ -33,6 +33,7 @@ import javax.swing.event.TreeModelListener;
  * @author Philip Milne
  * @author Scott Violet
  */
+@SuppressWarnings("serial")
 public class TreeTableModelAdapter extends AbstractTableModel
 {
     JTree tree;
@@ -86,7 +87,8 @@ public class TreeTableModelAdapter extends AbstractTableModel
 	return treeTableModel.getColumnName(column);
     }
 
-    public Class getColumnClass(int column) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Class getColumnClass(int column) {
 	return treeTableModel.getColumnClass(column);
     }
 

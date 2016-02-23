@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import net.sf.memoranda.ui.htmleditor.util.Local;
+import net.sf.memoranda.ui.htmleditor.util.HTMLLocal;
 
 /**
  * <p>Title: </p>
@@ -37,6 +37,7 @@ import net.sf.memoranda.ui.htmleditor.util.Local;
  * @version 1.0
  */
 
+@SuppressWarnings("serial")
 public class FontDialog extends JDialog {
     JPanel areaPanel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc;
@@ -46,9 +47,11 @@ public class FontDialog extends JDialog {
     JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     public JLabel header = new JLabel();
     public boolean CANCELLED = false;
-    public JComboBox fontSizeCB = new JComboBox(new Object[] 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public JComboBox fontSizeCB = new JComboBox(new String[] 
     	{"", "1","2","3","4","5","6","7"});
-    public JComboBox fontFamilyCB;
+    @SuppressWarnings("rawtypes")
+	public JComboBox fontFamilyCB;
     public JLabel sample = new JLabel();
     JPanel samplePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     public JTextField colorField = new JTextField();
@@ -56,7 +59,7 @@ public class FontDialog extends JDialog {
     JButton colorB = new JButton();
 
     public FontDialog(Frame frame) {
-        super(frame, Local.getString("Text properties"), true);
+        super(frame, HTMLLocal.getString("Text properties"), true);
         try {
             jbInit();
             pack();
@@ -75,19 +78,19 @@ public class FontDialog extends JDialog {
         GraphicsEnvironment gEnv = 
         	GraphicsEnvironment.getLocalGraphicsEnvironment();
         String envfonts[] = gEnv.getAvailableFontFamilyNames();
-        Vector fonts = new Vector();
+        Vector<String> fonts = new Vector<String>();
         fonts.add("");
         fonts.add("serif");
         fonts.add("sans-serif");
         fonts.add("monospaced");
         for (int i = 0; i < envfonts.length; i++)
             fonts.add(envfonts[i]);
-        fontFamilyCB = new JComboBox(fonts);
+        fontFamilyCB = new JComboBox<String>(fonts);
         
 		headerPanel.setBackground(Color.WHITE);
 		header.setFont(new java.awt.Font("Dialog", 0, 20));
 		header.setForeground(new Color(0, 0, 124));
-		header.setText(Local.getString("Text properties"));
+		header.setText(HTMLLocal.getString("Text properties"));
 		header.setIcon(new ImageIcon(
 			net.sf.memoranda.ui.htmleditor.ImageDialog.class.getResource(
 			"resources/icons/fontbig.png")));
@@ -99,7 +102,7 @@ public class FontDialog extends JDialog {
 		fontFamilyCB.setMaximumRowCount(9);
 		fontFamilyCB.setBorder(new TitledBorder(
 			BorderFactory.createEmptyBorder(), 
-			Local.getString("Font family")));
+			HTMLLocal.getString("Font family")));
 		fontFamilyCB.setPreferredSize(new Dimension(200, 50));
 		fontFamilyCB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -119,14 +122,14 @@ public class FontDialog extends JDialog {
 			}
 		});
 		fontSizeCB.setBorder(new TitledBorder(
-			BorderFactory.createEmptyBorder(), Local.getString("Font size")));
+			BorderFactory.createEmptyBorder(), HTMLLocal.getString("Font size")));
 		fontSizeCB.setPreferredSize(new Dimension(60, 50));
 		gbc = new GridBagConstraints();
 		gbc.gridx = 2; gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.insets = new Insets(10, 5, 5, 10);
 		areaPanel.add(fontSizeCB, gbc);
-		lblTextColor.setText(Local.getString("Font color"));		
+		lblTextColor.setText(HTMLLocal.getString("Font color"));		
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0; gbc.gridy = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -154,8 +157,8 @@ public class FontDialog extends JDialog {
 		areaPanel.add(colorB, gbc);
 		samplePanel.setBackground(Color.white);
 		samplePanel.setBorder(BorderFactory.createTitledBorder(
-			Local.getString("Sample")));
-		sample.setText(Local.getString("AaBbCcDd"));
+			HTMLLocal.getString("Sample")));
+		sample.setText(HTMLLocal.getString("AaBbCcDd"));
 		sample.setHorizontalAlignment(SwingConstants.CENTER);
 		sample.setVerticalAlignment(SwingConstants.CENTER);
 		sample.setPreferredSize(new Dimension(250, 50));
@@ -172,7 +175,7 @@ public class FontDialog extends JDialog {
         cancelB.setMaximumSize(new Dimension(100, 26));
         cancelB.setMinimumSize(new Dimension(100, 26));
         cancelB.setPreferredSize(new Dimension(100, 26));
-        cancelB.setText(Local.getString("Cancel"));
+        cancelB.setText(HTMLLocal.getString("Cancel"));
         cancelB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancelB_actionPerformed(e);
@@ -181,7 +184,7 @@ public class FontDialog extends JDialog {
         okB.setMaximumSize(new Dimension(100, 26));
         okB.setMinimumSize(new Dimension(100, 26));
         okB.setPreferredSize(new Dimension(100, 26));
-        okB.setText(Local.getString("Ok"));
+        okB.setText(HTMLLocal.getString("Ok"));
         okB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okB_actionPerformed(e);
@@ -219,31 +222,31 @@ public class FontDialog extends JDialog {
 		// Fix until Sun's JVM supports more locales...
 		UIManager.put(
 			"ColorChooser.swatchesNameText",
-			Local.getString("Swatches"));
-		UIManager.put("ColorChooser.hsbNameText", Local.getString("HSB"));
-		UIManager.put("ColorChooser.rgbNameText", Local.getString("RGB"));
+			HTMLLocal.getString("Swatches"));
+		UIManager.put("ColorChooser.hsbNameText", HTMLLocal.getString("HSB"));
+		UIManager.put("ColorChooser.rgbNameText", HTMLLocal.getString("RGB"));
 		UIManager.put(
 			"ColorChooser.swatchesRecentText",
-			Local.getString("Recent:"));
-		UIManager.put("ColorChooser.previewText", Local.getString("Preview"));
+			HTMLLocal.getString("Recent:"));
+		UIManager.put("ColorChooser.previewText", HTMLLocal.getString("Preview"));
 		UIManager.put(
 			"ColorChooser.sampleText",
-			Local.getString("Sample Text")
+			HTMLLocal.getString("Sample Text")
 				+ " "
-				+ Local.getString("Sample Text"));
-		UIManager.put("ColorChooser.okText", Local.getString("OK"));
-		UIManager.put("ColorChooser.cancelText", Local.getString("Cancel"));
-		UIManager.put("ColorChooser.resetText", Local.getString("Reset"));
-		UIManager.put("ColorChooser.hsbHueText", Local.getString("H"));
-		UIManager.put("ColorChooser.hsbSaturationText", Local.getString("S"));
-		UIManager.put("ColorChooser.hsbBrightnessText", Local.getString("B"));
-		UIManager.put("ColorChooser.hsbRedText", Local.getString("R"));
-		UIManager.put("ColorChooser.hsbGreenText", Local.getString("G"));
-		UIManager.put("ColorChooser.hsbBlueText", Local.getString("B2"));
-		UIManager.put("ColorChooser.rgbRedText", Local.getString("Red"));
-		UIManager.put("ColorChooser.rgbGreenText", Local.getString("Green"));
-		UIManager.put("ColorChooser.rgbBlueText", Local.getString("Blue"));        
-        Color c = JColorChooser.showDialog(this, Local.getString("Font color"), 
+				+ HTMLLocal.getString("Sample Text"));
+		UIManager.put("ColorChooser.okText", HTMLLocal.getString("OK"));
+		UIManager.put("ColorChooser.cancelText", HTMLLocal.getString("Cancel"));
+		UIManager.put("ColorChooser.resetText", HTMLLocal.getString("Reset"));
+		UIManager.put("ColorChooser.hsbHueText", HTMLLocal.getString("H"));
+		UIManager.put("ColorChooser.hsbSaturationText", HTMLLocal.getString("S"));
+		UIManager.put("ColorChooser.hsbBrightnessText", HTMLLocal.getString("B"));
+		UIManager.put("ColorChooser.hsbRedText", HTMLLocal.getString("R"));
+		UIManager.put("ColorChooser.hsbGreenText", HTMLLocal.getString("G"));
+		UIManager.put("ColorChooser.hsbBlueText", HTMLLocal.getString("B2"));
+		UIManager.put("ColorChooser.rgbRedText", HTMLLocal.getString("Red"));
+		UIManager.put("ColorChooser.rgbGreenText", HTMLLocal.getString("Green"));
+		UIManager.put("ColorChooser.rgbBlueText", HTMLLocal.getString("Blue"));        
+        Color c = JColorChooser.showDialog(this, HTMLLocal.getString("Font color"), 
         	Util.decodeColor(colorField.getText()));
         if (c == null) return;
         colorField.setText(Util.encodeColor(c));

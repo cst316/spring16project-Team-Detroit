@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Configuration;
 
+@SuppressWarnings("serial")
 public class ExitConfirmationDialog extends JDialog implements WindowListener {
     
     public boolean CANCELLED = false;

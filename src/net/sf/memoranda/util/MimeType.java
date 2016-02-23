@@ -44,7 +44,7 @@ public class MimeType {
     }
 
     public String[] getExtensions() {
-        Vector v = new Vector();
+        Vector<String> v = new Vector<String>();
         String[] ss = {};
         Elements exts = _root.getChildElements("ext");
         for (int i = 0; i < exts.size(); i++)

@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.net.URL;
 import java.text.DateFormat;
 
 import javax.swing.AbstractAction;
@@ -41,6 +40,7 @@ import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.OpenBrowser;
 
 /*$Id: EditorPanel.java,v 1.21 2006/06/28 22:58:31 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class EditorPanel extends JPanel {
 	BorderLayout borderLayout1 = new BorderLayout();
 	JPanel jPanel1 = new JPanel();
@@ -75,6 +75,7 @@ public class EditorPanel extends JPanel {
 		}
 	}
 
+	
 	public Action insertTimeAction = new AbstractAction(Local
 			.getString("Insert current time"), new ImageIcon(
 			net.sf.memoranda.ui.AppFrame.class
@@ -135,7 +136,7 @@ public class EditorPanel extends JPanel {
 	void jbInit() throws Exception {
 
 		if (!Configuration.get("DISABLE_L10N").equals("yes"))
-			net.sf.memoranda.ui.htmleditor.util.Local.setMessages(Local
+			net.sf.memoranda.ui.htmleditor.util.HTMLLocal.setMessages(Local
 					.getMessages());
 
 		editor = new HTMLEditor();

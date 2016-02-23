@@ -2,8 +2,11 @@ package net.sf.memoranda.ui.htmleditor;
 
 import java.awt.Color;
 import java.util.Hashtable;
+import java.util.Locale;
 
 import javax.swing.JTextField;
+
+import net.sf.memoranda.util.Local;
 
 /**
  * <p>Title: </p>
@@ -16,9 +19,9 @@ import javax.swing.JTextField;
 
 public class Util {
     
-    public static Hashtable HTMLColors;
+    public static Hashtable<String, Color> HTMLColors;
     static {
-        HTMLColors = new Hashtable();
+        HTMLColors = new Hashtable<String, Color>();
         HTMLColors.put("red", Color.red);
         HTMLColors.put("green", Color.green);
         HTMLColors.put("blue", Color.blue);
@@ -37,7 +40,7 @@ public class Util {
         
         
     public static Color getColorForName(String name, Color defaultColor) {
-        if (HTMLColors.contains(name.toLowerCase()))
+        if (HTMLColors.containsKey(name.toLowerCase(Local.getCurrentLocale())))
             return (Color)HTMLColors.get(name.toLowerCase());
         return defaultColor;
     }
@@ -50,7 +53,7 @@ public class Util {
                 colorVal = colorVal.substring(1);            
             try {
                 colorVal = new Integer(Integer.parseInt(colorVal, 16)).toString();
-                return Color.decode(colorVal.toLowerCase());
+                return Color.decode(colorVal.toLowerCase(Local.getCurrentLocale()));
             }
             catch (Exception ex) {
 		    ex.printStackTrace();
@@ -61,7 +64,7 @@ public class Util {
     }
     
     public static String encodeColor(Color color) {        
-        return "#"+Integer.toHexString(color.getRGB()-0xFF000000).toUpperCase();  
+        return "#"+Integer.toHexString(color.getRGB()-0xFF000000).toUpperCase(Locale.forLanguageTag("en"));  
     }
 
     public static Color decodeColor(String color) {

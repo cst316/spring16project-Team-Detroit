@@ -41,6 +41,7 @@ import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
 
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
+@SuppressWarnings("serial")
 public class TaskPanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     JButton historyBackB = new JButton();
@@ -609,7 +610,8 @@ public class TaskPanel extends JPanel {
     }
 
     void listSubTasks_actionPerformed(ActionEvent e) {
-        String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
+        @SuppressWarnings("unused")
+		String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
         
         //XXX taskTable.setCurrentRootTask(parentTaskId); 
 		taskTable.tableChanged();
@@ -660,7 +662,7 @@ public class TaskPanel extends JPanel {
                 JOptionPane.YES_NO_OPTION);
         if (n != JOptionPane.YES_OPTION)
             return;
-        Vector toremove = new Vector();
+        Vector<Task> toremove = new Vector<Task>();
         for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
             Task t =
             CurrentProject.getTaskList().getTask(
@@ -679,8 +681,9 @@ public class TaskPanel extends JPanel {
     }
 
 	void ppCompleteTask_actionPerformed(ActionEvent e) {
+		@SuppressWarnings("unused")
 		String msg;
-		Vector tocomplete = new Vector();
+		Vector<Task> tocomplete = new Vector<Task>();
 		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
 			Task t =
 			CurrentProject.getTaskList().getTask(

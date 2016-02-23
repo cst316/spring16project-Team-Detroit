@@ -22,28 +22,17 @@ package net.sf.memoranda.ui;
 
 import net.sf.memoranda.util.*;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import java.util.EventObject;
-import java.util.Collection;
-import java.util.Vector;
 import java.util.Iterator;
-import java.util.Hashtable;
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.LookAndFeel;
-import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.*;
 import javax.swing.table.*;
@@ -79,6 +68,7 @@ import net.sf.memoranda.ui.treetable.*;
  * @version $Id: TaskTable.java,v 1.26 2007/01/05 10:33:26 alexeya Exp $
  * @author $Author: alexeya $
  */
+@SuppressWarnings("serial")
 public class TaskTable extends JTable {
 
     public static final int TASK_ID = 100;
@@ -478,7 +468,7 @@ public class TaskTable extends JTable {
 	 */
 	 class ExpansionHandler implements TreeExpansionListener { // {{{
 	
-		private java.util.Set expanded = new java.util.HashSet();
+		private java.util.Set<TreePath> expanded = new java.util.HashSet<TreePath>();
 		
 		public void treeExpanded(TreeExpansionEvent e) {
 			expanded.add(e.getPath());
@@ -515,9 +505,9 @@ public class TaskTable extends JTable {
 		 * </p>
 		 */
 		public void expand(JTree tree){
-			Iterator iter = expanded.iterator();
+			Iterator<TreePath> iter = expanded.iterator();
 			while(iter.hasNext()){
-				tree.expandPath( (TreePath) iter.next() );
+				tree.expandPath( iter.next() );
 			}
 			System.out.println(expanded.size());
 		}

@@ -8,15 +8,17 @@
  */
 package net.sf.memoranda.ui.htmleditor.util;
 import java.util.Hashtable;
+import java.util.Locale;
+import net.sf.memoranda.util.Local;
 
 /**
  * 
  */
-public class Local {
+public class HTMLLocal {
 
-   static Hashtable messages = null;
+   static Hashtable<?, ?> messages = null;
    
-   public static void setMessages(Hashtable msgs) {
+   public static void setMessages(Hashtable<?, ?> msgs) {
         messages = msgs;
    }  
    
@@ -32,5 +34,9 @@ public class Local {
             return key;
         }
    }
+
+public static Locale getCurrentLocale() {
+	return HTMLLocal.getCurrentLocale();
+}
 
 }

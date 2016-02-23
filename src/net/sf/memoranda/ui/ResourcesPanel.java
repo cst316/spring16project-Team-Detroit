@@ -34,6 +34,7 @@ import net.sf.memoranda.util.Util;
 import java.io.*;
 
 /*$Id: ResourcesPanel.java,v 1.13 2007/03/20 08:22:41 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class ResourcesPanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     JToolBar toolBar = new JToolBar();

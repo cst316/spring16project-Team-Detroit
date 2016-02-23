@@ -7,11 +7,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.util.*;
 
 /*$Id: LoadableProperties.java,v 1.4 2004/01/30 12:17:42 alexeya Exp $*/
-public class LoadableProperties extends Hashtable {
+@SuppressWarnings("serial")
+public class LoadableProperties extends Hashtable<Object, Object> {
 
     public LoadableProperties() {
         super();
@@ -33,7 +33,7 @@ public class LoadableProperties extends Hashtable {
                 index = line.indexOf("=");
                 aKey = line.substring(0, index).trim();
                 aValue = line.substring(index + 1).trim();
-                put(aKey.toUpperCase(), aValue);
+                put(aKey.toUpperCase(Locale.forLanguageTag("en")), aValue);
             }
             line = getNextLine(in);
         }
@@ -47,8 +47,8 @@ public class LoadableProperties extends Hashtable {
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(outStream, "UTF-8"));
         String aKey;
         Object aValue;
-        TreeMap tm = new TreeMap(this);
-        for (Iterator i = tm.keySet().iterator(); i.hasNext();) {
+        TreeMap<?, ?> tm = new TreeMap<Object, Object>(this);
+        for (Iterator<?> i = tm.keySet().iterator(); i.hasNext();) {
             aKey = (String) i.next();
             aValue = get(aKey);
             out.write(aKey + " = " + aValue);
@@ -62,7 +62,7 @@ public class LoadableProperties extends Hashtable {
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(outStream, "UTF-8"));
         String aKey;
         Object aValue;
-        for (Enumeration e = keys(); e.hasMoreElements();) {
+        for (Enumeration<?> e = keys(); e.hasMoreElements();) {
             aKey = (String) e.nextElement();
             aValue = get(aKey);
             out.write(aKey + " = " + aValue);

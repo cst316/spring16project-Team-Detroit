@@ -32,9 +32,10 @@ import javax.swing.table.TableModel;
 import net.sf.memoranda.util.Local;
 
 /*$Id: TableSorter.java,v 1.7 2004/10/07 08:52:32 ivanrise Exp $*/
+@SuppressWarnings("serial")
 public class TableSorter extends TableMap {
     int             indexes[];
-    Vector          sortingColumns = new Vector();
+    Vector<Integer>          sortingColumns = new Vector<Integer>();
     boolean         ascending = true;
     int compares;
     int sortBy = 0;
@@ -53,7 +54,7 @@ public class TableSorter extends TableMap {
     }
 
     public int compareRowsByColumn(int row1, int row2, int column) {
-        Class type = model.getColumnClass(column);
+        Class<?> type = model.getColumnClass(column);
         TableModel data = model;
 
         // Check for nulls.
@@ -123,7 +124,7 @@ public class TableSorter extends TableMap {
         } else if (type == String.class) {
 	    int result;
 	    if(data.getColumnName(column).equals(Local.getString("Priority"))) {
-		    Hashtable priority = new Hashtable();
+		    Hashtable<String, Integer> priority = new Hashtable<String, Integer>();
 		    priority.put(Local.getString("Lowest"), new Integer(1));
 		    priority.put(Local.getString("Low"), new Integer(2));
 		    priority.put(Local.getString("Normal"), new Integer(3));
@@ -136,7 +137,7 @@ public class TableSorter extends TableMap {
 		    result = s1.compareTo(s2);
 	    }
 	    else if(data.getColumnName(column).equals(Local.getString("Status"))) {
-		    Hashtable priority = new Hashtable();
+		    Hashtable<String, Integer> priority = new Hashtable<String, Integer>();
 		    priority.put(Local.getString("Completed"), new Integer(1));
 		    priority.put(Local.getString("Failed"), new Integer(2));
 		    priority.put(Local.getString("Scheduled"), new Integer(3));

@@ -39,6 +39,10 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.html.CSS;
 import javax.swing.text.html.HTML;
+import javax.swing.text.html.HTML.Tag;
+
+import net.sf.memoranda.util.Local;
+
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.Option;
 import javax.swing.text.html.StyleSheet;
@@ -60,13 +64,14 @@ public class AltHTMLWriter extends AbstractWriter {
      * Stores all elements for which end tags have to
      * be emitted.
      */
-    private Stack blockElementStack = new Stack();
+    private Stack<Element> blockElementStack = new Stack<Element>();
     private boolean inContent = false;
     private boolean inPre = false;
     /** When inPre is true, this will indicate the end offset of the pre
      * element. */
     private int preEndOffset;
-    private boolean inTextArea = false;
+    @SuppressWarnings("unused")
+	private boolean inTextArea = false;
     private boolean newlineOutputed = false;
     private boolean completeDoc;
 
@@ -76,12 +81,12 @@ public class AltHTMLWriter extends AbstractWriter {
      * character level attributes.  Examples include
      * &lt;b&gt;, &lt;i&gt;, &lt;font&gt;, and &lt;a&gt;.
      */
-    private Vector tags = new Vector(10);
+    private Vector<Tag> tags = new Vector<Tag>(10);
 
     /**
      * Values for the tags.
      */
-    private Vector tagValues = new Vector(10);
+    private Vector<Object> tagValues = new Vector<Object>(10);
 
     /**
      * Used when writing out content.
@@ -91,7 +96,7 @@ public class AltHTMLWriter extends AbstractWriter {
     /*
      * This is used in closeOutUnwantedEmbeddedTags.
      */
-    private Vector tagsToRemove = new Vector(10);
+    private Vector<Tag> tagsToRemove = new Vector<Tag>(10);
 
     /**
      * Set to true after the head has been output.
@@ -280,7 +285,7 @@ public class AltHTMLWriter extends AbstractWriter {
         convAttr.removeAttributes(convAttr);
         convertToHTML32(attr, convAttr);
 
-        Enumeration names = convAttr.getAttributeNames();
+        Enumeration<?> names = convAttr.getAttributeNames();
         while (names.hasMoreElements()) {
             Object name = names.nextElement();
             if (name instanceof HTML.Tag || name instanceof StyleConstants || name == HTML.Attribute.ENDTAG) {
@@ -680,7 +685,7 @@ public class AltHTMLWriter extends AbstractWriter {
         Object comments = getDocument().getProperty(HTMLDocument.AdditionalComments);
         if (comments == null) return; 
         if (comments instanceof Vector) {
-            Vector v = (Vector) comments;
+            Vector<?> v = (Vector<?>) comments;
             for (int counter = 0, maxCounter = v.size(); counter < maxCounter; counter++) {
                 writeComment(v.elementAt(counter).toString());
             }
@@ -731,7 +736,7 @@ public class AltHTMLWriter extends AbstractWriter {
         // translate css attributes to html
         attr = convertToHTML(attr, oConvAttr);
 
-        Enumeration names = attr.getAttributeNames();
+        Enumeration<?> names = attr.getAttributeNames();
         while (names.hasMoreElements()) {
             Object name = names.nextElement();
             if (name instanceof HTML.Tag) {
@@ -791,7 +796,7 @@ public class AltHTMLWriter extends AbstractWriter {
         for (int i = size - 1; i >= 0; i--) {
             t = (HTML.Tag) tags.elementAt(i);
             tValue = tagValues.elementAt(i);
-            if ((attr == null) || noMatchForTagInAttributes(attr, t, tValue)) {
+            if (noMatchForTagInAttributes(attr, t, tValue)) {
                 firstIndex = i;
                 tagsToRemove.addElement(t);
             }
@@ -870,7 +875,7 @@ public class AltHTMLWriter extends AbstractWriter {
      * Outputs the maps as elements. Maps are not stored as elements in
      * the document, and as such this is used to output them.
      */
-    void writeMaps(Enumeration maps) throws IOException {
+    void writeMaps(Enumeration<?> maps) throws IOException {
         if (maps != null) {
             while (maps.hasMoreElements()) {
                 Map map = (Map) maps.nextElement();
@@ -917,7 +922,7 @@ public class AltHTMLWriter extends AbstractWriter {
      */
     void writeStyles(StyleSheet sheet) throws IOException {
         if (sheet != null) {
-            Enumeration styles = sheet.getStyleNames();
+            Enumeration<?> styles = sheet.getStyleNames();
             if (styles != null) {
                 boolean outputStyle = false;
                 while (styles.hasMoreElements()) {
@@ -942,7 +947,7 @@ public class AltHTMLWriter extends AbstractWriter {
      */
     boolean writeStyle(String name, Style style, boolean outputStyle) throws IOException {
         boolean didOutputStyle = false;
-        Enumeration attributes = style.getAttributeNames();
+        Enumeration<?> attributes = style.getAttributeNames();
         if (attributes != null) {
             while (attributes.hasMoreElements()) {
                 Object attribute = attributes.nextElement();
@@ -1053,7 +1058,7 @@ public class AltHTMLWriter extends AbstractWriter {
         if (from == null) {
             return;
         }
-        Enumeration keys = from.getAttributeNames();
+        Enumeration<?> keys = from.getAttributeNames();
         String value = "";
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
@@ -1071,7 +1076,7 @@ public class AltHTMLWriter extends AbstractWriter {
                     if (weightValue != null) {
                         int fweight;
                         try {
-                            fweight = new Integer(weightValue).intValue();
+                            fweight = Integer.valueOf(weightValue).intValue();
                         }
                         catch (Exception ex) {
                             fweight = -1;
@@ -1154,7 +1159,7 @@ public class AltHTMLWriter extends AbstractWriter {
      * attribute.
      */
     private static void convertToHTML40(AttributeSet from, MutableAttributeSet to) {
-        Enumeration keys = from.getAttributeNames();
+        Enumeration<?> keys = from.getAttributeNames();
         String value = "";
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
@@ -1291,7 +1296,9 @@ public class AltHTMLWriter extends AbstractWriter {
       @version 1.9 12/03/01
      */
 
-    class OptionListModel extends DefaultListModel implements ListSelectionModel, Serializable {
+    @SuppressWarnings("serial")
+	static
+	class OptionListModel extends DefaultListModel<Object> implements ListSelectionModel, Cloneable, Serializable {
 
         private static final int MIN = -1;
         private static final int MAX = Integer.MAX_VALUE;
@@ -1305,7 +1312,7 @@ public class AltHTMLWriter extends AbstractWriter {
         private boolean isAdjusting = false;
         private BitSet value = new BitSet(32);
         private BitSet initialValue = new BitSet(32);
-        protected EventListenerList listenerList = new EventListenerList();
+        protected EventListenerList listenersList = new EventListenerList();
 
         protected boolean leadAnchorNotificationEnabled = true;
 
@@ -1346,11 +1353,11 @@ public class AltHTMLWriter extends AbstractWriter {
         }
 
         public void addListSelectionListener(ListSelectionListener l) {
-            listenerList.add(ListSelectionListener.class, l);
+            listenersList.add(ListSelectionListener.class, l);
         }
 
         public void removeListSelectionListener(ListSelectionListener l) {
-            listenerList.remove(ListSelectionListener.class, l);
+            listenersList.remove(ListSelectionListener.class, l);
         }
 
         /**
@@ -1362,7 +1369,7 @@ public class AltHTMLWriter extends AbstractWriter {
          * @since 1.4
          */
         public ListSelectionListener[] getListSelectionListeners() {
-            return (ListSelectionListener[]) listenerList.getListeners(ListSelectionListener.class);
+            return (ListSelectionListener[]) listenersList.getListeners(ListSelectionListener.class);
         }
 
         /**
@@ -1388,7 +1395,7 @@ public class AltHTMLWriter extends AbstractWriter {
          * @see EventListenerList
          */
         protected void fireValueChanged(int firstIndex, int lastIndex, boolean isAdjusting) {
-            Object[] listeners = listenerList.getListenerList();
+            Object[] listeners = listenersList.getListenerList();
             ListSelectionEvent e = null;
 
             for (int i = listeners.length - 2; i >= 0; i -= 2) {
@@ -1714,7 +1721,7 @@ public class AltHTMLWriter extends AbstractWriter {
         public Object clone() throws CloneNotSupportedException {
             OptionListModel clone = (OptionListModel) super.clone();
             clone.value = (BitSet) value.clone();
-            clone.listenerList = new EventListenerList();
+            clone.listenersList = new EventListenerList();
             return clone;
         }
 
@@ -1812,7 +1819,8 @@ public class AltHTMLWriter extends AbstractWriter {
         }
     }
 
-    class OptionComboBoxModel extends DefaultComboBoxModel implements Serializable {
+    @SuppressWarnings("serial")
+	static class OptionComboBoxModel extends DefaultComboBoxModel<Object> implements Serializable {
 
         private Option selectedOption = null;
 
@@ -1845,10 +1853,10 @@ public class AltHTMLWriter extends AbstractWriter {
         /** Name of the Map. */
         private String name;
         /** An array of AttributeSets. */
-        private Vector areaAttributes;
+        private Vector<AttributeSet> areaAttributes;
         /** An array of RegionContainments, will slowly grow to match the
          * length of areaAttributes as needed. */
-        private Vector areas;
+        private Vector<RegionContainment> areas;
 
         public Map() {}
 
@@ -1871,7 +1879,7 @@ public class AltHTMLWriter extends AbstractWriter {
                 return;
             }
             if (areaAttributes == null) {
-                areaAttributes = new Vector(2);
+                areaAttributes = new Vector<AttributeSet>(2);
             }
             areaAttributes.addElement(as.copyAttributes());
         }
@@ -1920,7 +1928,7 @@ public class AltHTMLWriter extends AbstractWriter {
                 int numAreas = (areas != null) ? areas.size() : 0;
 
                 if (areas == null) {
-                    areas = new Vector(numAttributes);
+                    areas = new Vector<RegionContainment>(numAttributes);
                 }
                 for (int counter = 0; counter < numAttributes; counter++) {
                     if (counter >= numAreas) {
@@ -1946,7 +1954,7 @@ public class AltHTMLWriter extends AbstractWriter {
                 shape = "rect";
             }
             if (shape instanceof String) {
-                String shapeString = ((String) shape).toLowerCase();
+                String shapeString = ((String) shape).toLowerCase(Local.getCurrentLocale());
                 RegionContainment rc = null;
 
                 try {
@@ -2062,7 +2070,8 @@ public class AltHTMLWriter extends AbstractWriter {
     /**
      * Used to test for containment in a polygon region.
      */
-    static class PolygonRegionContainment extends Polygon implements RegionContainment {
+    @SuppressWarnings("serial")
+	static class PolygonRegionContainment extends Polygon implements RegionContainment {
         /** If any value is a percent there will be an entry here for the
          * percent value. Use percentIndex to find out the index for it. */
         float[] percentValues;

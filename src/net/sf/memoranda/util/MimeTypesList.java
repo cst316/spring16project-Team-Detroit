@@ -26,8 +26,8 @@ public class MimeTypesList {
         _root = _doc.getRootElement();
     }
 
-    public static Vector getAllMimeTypes() {
-        Vector v = new Vector();
+    public static Vector<MimeType> getAllMimeTypes() {
+        Vector<MimeType> v = new Vector<MimeType>();
         Elements els = _root.getChildElements("mime-type");
         for (int i = 0; i < els.size(); i++)
             v.add(new MimeType(els.get(i)));

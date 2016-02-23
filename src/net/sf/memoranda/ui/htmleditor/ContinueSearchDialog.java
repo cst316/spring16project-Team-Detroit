@@ -11,8 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import net.sf.memoranda.ui.htmleditor.util.Local;
+import net.sf.memoranda.ui.htmleditor.util.HTMLLocal;
 
+@SuppressWarnings("serial")
 public class ContinueSearchDialog extends JPanel {
   JPanel panel1 = new JPanel();
   BorderLayout borderLayout1 = new BorderLayout();
@@ -49,7 +50,7 @@ public class ContinueSearchDialog extends JPanel {
     cancelB.setMaximumSize(new Dimension(120, 26));
     cancelB.setMinimumSize(new Dimension(80, 26));
     cancelB.setPreferredSize(new Dimension(120, 26));
-    cancelB.setText(Local.getString("Cancel"));
+    cancelB.setText(HTMLLocal.getString("Cancel"));
     cancelB.setFocusable(false);
     cancelB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -61,7 +62,7 @@ public class ContinueSearchDialog extends JPanel {
                 continueB_actionPerformed(e);
             }
         });
-    continueB.setText(Local.getString("Find next"));
+    continueB.setText(HTMLLocal.getString("Find next"));
     continueB.setPreferredSize(new Dimension(120, 26));
     continueB.setMinimumSize(new Dimension(80, 26));
     continueB.setMaximumSize(new Dimension(120, 26));
@@ -69,7 +70,7 @@ public class ContinueSearchDialog extends JPanel {
     flowLayout1.setAlignment(FlowLayout.RIGHT);
     buttonsPanel.setLayout(flowLayout1);
     
-    jLabel1.setText(" "+Local.getString("Search for")+":  ");
+    jLabel1.setText(" "+HTMLLocal.getString("Search for")+":  ");
     jLabel1.setIcon(new ImageIcon(net.sf.memoranda.ui.htmleditor.HTMLEditor.class.getResource("resources/icons/findbig.png"))) ;   
     this.add(jLabel1, BorderLayout.WEST);
     this.add(textF,BorderLayout.CENTER);    
@@ -78,13 +79,15 @@ public class ContinueSearchDialog extends JPanel {
     this.add(buttonsPanel,  BorderLayout.EAST);
   }
 
-  void cancelB_actionPerformed(ActionEvent e) {
+  @SuppressWarnings("deprecation")
+void cancelB_actionPerformed(ActionEvent e) {
     cont = true;
     cancel = true;    
     thread.resume();
   }
 
-  void continueB_actionPerformed(ActionEvent e) {
+  @SuppressWarnings("deprecation")
+void continueB_actionPerformed(ActionEvent e) {
      cont = true;     
      thread.resume();
   }

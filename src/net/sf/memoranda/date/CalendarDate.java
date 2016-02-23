@@ -121,19 +121,27 @@ public class CalendarDate {
     }
 
     public boolean equals(Object object) {
-        if (object.getClass().isInstance(CalendarDate.class)) {
+    	if (object == null) {
+    		return false;
+    	}
+    	else if (object instanceof CalendarDate) {
             CalendarDate d2 = (CalendarDate) object;
             return ((d2.getDay() == getDay()) && (d2.getMonth() == getMonth()) && (d2.getYear() == getYear()));
         }
-        else if (object.getClass().isInstance(Calendar.class)) {
+        else if (object instanceof Calendar) {
             Calendar cal = (Calendar) object;
             return this.equals(new CalendarDate(cal));
         }
-        else if (object.getClass().isInstance(Date.class)) {
+        else if (object instanceof Date) {
             Date d = (Date) object;
             return this.equals(new CalendarDate(d));
         }
         return super.equals(object);
+    }
+    
+    public int hashCode() {
+    	int result = (int) (Math.random() * 42000);
+    	return result;
     }
 
     public boolean equals(CalendarDate date) {

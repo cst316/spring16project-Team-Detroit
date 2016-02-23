@@ -21,12 +21,9 @@ import javax.swing.table.*;
 
 import net.sf.memoranda.Task;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-
 import java.awt.event.MouseEvent;
 
 import java.util.EventObject;
@@ -41,6 +38,7 @@ import java.util.EventObject;
  * @author Philip Milne
  * @author Scott Violet
  */
+@SuppressWarnings("serial")
 public class JTreeTable extends JTable {
 	/** A subclass of JTree. */
 	protected TreeTableCellRenderer tree;

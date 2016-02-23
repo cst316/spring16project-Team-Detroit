@@ -25,6 +25,7 @@ import javax.swing.event.CaretEvent;
 import net.sf.memoranda.util.Local;
 
 /*$Id: EditTypeDialog.java,v 1.9 2005/07/05 08:17:24 alexeya Exp $*/
+@SuppressWarnings("serial")
 public class EditTypeDialog extends JDialog {
     JButton cancelB = new JButton();
     JPanel buttonsPanel = new JPanel();

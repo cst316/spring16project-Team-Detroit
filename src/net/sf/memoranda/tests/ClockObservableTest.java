@@ -4,23 +4,23 @@ import static org.junit.Assert.*;
 
 import java.util.Observable;
 import java.util.Observer;
-//import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.Before;
 import org.junit.Test;
-//import org.junit.runner.RunWith;
+import org.junit.runner.RunWith;
 
 import net.sf.memoranda.util.ClockObservable;
 import net.sf.memoranda.util.Configuration;
-//import net.sf.memoranda.util.MultiThreadedRunner;
+import net.sf.memoranda.util.MultiThreadedRunner;
 
-//@RunWith(MultiThreadedRunner.class)
+@RunWith(MultiThreadedRunner.class)
 public class ClockObservableTest implements Observer {
 	private ClockObservable clock_one = null;
 	private ClockObservable clock_two = null;
 	private ClockObservable clock_three = null;
 	
-	//private static final CountDownLatch latch = new CountDownLatch(3);
+	private static final CountDownLatch latch = new CountDownLatch(3);
 	
 	@Before
 	public void setUp() throws Exception {
@@ -32,14 +32,14 @@ public class ClockObservableTest implements Observer {
 		clock_two.addObserver(this);
 	}
 	
-	@Test //(timeout = 2500)
+	@Test (timeout = 2500)
 	public void afterEachObserverIsUpdatedTheyShouldReturnEqualTimes() 
 			throws InterruptedException {
-		//latch.await();
+		latch.await();
 		assertTrue(clock_one.getTime().equals(clock_two.getTime()));
 	}
 
-	@Test //(timeout = 1500)
+	@Test (timeout = 1500)
 	public void aNewlyInstantiatedClockObservableShouldEqualPreviousClockObservables() 
 			throws InterruptedException {
 		Thread.sleep(600);
@@ -49,7 +49,7 @@ public class ClockObservableTest implements Observer {
 		assertTrue(clock_one.getTime().equals(clock_three.getTime()));
 	}
 	
-	@Test //(timeout = 2500)
+	@Test (timeout = 2500)
 	public void afterTwoSecondsAClockShouldIncrementAccordingly() 
 			throws InterruptedException {
 		String firstString = clock_one.getTime();
@@ -99,7 +99,7 @@ public class ClockObservableTest implements Observer {
 			result += Integer.parseInt(aTime.substring(0, 2)) * 3600;
 			result += Integer.parseInt(aTime.substring(3, 5)) * 60;
 			result += Integer.parseInt(aTime.substring(6, 8));
-		} else if (aTime.substring(1) != ":") {
+		} else if (!(aTime.substring(1)).equals(":")) {
 			result += Integer.parseInt(aTime.substring(0, 2)) * 3600;
 			result += Integer.parseInt(aTime.substring(3, 5)) * 60;
 			result += Integer.parseInt(aTime.substring(6, 8));
@@ -117,7 +117,7 @@ public class ClockObservableTest implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (clock_one == o) {
-			//latch.countDown();
+			latch.countDown();
 		}
 		
 		/*System.out.println(latch.getCount() + " " + arg +

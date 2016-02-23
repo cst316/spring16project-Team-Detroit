@@ -35,6 +35,7 @@ import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 
 /*$Id: ProjectDialog.java,v 1.26 2004/10/18 19:09:10 ivanrise Exp $*/
+@SuppressWarnings("serial")
 public class ProjectDialog extends JDialog {
     public boolean CANCELLED = true;
     boolean ignoreStartChanged = false;
@@ -322,7 +323,8 @@ public class ProjectDialog extends JDialog {
         CalendarDate endD = null;
         if (dlg.endDateChB.isSelected())
             endD = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-        Project prj = ProjectManager.createProject(title, startD, endD);
+        @SuppressWarnings("unused")
+		Project prj = ProjectManager.createProject(title, startD, endD);
         /*if (dlg.freezeChB.isSelected())
             prj.freeze();*/
         CurrentStorage.get().storeProjectManager();

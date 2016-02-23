@@ -53,6 +53,7 @@ import net.sf.memoranda.util.Util;
  */
 
 /*$Id: DailyItemsPanel.java,v 1.22 2005/02/13 03:06:10 rawsushi Exp $*/
+@SuppressWarnings("serial")
 public class DailyItemsPanel extends JPanel implements Observer{
 	ClockObservable clockObservable = new ClockObservable();
 			
@@ -107,7 +108,7 @@ public class DailyItemsPanel extends JPanel implements Observer{
 	JTabbedPane agendaTabbedPane = new JTabbedPane();
     Border border2;
 
-	String CurrentPanel;
+	String currentPanel;
 	
     Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
 
@@ -494,11 +495,11 @@ public class DailyItemsPanel extends JPanel implements Observer{
         cardLayout1.show(editorsPanel, pan);
         cardLayout2.show(mainTabsPanel, pan + "TAB");
 		calendar.jnCalendar.updateUI();
-		CurrentPanel=pan;
+		currentPanel=pan;
     }
 
 	public String getCurrentPanel() {
-		return CurrentPanel;
+		return currentPanel;
 	}
     void taskB_actionPerformed(ActionEvent e) {
         parentPanel.tasksB_actionPerformed(null);

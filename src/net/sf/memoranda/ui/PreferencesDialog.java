@@ -14,8 +14,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import sun.util.locale.LocaleUtils;
-
 import java.awt.event.*;
 
 /*$Id: PreferencesDialog.java,v 1.16 2006/06/28 22:58:31 alexeya Exp $*/
@@ -541,6 +539,7 @@ public class PreferencesDialog extends JDialog {
 			// this.askConfirmChB.setEnabled(false);
 		}
 
+		@SuppressWarnings("unused")
 		String onmin = Configuration.get("ON_MINIMIZE").toString();
 		this.minTaskbarRB.setSelected(true);
 
@@ -596,7 +595,7 @@ public class PreferencesDialog extends JDialog {
 	void apply() {
 		String languageTag = getLanguages().get(0).get(languagesListCB.getSelectedIndex());
 		
-		if (!languageTag.equals(Local.getCurrentLocale())) {
+		if (!languageTag.equals(Local.getCurrentLocale().toLanguageTag())) {
 			//Set the language file
 			Local.setMessages(languageTag);
 			//Save current locale to configuration
@@ -905,7 +904,7 @@ public class PreferencesDialog extends JDialog {
 		Vector<String> displayLanguage = new Vector<String>();
 		
 		for (File file : files) {
-			if (file.getName().substring(11, 12).equals(".")) {
+			if (file != null && file.getName().substring(11, 12).equals(".")) {
 				languageTag.add(file.getName().substring(9, 11));
 				displayLanguage.add(Locale.forLanguageTag(file.getName().substring(9, 11)).
 						getDisplayLanguage(Local.getCurrentLocale()));

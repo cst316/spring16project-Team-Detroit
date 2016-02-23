@@ -59,10 +59,10 @@ public class TaskListVersioning {
         }
         else {
             // get all projects
-            Vector projects = ProjectManager.getAllProjects();
+            Vector<?> projects = ProjectManager.getAllProjects();
             String[] projectIds = new String[projects.size()];
             int c = 0;
-            for (Iterator iter = projects.iterator(); iter.hasNext();) {
+            for (Iterator<?> iter = projects.iterator(); iter.hasNext();) {
                 Project prj = (Project) iter.next();
                 projectIds[c++] = prj.getID();
             }
@@ -106,7 +106,7 @@ public class TaskListVersioning {
 //                }
                 
                 Attribute parentAttr = task.getAttribute("parent");
-            	if ((parentAttr == null) || (parentAttr.getValue() == "")) {
+            	if ((parentAttr.getValue()).equals("")) {
             		// no parent, do nothing here
             	}
             	else {
