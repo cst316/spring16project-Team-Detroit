@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 //Source code obtained and modified from GitHub user luizfonesca - Clock.java
 public class ClockObservable extends Observable implements ActionListener{
-	public static Timer timer = null;
+	private static Timer timer = null;
 
 	public ClockObservable() {
 		startClock();

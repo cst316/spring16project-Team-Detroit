@@ -18,7 +18,7 @@ public class MultiThreadedRunner extends BlockJUnit4ClassRunner {
     
     private AtomicInteger numThreads;
     
-    public static int maxThreads = 8;
+    public static final int maxThreads = 8;
     
     public MultiThreadedRunner (Class<?> klass) throws InitializationError {
         super (klass);

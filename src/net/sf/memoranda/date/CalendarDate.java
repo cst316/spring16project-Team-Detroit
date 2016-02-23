@@ -11,6 +11,7 @@ package net.sf.memoranda.date;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
@@ -140,7 +141,7 @@ public class CalendarDate {
     }
     
     public int hashCode() {
-    	int result = (int) (Math.random() * 42000);
+    	int result = new Random().nextInt();
     	return result;
     }
 

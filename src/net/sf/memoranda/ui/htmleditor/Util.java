@@ -19,7 +19,7 @@ import net.sf.memoranda.util.Local;
 
 public class Util {
     
-    public static Hashtable<String, Color> HTMLColors;
+    protected static final Hashtable<String, Color> HTMLColors;
     static {
         HTMLColors = new Hashtable<String, Color>();
         HTMLColors.put("red", Color.red);
@@ -41,7 +41,7 @@ public class Util {
         
     public static Color getColorForName(String name, Color defaultColor) {
         if (HTMLColors.containsKey(name.toLowerCase(Local.getCurrentLocale())))
-            return (Color)HTMLColors.get(name.toLowerCase());
+            return (Color)HTMLColors.get(name.toLowerCase(Locale.forLanguageTag("en")));
         return defaultColor;
     }
 
@@ -52,7 +52,7 @@ public class Util {
             if (colorVal.startsWith("#"))
                 colorVal = colorVal.substring(1);            
             try {
-                colorVal = new Integer(Integer.parseInt(colorVal, 16)).toString();
+                colorVal = Integer.valueOf(Integer.parseInt(colorVal, 16)).toString();
                 return Color.decode(colorVal.toLowerCase(Local.getCurrentLocale()));
             }
             catch (Exception ex) {

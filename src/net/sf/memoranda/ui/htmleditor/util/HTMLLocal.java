@@ -26,7 +26,7 @@ public class HTMLLocal {
         if (messages == null){
             return key;
         }
-        String msg = (String) messages.get(key.trim().toUpperCase());
+        String msg = (String) messages.get(key.trim().toUpperCase(Locale.forLanguageTag("en")));
         if ((msg != null) && (msg.length() > 0)){
             return msg;
         }
@@ -36,7 +36,7 @@ public class HTMLLocal {
    }
 
 public static Locale getCurrentLocale() {
-	return HTMLLocal.getCurrentLocale();
+	return Local.getCurrentLocale();
 }
 
 }

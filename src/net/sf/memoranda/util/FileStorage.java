@@ -42,7 +42,7 @@ import nu.xom.Document;
 /*$Id: FileStorage.java,v 1.15 2006/10/09 23:31:58 alexeya Exp $*/
 public class FileStorage implements Storage {
 
-    public static String JN_DOCPATH = Util.getEnvDir();
+    static String JN_DOCPATH = Util.getEnvDir();
     private HTMLEditorKit editorKit = new HTMLEditorKit();
 
     public FileStorage() {

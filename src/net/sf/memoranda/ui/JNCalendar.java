@@ -68,11 +68,11 @@ public class JNCalendar extends JTable {
 				if (val != null) {
 					if (val
 						.toString()
-						.equals(new Integer(_date.getDay()).toString()))
+						.equals(Integer.valueOf(_date.getDay()).toString()))
 						return;
 					_date =
 						new CalendarDate(
-							Integer.valueOf(val.toString()).intValue(),
+							Integer.valueOf(val.toString()),
 							_date.getMonth(),
 							_date.getYear());
 					notifyListeners();
@@ -133,13 +133,13 @@ public class JNCalendar extends JTable {
 		Object d = this.getModel().getValueAt(row, column);
 		/*
 		 * if (d != null) return new JNCalendarCellRenderer( new
-		 * CalendarDate(new Integer(d.toString()).intValue(), _date.getMonth(),
+		 * CalendarDate(new Integer(d.toString()), _date.getMonth(),
 		 * _date.getYear()));
 		 */
 		if (d != null)
 			renderer.setDate(
 				new CalendarDate(
-					new Integer(d.toString()).intValue(),
+					new Integer(d.toString()),
 					_date.getMonth(),
 					_date.getYear()));
 		else

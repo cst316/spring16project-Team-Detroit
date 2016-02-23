@@ -282,7 +282,7 @@ public class JNCalendarPanel extends JPanel {
 
   void yearSpin_actionPerformed() {
     if (ignoreChange) return;
-    _date = new CalendarDate(_date.getDay(), _date.getMonth(), ((Integer)yearSpin.getValue()).intValue());
+    _date = new CalendarDate(_date.getDay(), _date.getMonth(), ((Integer)yearSpin.getValue()));
     jnCalendar.set(_date);
     notifyListeners();
   }

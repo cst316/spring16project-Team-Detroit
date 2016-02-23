@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -301,7 +302,7 @@ public class TableDialog extends JDialog {
 			return;
 
 		bgcolorField.setText(
-			"#" + Integer.toHexString(c.getRGB()).substring(2).toUpperCase(HTMLLocal.getCurrentLocale()));
+			"#" + Integer.toHexString(c.getRGB()).substring(2).toUpperCase(Locale.forLanguageTag("en")));
 		Util.setBgcolorField(bgcolorField);
 	}
 

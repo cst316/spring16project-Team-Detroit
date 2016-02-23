@@ -37,14 +37,14 @@ public class EventImpl implements Event, Comparable {
      * @see net.sf.memoranda.Event#getHour()
      */
     public int getHour() {
-        return Integer.valueOf(_elem.getAttribute("hour").getValue()).intValue();
+        return Integer.valueOf(_elem.getAttribute("hour").getValue());
     }
 
     /**
      * @see net.sf.memoranda.Event#getMinute()
      */
     public int getMinute() {
-        return new Integer(_elem.getAttribute("min").getValue()).intValue();
+        return Integer.valueOf(_elem.getAttribute("min").getValue());
     }
     
     public String getTimeString() {
@@ -92,7 +92,7 @@ public class EventImpl implements Event, Comparable {
      */
     public int getPeriod() {
         Attribute a = _elem.getAttribute("period");
-        if (a != null) return new Integer(a.getValue()).intValue();
+        if (a != null) return new Integer(a.getValue());
         return 0;
     }
     /**
@@ -108,7 +108,7 @@ public class EventImpl implements Event, Comparable {
      */
     public int getRepeat() {
         Attribute a = _elem.getAttribute("repeat-type");
-        if (a != null) return new Integer(a.getValue()).intValue();
+        if (a != null) return new Integer(a.getValue());
         return 0;
     }
     /**

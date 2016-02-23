@@ -20,6 +20,7 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Locale;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -233,7 +234,7 @@ public class HTMLEditor extends JPanel {
 			 * String elName =
 			 * document.getParagraphElement(editor.getCaretPosition()).getName();
 			 * HTML.Tag tag = HTML.getTag(elName); if
-			 * (elName.toUpperCase().equals("P-IMPLIED")) tag =
+			 * (elName.toUpperCase(Locale.forLanguageTag("en")).equals("P-IMPLIED")) tag =
 			 * HTML.Tag.IMPLIED; HTMLEditorKit.InsertHTMLTextAction hta = new
 			 * HTMLEditorKit.InsertHTMLTextAction("insertHR", " <hr> ", tag,
 			 * HTML.Tag.HR);
@@ -358,7 +359,7 @@ public class HTMLEditor extends JPanel {
 		 * null); } catch (Exception e) { e.printStackTrace();
 		 */
 		Element el = document.getParagraphElement(editor.getSelectionStart());
-		if (el.getName().toUpperCase(HTMLLocal.getCurrentLocale()).equals("P-IMPLIED"))
+		if (el.getName().toUpperCase(Locale.forLanguageTag("en")).equals("P-IMPLIED"))
 			el = el.getParentElement();
 		String elName = el.getName();
 		StringWriter sw = new StringWriter();
@@ -1186,7 +1187,7 @@ public class HTMLEditor extends JPanel {
 		/*
 		 * currentParaElement =
 		 * document.getParagraphElement(editor.getCaretPosition());
-		 * currentTagName = currentParaElement.getName().toUpperCase();
+		 * currentTagName = currentParaElement.getName().toUpperCase(Locale.forLanguageTag("en"));
 		 */
 
 		AttributeSet charattrs = null;
@@ -1266,7 +1267,7 @@ public class HTMLEditor extends JPanel {
 		String pName = pEl.getName().toUpperCase(net.sf.memoranda.util.Local.getCurrentLocale());
 		blockCBEventsLock = true;
 		if (pName.equals("P-IMPLIED"))
-			pName = pEl.getParentElement().getName().toUpperCase();
+			pName = pEl.getParentElement().getName().toUpperCase(Locale.forLanguageTag("en"));
 
 		if (pName.equals("P"))
 			blockCB.setSelectedIndex(T_P);
@@ -1294,7 +1295,7 @@ public class HTMLEditor extends JPanel {
 		this.insertTableRowAction.update();
 		/*
 		 * String ppName =
-		 * document.getParagraphElement(editor.getCaretPosition()).getParentElement().getName().toUpperCase();
+		 * document.getParagraphElement(editor.getCaretPosition()).getParentElement().getName().toUpperCase(Locale.forLanguageTag("en"));
 		 * System.out.print(ppName+"->"+pName+":");
 		 * 
 		 * AbstractDocument.BranchElement pEl =
@@ -1375,12 +1376,12 @@ public class HTMLEditor extends JPanel {
 
 			Element elem =
 				document.getParagraphElement(editor.getCaretPosition());
-			String elName = elem.getName().toUpperCase(HTMLLocal.getCurrentLocale());
+			String elName = elem.getName().toUpperCase(Locale.forLanguageTag("en"));
 			String parentname = elem.getParentElement().getName();
 			HTML.Tag parentTag = HTML.getTag(parentname);
 			if (parentname.toUpperCase(Local.getCurrentLocale()).equals("P-IMPLIED"))
 				parentTag = HTML.Tag.IMPLIED;
-			if (parentname.toLowerCase().equals("li")) {
+			if (parentname.toLowerCase(Locale.forLanguageTag("en")).equals("li")) {
 				// HTML.Tag listTag =
 				// HTML.getTag(elem.getParentElement().getParentElement().getName());
 				if (elem.getEndOffset() - elem.getStartOffset() > 1) {
@@ -1412,7 +1413,7 @@ public class HTMLEditor extends JPanel {
 					HTML.Tag listParentTag =
 						HTML.getTag(listParentElement.getName());
 					String listParentTagName = listParentTag.toString();
-					if (listParentTagName.toLowerCase().equals("li")) {
+					if (listParentTagName.toLowerCase(Locale.forLanguageTag("en")).equals("li")) {
 						Element listAncEl =
 							listParentElement.getParentElement();
 						try {
@@ -1505,8 +1506,8 @@ public class HTMLEditor extends JPanel {
 					.getParagraphElement(editor.getCaretPosition())
 					.getName();
 			/*
-			 * if ((elName.toUpperCase().equals("PRE")) ||
-			 * (elName.toUpperCase().equals("P-IMPLIED"))) {
+			 * if ((elName.toUpperCase(Locale.forLanguageTag("en")).equals("PRE")) ||
+			 * (elName.toUpperCase(Locale.forLanguageTag("en")).equals("P-IMPLIED"))) {
 			 * editor.replaceSelection("\r"); return;
 			 */
 			HTML.Tag tag = HTML.getTag(elName);
@@ -1541,7 +1542,7 @@ public class HTMLEditor extends JPanel {
 					.getParentElement()
 					.getParentElement();
 			for (int i = 0; i < tr.getElementCount(); i++)
-				if (tr.getElement(i).getName().toUpperCase(HTMLLocal.getCurrentLocale()).equals("TD"))
+				if (tr.getElement(i).getName().toUpperCase(Locale.forLanguageTag("en")).equals("TD"))
 					trTag += "<td><p></p></td>";
 			trTag += "</tr>";
 
@@ -1566,7 +1567,7 @@ public class HTMLEditor extends JPanel {
 				.getParagraphElement(editor.getCaretPosition())
 				.getParentElement()
 				.getName()
-				.toUpperCase(HTMLLocal.getCurrentLocale())
+				.toUpperCase(Locale.forLanguageTag("en"))
 				.equals("TD");
 		}
 
@@ -1604,7 +1605,7 @@ public class HTMLEditor extends JPanel {
 				.getParagraphElement(editor.getCaretPosition())
 				.getParentElement()
 				.getName()
-				.toUpperCase(HTMLLocal.getCurrentLocale())
+				.toUpperCase(Locale.forLanguageTag("en"))
 				.equals("TD");
 		}
 
@@ -1831,12 +1832,12 @@ public class HTMLEditor extends JPanel {
 		int cols = 1;
 		int rows = 1;
 		try {
-			cols = ((Integer) dlg.columns.getValue()).intValue();
+			cols = ((Integer) dlg.columns.getValue());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		try {
-			rows = ((Integer) dlg.rows.getValue()).intValue();
+			rows = ((Integer) dlg.rows.getValue());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -1938,7 +1939,7 @@ public class HTMLEditor extends JPanel {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		dlg.chkNewWin.setSelected(target.toUpperCase().equals("_BLANK"));
+		dlg.chkNewWin.setSelected(target.toUpperCase(Locale.forLanguageTag("en")).equals("_BLANK"));
 		dlg.header.setText(HTMLLocal.getString("Hyperlink properties"));
 		dlg.setTitle(HTMLLocal.getString("Hyperlink properties"));
 		dlg.setVisible(true);
@@ -2137,7 +2138,7 @@ public class HTMLEditor extends JPanel {
 				tda
 					.getAttribute(HTML.Attribute.ALIGN)
 					.toString()
-					.toLowerCase(HTMLLocal.getCurrentLocale()));
+					.toLowerCase(Locale.forLanguageTag("en")));
 		if (tda.isDefined(HTML.Attribute.VALIGN))
 			dlg.tdValignCB.setSelectedItem(
 				tda
@@ -2158,13 +2159,13 @@ public class HTMLEditor extends JPanel {
 				tra
 					.getAttribute(HTML.Attribute.ALIGN)
 					.toString()
-					.toLowerCase());
+					.toLowerCase(Locale.forLanguageTag("en")));
 		if (tra.isDefined(HTML.Attribute.VALIGN))
 			dlg.trValignCB.setSelectedItem(
 				tra
 					.getAttribute(HTML.Attribute.VALIGN)
 					.toString()
-					.toLowerCase());
+					.toLowerCase(Locale.forLanguageTag("en")));
 
 		//TABLE ****
 		AttributeSet ta = table.getAttributes();
@@ -2181,13 +2182,13 @@ public class HTMLEditor extends JPanel {
 				ta.getAttribute(HTML.Attribute.HEIGHT).toString());
 		if (ta.isDefined(HTML.Attribute.ALIGN))
 			dlg.alignCB.setSelectedItem(
-				ta.getAttribute(HTML.Attribute.ALIGN).toString().toLowerCase());
+				ta.getAttribute(HTML.Attribute.ALIGN).toString().toLowerCase(Locale.forLanguageTag("en")));
 		if (ta.isDefined(HTML.Attribute.VALIGN))
 			dlg.vAlignCB.setSelectedItem(
 				ta
 					.getAttribute(HTML.Attribute.VALIGN)
 					.toString()
-					.toLowerCase());
+					.toLowerCase(Locale.forLanguageTag("en")));
 		if (ta.isDefined(HTML.Attribute.CELLPADDING))
 			try {
 				Integer i =
@@ -2415,7 +2416,7 @@ public class HTMLEditor extends JPanel {
 		}
 
 		Element el = document.getParagraphElement(editor.getCaretPosition());
-		if (el.getName().toUpperCase(HTMLLocal.getCurrentLocale()).equals("P-IMPLIED")) {
+		if (el.getName().toUpperCase(Locale.forLanguageTag("en")).equals("P-IMPLIED")) {
 			Element pEl = el.getParentElement();
 			String pElName = pEl.getName();
 			String newName = tag.toString();
@@ -2546,7 +2547,7 @@ public class HTMLEditor extends JPanel {
 			System.out.println(k + " = '" + attrs.getAttribute(k) + "'");
 		}
 
-		if (pEl.getParentElement().getName().toUpperCase().equals("TD")) {
+		if (pEl.getParentElement().getName().toUpperCase(Locale.forLanguageTag("en")).equals("TD")) {
 			setTableProperties(pEl.getParentElement());
 			return;
 		}

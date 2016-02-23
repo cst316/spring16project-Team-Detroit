@@ -7,6 +7,7 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package net.sf.memoranda.util;
+import java.util.Locale;
 import java.util.StringTokenizer;
 import nu.xom.Attribute;
 import nu.xom.Element;
@@ -24,7 +25,7 @@ public class AppList {
     public static String OS_SOLARIS = "solaris";
 
     public static String getPlafCode(String osName) {
-        osName = osName.toLowerCase();
+        osName = osName.toLowerCase(Locale.forLanguageTag("en"));
         if (osName.indexOf(OS_WINDOWS) > -1)
             return OS_WINDOWS;
         else if (osName.indexOf(OS_LINUX) > -1)

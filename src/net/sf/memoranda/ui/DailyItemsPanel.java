@@ -525,7 +525,7 @@ public class DailyItemsPanel extends JPanel implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		if (clockObservable == o) {
-			clockLabel.setText(Local.getString("Current time is: ") + (String)arg);
+			clockLabel.setText(Local.getString("Current time is") + ": " + (String) arg);
 		}
 	}
 }

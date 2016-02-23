@@ -7,6 +7,7 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package net.sf.memoranda.util;
+import java.util.Locale;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -75,7 +76,7 @@ public class MimeType {
     public String getAppId(String plafCode) {
         Elements apps = _root.getChildElements("app");
         for (int i = 0; i < apps.size(); i++)
-            if (apps.get(i).getAttribute("platform").getValue().toLowerCase().equals(plafCode.toLowerCase()))
+            if (apps.get(i).getAttribute("platform").getValue().toLowerCase(Locale.forLanguageTag("en")).equals(plafCode.toLowerCase(Locale.forLanguageTag("en"))))
                 return apps.get(i).getAttribute("appId").getValue();
         return null;
     }
@@ -84,7 +85,7 @@ public class MimeType {
         if (getAppId(plafCode) != null) {
             Elements apps = _root.getChildElements("app");
             for (int i = 0; i < apps.size(); i++)
-                if (apps.get(i).getAttribute("platform").getValue().toLowerCase().equals(plafCode.toLowerCase()))
+                if (apps.get(i).getAttribute("platform").getValue().toLowerCase(Locale.forLanguageTag("en")).equals(plafCode.toLowerCase(Locale.forLanguageTag("en"))))
                     apps.get(i).getAttribute("appId").setValue(appId);
         }
         else {

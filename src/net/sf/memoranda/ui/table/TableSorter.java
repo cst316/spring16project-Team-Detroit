@@ -82,9 +82,9 @@ public class TableSorter extends TableMap {
          
          if (type.getSuperclass() == java.lang.Integer.class) {
             Integer n1 = (Integer)data.getValueAt(row1, column);
-            int i1 = n1.intValue();
+            int i1 = n1;
             Integer n2 = (Integer)data.getValueAt(row2, column);
-            int i2 = n2.intValue();
+            int i2 = n2;
 
             if (i1 < i2) {
                 return -1;
@@ -197,7 +197,7 @@ public class TableSorter extends TableMap {
         compares++;
         for (int level = 0; level < sortingColumns.size(); level++) {
             Integer column = (Integer)sortingColumns.elementAt(level);
-            int result = compareRowsByColumn(row1, row2, column.intValue());
+            int result = compareRowsByColumn(row1, row2, column);
             if (result != 0) {
                 return ascending ? result : -result;
             }

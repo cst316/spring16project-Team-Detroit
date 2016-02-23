@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.io.Writer;
 import java.util.BitSet;
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Stack;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -1076,12 +1077,12 @@ public class AltHTMLWriter extends AbstractWriter {
                     if (weightValue != null) {
                         int fweight;
                         try {
-                            fweight = Integer.valueOf(weightValue).intValue();
+                            fweight = Integer.valueOf(weightValue);
                         }
                         catch (Exception ex) {
                             fweight = -1;
                         }
-                        if ((weightValue.toLowerCase().equals("bold")) || (fweight > 400))
+                        if ((weightValue.toLowerCase(Locale.forLanguageTag("en")).equals("bold")) || (fweight > 400))
                             to.addAttribute(HTML.Tag.B, SimpleAttributeSet.EMPTY);
                     }
                 }

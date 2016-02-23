@@ -140,15 +140,16 @@ public class Local {
         { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
     public static String getString(String key) {    	
-        if ((messages == null) || (disabled || currentLocale.equals(Locale.forLanguageTag("en")))) {
+        if ((messages == null) || disabled || currentLocale.equals(Locale.forLanguageTag("en"))) {
             return key;
         }
-        String msg = (String) messages.get(key.trim().toUpperCase());        
+        String msg = (String) messages.get(key.trim().toUpperCase(Locale.forLanguageTag("en")));        
         if ((msg != null) && (msg.length() > 0)) {
             return msg;
         } else {
-        	put(key.toUpperCase(), key + " - Requires Translation - " + Local.getCurrentLocale().getDisplayLanguage());
-        	msg = (String) messages.get(key.trim().toUpperCase());
+        	put(key.toUpperCase(Locale.forLanguageTag("en")), key + " - Requires Translation - " + Local
+        			.getCurrentLocale().getDisplayLanguage(Local.getCurrentLocale()));
+        	msg = (String) messages.get(key.trim().toUpperCase(Locale.forLanguageTag("en")));
             return msg;
         }
     }
@@ -276,7 +277,7 @@ public class Local {
         }
         int[] time = new int[2];
         try {
-            time[0] = Integer.valueOf(h).intValue();
+            time[0] = Integer.valueOf(h);
             if ((time[0] < 0) || (time[0] > 23)) {
                 time[0] = 0;
             }
@@ -285,7 +286,7 @@ public class Local {
             return null;
         }
         try {
-            time[1] = new Integer(m).intValue();
+            time[1] = new Integer(m);
             if ((time[1] < 0) || (time[1] > 59)) {
                 time[1] = 0;
             }

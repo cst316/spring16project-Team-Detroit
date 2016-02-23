@@ -227,12 +227,12 @@ public class NoteListImpl implements NoteList {
         }
 
         public int getValue() {
-            return new Integer(yearElement.getAttribute("year").getValue()).intValue();
+            return Integer.valueOf(yearElement.getAttribute("year").getValue());
         }
 
         public Month getMonth(int m) {
             Elements ms = yearElement.getChildElements("month");
-            String mm = new Integer(m).toString();
+            String mm = Integer.valueOf(m).toString();
             for (int i = 0; i < ms.size(); i++)
                 if (ms.get(i).getAttribute("month").getValue().equals(mm))
                     return new Month(ms.get(i));
@@ -270,14 +270,14 @@ public class NoteListImpl implements NoteList {
         }
 
         public int getValue() {
-            return new Integer(mElement.getAttribute("month").getValue()).intValue();
+            return new Integer(mElement.getAttribute("month").getValue());
         }
 
         public Day getDay(int d) {
             if (mElement == null)
                 return null;
             Elements ds = mElement.getChildElements("day");
-            String dd = new Integer(d).toString();
+            String dd = Integer.valueOf(d).toString();
             for (int i = 0; i < ds.size(); i++)
                 if (ds.get(i).getAttribute("day").getValue().equals(dd))
                     return new Day(ds.get(i));
@@ -287,14 +287,14 @@ public class NoteListImpl implements NoteList {
 
         private Day createDay(int d) {
             Element el = new Element("day");
-            el.addAttribute(new Attribute("day", new Integer(d).toString()));
+            el.addAttribute(new Attribute("day", Integer.valueOf(d).toString()));
 /*            el.addAttribute(
                 new Attribute(
                     "date",
                     new CalendarDate(
                         d,
                         getValue(),
-                        new Integer(((Element) mElement.getParent()).getAttribute("year").getValue()).intValue())
+                        new Integer(((Element) mElement.getParent()).getAttribute("year").getValue()))
                         .toString()));
 */
             mElement.appendChild(el);
@@ -343,7 +343,7 @@ public class NoteListImpl implements NoteList {
         }
 
         public int getValue() {
-            return Integer.valueOf(dEl.getAttribute("day").getValue()).intValue();
+            return Integer.valueOf(dEl.getAttribute("day").getValue());
         }
 
         /*public Note getNote() {

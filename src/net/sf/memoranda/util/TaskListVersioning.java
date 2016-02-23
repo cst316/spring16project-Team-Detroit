@@ -23,7 +23,7 @@ import nu.xom.Elements;
  */
 public class TaskListVersioning {
     
-    public static final String[] VERSIONS = new String[]{
+    private static final String[] VERSIONS = new String[]{
             "-//Memoranda//DTD Tasklist 1.0//EN",
             "-//Memoranda//DTD Tasklist 1.1d1//EN"
     };

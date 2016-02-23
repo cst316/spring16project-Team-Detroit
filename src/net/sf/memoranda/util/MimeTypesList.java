@@ -7,6 +7,7 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package net.sf.memoranda.util;
+import java.util.Locale;
 import java.util.Vector;
 
 import nu.xom.Attribute;
@@ -18,7 +19,7 @@ import nu.xom.Elements;
  */
 /*$Id: MimeTypesList.java,v 1.3 2004/01/30 12:17:42 alexeya Exp $*/
 public class MimeTypesList {
-    public static Document _doc = null;
+    static Document _doc = null;
     static Element _root = null;
 
     static {
@@ -52,7 +53,7 @@ public class MimeTypesList {
             Element el = els.get(i);
             Elements exts = el.getChildElements("ext");
             for (int j = 0; j < exts.size(); j++)
-                if (exts.get(j).getValue().toLowerCase().equals(ext.toLowerCase()))
+                if (exts.get(j).getValue().toLowerCase(Locale.forLanguageTag("en")).equals(ext.toLowerCase(Locale.forLanguageTag("en"))))
                     return new MimeType(el);
         }
         return new MimeType();
@@ -82,7 +83,7 @@ public class MimeTypesList {
         String ext = null;
         int i = s.lastIndexOf('.');
         if (i > 0 &&  i < s.length() - 1) {
-            ext = s.substring(i+1).toLowerCase();
+            ext = s.substring(i+1).toLowerCase(Locale.forLanguageTag("en"));
         }
         return ext;
     }
