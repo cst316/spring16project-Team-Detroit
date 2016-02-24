@@ -48,7 +48,8 @@ public class LoadableProperties extends Hashtable<Object, Object> {
         String aKey;
         Object aValue;
         TreeMap<?, ?> tm = new TreeMap<Object, Object>(this);
-        for (Iterator<?> i = tm.keySet().iterator(); i.hasNext();) {
+        for (@SuppressWarnings("unchecked")
+        Iterator<String> i = (Iterator<String>) tm.keySet().iterator(); i.hasNext();) {
             aKey = (String) i.next();
             aValue = get(aKey);
             out.write(aKey + " = " + aValue);

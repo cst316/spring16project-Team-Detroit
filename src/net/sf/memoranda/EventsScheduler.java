@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
+
+import net.sf.memoranda.date.CalendarDate;
 
 /**
  *
@@ -141,5 +144,13 @@ public class EventsScheduler {
         }
     }
 
+    public static long getTimeToNextEventInSeconds() {
+      Event ev = getFirstScheduledEvent();
+      
+      long seconds = CalendarDate.getDateDiff(new Date(), 
+          ev.getTime(), TimeUnit.SECONDS);
+      
+      return seconds;
+    }
 
 }

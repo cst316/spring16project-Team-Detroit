@@ -131,7 +131,7 @@ public class EventImpl implements Event, Comparable {
 		d = calendar.getTime(); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
         return d;
     }
-	
+    
 	/**
      * @see net.sf.memoranda.Event#getWorkinDays()
      */
