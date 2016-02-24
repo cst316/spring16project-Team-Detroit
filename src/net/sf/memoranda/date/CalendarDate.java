@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
@@ -183,6 +184,10 @@ public class CalendarDate {
     public String getShortDateString() {
         return Local.getDateString(this, DateFormat.SHORT);
     }
-    
 
+    //Method provided by Sebastien Lorber of StackOverflow  
+    public static long getDateDiff(Date earlierDate, Date laterDate, TimeUnit timeUnit) {
+        long diffInMillies = laterDate.getTime() - earlierDate.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+    }
 }

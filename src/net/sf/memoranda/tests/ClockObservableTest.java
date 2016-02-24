@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.CountDownLatch;
+//import java.util.concurrent.CountDownLatch;
 
-import org.junit.Before;
+//import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import net.sf.memoranda.util.ClockObservable;
-import net.sf.memoranda.util.Configuration;
+//import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.MultiThreadedRunner;
 
 @RunWith(MultiThreadedRunner.class)
