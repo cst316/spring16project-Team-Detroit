@@ -25,7 +25,6 @@ public class ContactList {
 		for (Iterator<EmailContact> it = cl.iterator(); it.hasNext(); ) {		    
 			EmailContact ec = it.next();
 		    if (ec.getCredentials().equals("User")) {
-		    	System.out.println("NO");
 		    	contactList.put("User", ec);
 		    }
 		    else {
