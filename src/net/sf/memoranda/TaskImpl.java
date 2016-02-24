@@ -352,7 +352,7 @@ public class TaskImpl implements Task, Comparable<Object> {
 	 }
 	 
 	 public int hashCode() {
-		 int result = new Random().nextInt();
+		   int result = new Random().nextInt();
 	     return result;
 	 }
 	 

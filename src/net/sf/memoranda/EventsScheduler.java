@@ -34,18 +34,19 @@ public class EventsScheduler {
     public static void init() {
         cancelAll();
         //changeDateTimer.cancel();
-        Vector<Event> events = (Vector<Event>)EventsManager.getActiveEvents();
+        Vector<Event> events = (Vector<Event>)EventsManager.getNextActiveEventWithinThirtyDays();
         _timers = new Vector<EventTimer>();
         /*DEBUG*/System.out.println("----------");
         for (int i = 0; i < events.size(); i++) {
             Event ev = (Event)events.get(i);
             Date evTime = ev.getTime();
-        /*DEBUG*/System.out.println((Calendar.getInstance()).getTime());
-          //  if (evTime.after(new Date())) {
-	      if (evTime.after((Calendar.getInstance()).getTime())) {	
+            /*DEBUG*/System.out.println(evTime.toString() + (Calendar.getInstance()).getTime());
+            //  if (evTime.after(new Date())) {
+	          if (evTime.after((Calendar.getInstance()).getTime())) {	
                 EventTimer t = new EventTimer(ev);
                 t.schedule(new NotifyTask(t), ev.getTime());                
                 _timers.add(t);
+                System.out.println("Timers size =" + _timers.size());
                 /*DEBUG*/System.out.println(ev.getTimeString());
             }
         }
@@ -146,6 +147,11 @@ public class EventsScheduler {
 
     public static long getTimeToNextEventInSeconds() {
       Event ev = getFirstScheduledEvent();
+      
+      if (ev == null) {
+        //System.out.println("Could not find event in the next 30 days");
+        return -1;
+      }
       
       long seconds = CalendarDate.getDateDiff(new Date(), 
           ev.getTime(), TimeUnit.SECONDS);

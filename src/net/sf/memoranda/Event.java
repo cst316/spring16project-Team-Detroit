@@ -22,6 +22,10 @@ public interface Event {
     
     //CalendarDate getDate();
     
+    int getTheMonth();
+    
+    int getTheDay();
+    
     int getHour();
     
     int getMinute();

@@ -596,6 +596,9 @@ public class DailyItemsPanel extends JPanel implements Observer {
 
   public String getCountdownLabelText(long arg) {
     String result = ""; 
+    if (arg == -1) {
+      return Local.getString("No Future Events Scheduled Within One Month");
+    }
     
     long secondsRemaining = arg;
 	  
@@ -608,6 +611,7 @@ public class DailyItemsPanel extends JPanel implements Observer {
     int minutes = (int) (secondsRemaining / 60);
     secondsRemaining -= minutes * 60;
 
+    result += Local.getString("Next event in") + " ";
 	  result += days + "d:";
 	  result += hours + "h:";
 	  result += minutes +"m:";
