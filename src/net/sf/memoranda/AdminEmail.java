@@ -23,14 +23,19 @@ Class:	DailyEmail
 Description:  Creates the daily email sent to the user showing their schedule of events for the next day.
               Sends email when program is closed.
 */
-public class DailyEmail extends Emailer {
+public class AdminEmail extends Emailer {
 	
 	private static final String ADMIN_EMAIL = "memorandasystem@gmail.com";
 	private static final String ADMIN_EMAIL_PWD = "cst316project";
 	private static final String SUBJECT = "Tomorrows Schedule";
 	
-	public DailyEmail() {
+	public AdminEmail() {
 		super(ADMIN_EMAIL, ADMIN_EMAIL_PWD, recipient(), SUBJECT, message());
+	}
+	
+	//  Create test email for user profile set up
+	public AdminEmail(String email, String pwd, String recipient) {
+		super(email, pwd, recipient, "Test Email", "Testing email/password input");
 	}
 	
 	/**
@@ -56,7 +61,7 @@ public class DailyEmail extends Emailer {
 	  Description: Gets and returns user email address
 	*/
 	private static String recipient() {
-		return ContactList.getContact("USER").getEmail();
+		return ContactList.getContact("User").getEmail();
 	}
 	
 	/**
@@ -70,7 +75,7 @@ public class DailyEmail extends Emailer {
 		CalendarDate c = new CalendarDate();
 		c = CalendarDate.tomorrow();				
 
-		String evlist = "Dear " + ContactList.getContact("USER").getName() + ",\n\n" + "Here is your schedule for tomorrow:\n\n"
+		String evlist = "Dear " + ContactList.getContact("User").getName() + ",\n\n" + "Here is your schedule for tomorrow:\n\n"
 		                        + new SimpleDateFormat("EEEE, MMMM, dd yyyy").format(tomorrow()) + "\n";
 		                        
 

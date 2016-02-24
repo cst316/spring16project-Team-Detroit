@@ -41,7 +41,7 @@ public class ContactListStorage implements Serializable {
 	*/
 	public static void addContactToList(EmailContact ec) {
 		contactList.add(ec);
-		ContactList.addContactToMap(ec.getName().toUpperCase(Locale.forLanguageTag("en")) , ec);
+		ContactList.addContactToMap(ec.getName(), ec);
 	}
 	
 	/**
@@ -53,7 +53,24 @@ public class ContactListStorage implements Serializable {
 	*/
 	public static void addUserToList(EmailContact user) {
 		contactList.add(user);
-		ContactList.addUserToMap("USER", user);
+		ContactList.addUserToMap("User", user);
+	}
+	
+	/**
+	  Method:	removeUser
+	  @param:	N/A
+	  @return: 	N/A
+
+	  Description: Removes user contact from the contact list ArrayList
+	*/
+	public static void removeUser() {
+		for (Iterator<EmailContact> it = contactList.iterator(); it.hasNext(); ) {		    
+			EmailContact ec = it.next();
+		    if (ec.getCredentials().equals("User")) {
+		        it.remove();
+		    }
+		}
+		ContactList.removeUser();
 	}
 	
 	/**

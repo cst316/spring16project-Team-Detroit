@@ -24,23 +24,30 @@ public class EmailContact implements Serializable {
 	private String email;
 	private String phone;
 	private String notes;
+	private String credentials;
+	private String password;
 	
 	// Default Constructor
 	public EmailContact() {		
 	}
 	
 	// User constructor
-	public EmailContact(String name, String email) {
+	public EmailContact(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
+		this.password = password;
+		credentials = "User";
 		phone = "";
-		notes = "";		
+		notes = "";	
+		
 	}
 	
 	// Normal contact constructor
 	public EmailContact(String name, String email, String phone, String notes) {
 		this.name = name;
 		this.email = email;
+		password = "";
+		credentials = "";
 		this.phone = phone;
 		this.notes = notes;
 	}
@@ -76,8 +83,24 @@ public class EmailContact implements Serializable {
 
 	public String getNotes() {
 		return notes;
+	}	
+	
+	public void setCredentials(String credentials) {
+		this.credentials = credentials;
 	}
 	
+	public String getCredentials() {
+		return credentials;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+		
 	/**
 	  Method:	validateEmail
 	  @param:	email - contacts email address

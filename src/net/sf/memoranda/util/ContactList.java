@@ -21,13 +21,17 @@ public class ContactList {
 	
 	static HashMap<String, EmailContact> contactList = new HashMap<String, EmailContact>();
 	
-	public ContactList(ArrayList<EmailContact> cl) {		
-		if (cl.size() != 0) {
-			contactList.put("USER", cl.get(0));
-			for (int i=1; i < cl.size(); i++) {
-			    contactList.put(cl.get(i).getName().toUpperCase(Locale.forLanguageTag("en")) , cl.get(i));
-			}
-		}		
+	public ContactList(ArrayList<EmailContact> cl) {
+		for (Iterator<EmailContact> it = cl.iterator(); it.hasNext(); ) {		    
+			EmailContact ec = it.next();
+		    if (ec.getCredentials().equals("User")) {
+		    	System.out.println("NO");
+		    	contactList.put("User", ec);
+		    }
+		    else {
+		    	contactList.put(ec.getName(), ec);
+		    }
+		}	
 	}
 	
 	public ContactList() {		
@@ -64,5 +68,31 @@ public class ContactList {
 	*/
 	public static void addUserToMap(String key, EmailContact ec) {
 		contactList.put(key,ec);
-	}  		
+	}  
+	
+	/**
+	  Method:	removeUser
+	  @param:	Key value for object, User email object to be stored in map
+	  @return: 	N/A
+
+	  Description: Removes user contact from the contact list hashmap
+	*/
+	public static void removeUser() {
+		contactList.remove("User");
+	}  
+	
+	/**
+	  Method:	contains
+	  @param:	Key value for object
+	  @return: 	Returns true if map contains key, if not returns false
+
+	  Description: Checks if contactList hashmap contains key
+	*/
+	public static boolean contains(String key) {
+		if (contactList.containsKey(key)) {
+			return true;
+		}
+		return false;
+	} 
+
 }

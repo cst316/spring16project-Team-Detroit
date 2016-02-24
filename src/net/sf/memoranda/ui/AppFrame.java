@@ -20,6 +20,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -43,7 +44,8 @@ import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
 
 import net.sf.memoranda.CurrentProject;
-import net.sf.memoranda.DailyEmail;
+import net.sf.memoranda.EmailContact;
+import net.sf.memoranda.AdminEmail;
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.NoteList;
@@ -55,6 +57,7 @@ import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.htmleditor.HTMLEditor;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.ContactList;
 import net.sf.memoranda.util.ContactListStorage;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.CurrentStorage;
@@ -129,15 +132,15 @@ public class AppFrame extends JFrame {
     };
     
     /**
-	  Method:	userEmailSetUpAction
+	  Method:	profileSetUpAction
 	  @param:	N/A
 	  @return: 	N/A
 
-	  Description: Handles click event of Set Up User Email from Email drop down menu
+	  Description: Handles click event of Edit Profile from User drop down menu
 	*/
-    public Action userEmailSetUpAction = new AbstractAction(Local.getString("Set Up User Email")) {
+    public Action profileSetUpAction = new AbstractAction(Local.getString("Edit Profile")) {
         public void actionPerformed(ActionEvent e) {
-            showUserEmailSetUp();
+            showUserProfileSetUp();
         }
     };
     
@@ -146,18 +149,12 @@ public class AppFrame extends JFrame {
 	  @param:	N/A
 	  @return: 	N/A
 
-	  Description: Handles click event of Add Contact from Email drop down menu, forces user to set 
-	               up their own email first.
+	  Description: Handles click event of Add Contact from User drop down menu
 	*/
     public Action addContactAction = new AbstractAction(Local.getString("Add Contact")) {
     	public void actionPerformed(ActionEvent e) {
-    		if (ContactListStorage.getSize() == 0) {
-    			JOptionPane.showMessageDialog(null, Local.getString("You must set up user email first!"), "Error", JOptionPane.INFORMATION_MESSAGE);
-    			showUserEmailSetUp();   			
-    		}
-    		else {
-    			showAddContact();
-    		}   		
+    		showAddContact();
+ 		
     	}
     };
     
@@ -305,9 +302,9 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuHelpBug = new JMenuItem();
     JMenuItem jMenuHelpAbout = new JMenuItem();
     
-    //  Email menu items:  Ryan Schultz 2/10/2016
-    JMenu jMenuEmail = new JMenu();
-    JMenuItem jMenuUserEmailSetUp = new JMenuItem(userEmailSetUpAction);
+    //  User menu items:  Ryan Schultz 2/10/2016
+    JMenu jMenuUser = new JMenu();
+    JMenuItem jMenuUserProfileSetUp = new JMenuItem(profileSetUpAction);
     JMenuItem jMenuAddContact = new JMenuItem(addContactAction);
 
     //Construct the frame
@@ -499,10 +496,10 @@ public class AppFrame extends JFrame {
         jMenuInsertHR.setText(Local.getString("Horizontal rule"));
         jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
         
-        //  Set text of email drop down, UserEmailSetUp and AddContact Email jMenuItems:  Ryan Schultz 2/10/2016
-        jMenuEmail.setText(Local.getString("Email"));
-        jMenuUserEmailSetUp.setText(Local.getString("Set Up User Email"));
-        jMenuUserEmailSetUp.setToolTipText(Local.getString("Set Up User Email"));
+        //  Set text of User drop down, UserProfileSetUp and AddContact User jMenuItems Added:  Ryan Schultz 2/10/2016
+        jMenuUser.setText(Local.getString("User"));
+        jMenuUserProfileSetUp.setText(Local.getString("Edit Profile"));
+        jMenuUserProfileSetUp.setToolTipText(Local.getString("Edit Profile"));
         jMenuAddContact.setText(Local.getString("Add Contact"));
         jMenuAddContact.setToolTipText(Local.getString("Add Contact"));
 
@@ -540,8 +537,8 @@ public class AppFrame extends JFrame {
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
         
-        //  Add Email jMenuItem item to menuBar Added:  Ryan Schultz 2/10/2016
-        menuBar.add(jMenuEmail);
+        //  Add User jMenuItem item to menuBar Added:  Ryan Schultz 2/10/2016
+        menuBar.add(jMenuUser);
         
         menuBar.add(jMenuHelp);
         this.setJMenuBar(menuBar);
@@ -624,9 +621,9 @@ public class AppFrame extends JFrame {
         jMenuGo.add(jMenuGoDayFwd);
         jMenuGo.add(jMenuGoToday);
         
-        //  Add jMenuItems to Email drop down menu item:  Ryan Schultz 2/10/2016
-        jMenuEmail.add(jMenuUserEmailSetUp);
-        jMenuEmail.add(jMenuAddContact);
+        //  Add jMenuItems to User drop down menu item:  Ryan Schultz 2/10/2016
+        jMenuUser.add(jMenuUserProfileSetUp);
+        jMenuUser.add(jMenuAddContact);
     	jMenuAddContact.setVisible(true);        
 
         splitPane.setBorder(null);
@@ -740,11 +737,12 @@ public class AppFrame extends JFrame {
         Context.put("FRAME_HEIGHT", new Integer(this.getHeight()));
         Context.put("FRAME_XPOS", new Integer(this.getLocation().x));
         Context.put("FRAME_YPOS", new Integer(this.getLocation().y));
-        //  Upon exit checks if user set up email, if so sets up daily events email Added:  Ryan Schultz 2/12/2016
-        if (ContactListStorage.getSize() != 0) {
+        //  Upon exit checks if user set up email, if so sets up daily events email Edited:  Ryan Schultz 2/23/2016
+        if (ContactList.contains("User")) {
         	@SuppressWarnings("unused")
-			DailyEmail de = new DailyEmail();
-        } 
+			AdminEmail de = new AdminEmail();
+        	
+        }
         exitNotify();
         System.exit(0);
     }
@@ -908,17 +906,31 @@ public class AppFrame extends JFrame {
     }
     
     /**
-	  Method:	showUserEmailSetUp
+	  Method:	showUserProfileSetUp
 	  @param:	N/A
 	  @return: 	N/A
 
-	  Description: Displays dialog box to set up user email
+	  Description: Displays dialog box to edit user profile, checks if user profile is already set up and if so
+	  			   asks user if they would like to edit profile.
 	*/
-    public void showUserEmailSetUp() {
-    	UserEmailSetUpDialog eDlg = new UserEmailSetUpDialog(this);
-    	eDlg.pack();
-        eDlg.setLocationRelativeTo(this);
-        eDlg.setVisible(true);
+    public void showUserProfileSetUp() {
+    	if (ContactList.getContact("User") != null) {
+			if (JOptionPane.showConfirmDialog(null, "Current Profile:\nName: " + ContactList.getContact("User").getName() 
+					+ "\nEmail: " + ContactList.getContact("User").getEmail() + "\nPassword: " + ContactList.getContact("User").getPassword() +
+					"\nWould you like to edit your profile?\n", "Edit Profile", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+				UserProfileSetUpDialog eDlg = new UserProfileSetUpDialog(this);
+				eDlg.pack();
+		        eDlg.setLocationRelativeTo(this);
+		        eDlg.setVisible(true);				
+			}		
+		}
+		else {
+			UserProfileSetUpDialog eDlg = new UserProfileSetUpDialog(this);
+			eDlg.pack();
+	        eDlg.setLocationRelativeTo(this);
+	        eDlg.setVisible(true);			
+		}
     }
     
     /**
@@ -1389,9 +1401,9 @@ public class AppFrame extends JFrame {
 	        jMenuInsertHR.setText(Local.getString("Horizontal rule"));
 	        jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
 			
-	        jMenuEmail.setText(Local.getString("Email"));
-	        jMenuUserEmailSetUp.setText(Local.getString("Set Up User Email"));
-	        jMenuUserEmailSetUp.setToolTipText(Local.getString("Set Up User Email"));
+	        jMenuUser.setText(Local.getString("User"));
+	        jMenuUserProfileSetUp.setText(Local.getString("Edit Profile"));
+	        jMenuUserProfileSetUp.setToolTipText(Local.getString("Edit Profile"));
 	        jMenuAddContact.setText(Local.getString("Add Contact"));
 	        jMenuAddContact.setToolTipText(Local.getString("Add Contact"));
 		}
