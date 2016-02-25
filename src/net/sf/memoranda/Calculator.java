@@ -99,9 +99,9 @@ public class Calculator extends JFrame implements ActionListener {
 
 		// Text color
 		for (int i = 0; i < jbButtons.length; i++) {
-			if (i < 10)
+			if (i < 10){
 				jbButtons[i].setForeground(Color.blue);
-			else
+			}else
 				jbButtons[i].setForeground(Color.red);
 		}
 
