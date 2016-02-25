@@ -135,7 +135,7 @@ public class UserProfileSetUpDialog extends JDialog {
 			    					"Successful Update", JOptionPane.INFORMATION_MESSAGE);
 			    		}
 			    		else {
-			    	    	JOptionPane.showMessageDialog(null, "You entered an invalid email and or/password!" + "\n" + "Example:  abcd@gmail.com", "Invalid Email", JOptionPane.INFORMATION_MESSAGE);
+			    	    	JOptionPane.showMessageDialog(null, "You entered an invalid email and or/password!" + "\n" + "Example:  abcd@gmail.com", "Invalid Email" + "\nEmail has to use Gmail servers", JOptionPane.INFORMATION_MESSAGE);
 			    	    	this.setVisible(true);
 			    	    	//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 			    	    	nameTextField.transferFocus();
