@@ -52,7 +52,7 @@ public class Calculator extends JFrame implements ActionListener {
 		setBackground(Color.gray);
 		jpMaster = new JPanel();
 		jlOutput = new JLabel("0");
-		jlOutput.setHorizontalTextPosition(JLabel.LEFT);
+		jlOutput.setHorizontalTextPosition(JLabel.RIGHT);
 		jlOutput.setBackground(Color.white);
 		jlOutput.setOpaque(true);
 
@@ -70,29 +70,29 @@ public class Calculator extends JFrame implements ActionListener {
 		}
 
 		// Operator Buttons
-		jbButtons[10] = new JButton("+/-");
+		jbButtons[10] = new JButton("±");
 		jbButtons[11] = new JButton(".");
 		jbButtons[12] = new JButton("=");
 		jbButtons[13] = new JButton("/");
 		jbButtons[14] = new JButton("*");
 		jbButtons[15] = new JButton("-");
 		jbButtons[16] = new JButton("+");
-		jbButtons[17] = new JButton("sqrt");
+		jbButtons[17] = new JButton("√");
 		jbButtons[18] = new JButton("%");
 		jbButtons[19] = new JButton("1/x");
 
 		// Function Buttons
-		jbButtons[20] = new JButton("MC");
-		jbButtons[21] = new JButton("MR");
-		jbButtons[22] = new JButton("MS");
-		jbButtons[23] = new JButton("M+");
+		jbButtons[20] = new JButton("");
+		jbButtons[21] = new JButton("");
+		jbButtons[22] = new JButton("");
+		jbButtons[23] = new JButton("");
 		jbButtons[24] = new JButton(Local.getString("Backspace"));
 		jbButtons[25] = new JButton("CE");
 		jbButtons[26] = new JButton("C");
 
 		// Calculator Layout
 		jpControl = new JPanel();
-		jpControl.setLayout(new GridLayout(1, 3, 2, 2));
+		jpControl.setLayout(new GridLayout(1, 3, 4, 4));
 		jpControl.add(jbButtons[24]);
 		jpControl.add(jbButtons[25]);
 		jpControl.add(jbButtons[26]);
@@ -106,10 +106,10 @@ public class Calculator extends JFrame implements ActionListener {
 		}
 
 		// 4 by 6 grid
-		jpButtons.setLayout(new GridLayout(4, 6, 2, 2));
+		jpButtons.setLayout(new GridLayout(4, 5, 4, 4));
 
 		// First Row
-		jpButtons.add(jbButtons[20]); // MC button
+		//jpButtons.add(jbButtons[20]); // MC button
 		for (int i = 7; i <= 9; i++) // 7, 8, 9 buttons
 		{
 			jpButtons.add(jbButtons[i]);
@@ -118,7 +118,7 @@ public class Calculator extends JFrame implements ActionListener {
 		jpButtons.add(jbButtons[17]); // Square Root button
 
 		// Second Row
-		jpButtons.add(jbButtons[21]); // MR button
+		//jpButtons.add(jbButtons[21]); // MR button
 		for (int i = 4; i <= 6; i++) {
 			jpButtons.add(jbButtons[i]); // 4, 5, 6 buttons
 		}
@@ -126,7 +126,7 @@ public class Calculator extends JFrame implements ActionListener {
 		jpButtons.add(jbButtons[18]); // Percentage button
 
 		// Third Row
-		jpButtons.add(jbButtons[22]); // MS button
+		//jpButtons.add(jbButtons[22]); // MS button
 		for (int i = 1; i <= 3; i++) {
 			jpButtons.add(jbButtons[i]); // 1, 2, 3 buttons
 		}
@@ -134,7 +134,7 @@ public class Calculator extends JFrame implements ActionListener {
 		jpButtons.add(jbButtons[19]); // Reciprocal button
 
 		// Fourth Row
-		jpButtons.add(jbButtons[23]); // M+ button
+		//jpButtons.add(jbButtons[23]); // M+ button
 		jpButtons.add(jbButtons[0]); // 0 button
 		jpButtons.add(jbButtons[10]); // Positive/Negative button
 		jpButtons.add(jbButtons[11]); // Decimal button
@@ -473,7 +473,7 @@ public class Calculator extends JFrame implements ActionListener {
 	public static void openCalc() {
 		Calculator calc = new Calculator();
 		calc.setTitle(Local.getString("Calculator"));
-		calc.setSize(240, 200);
+		calc.setSize(440, 400);
 		calc.pack();
 		calc.setLocation(400, 300);
 		calc.setVisible(true);
