@@ -40,14 +40,13 @@ public class EventsScheduler {
         for (int i = 0; i < events.size(); i++) {
             Event ev = (Event)events.get(i);
             Date evTime = ev.getTime();
-            /*DEBUG*/System.out.println(evTime.toString() + (Calendar.getInstance()).getTime());
+            ///*DEBUG*/System.out.println(evTime.toString() + (Calendar.getInstance()).getTime());
             //  if (evTime.after(new Date())) {
 	          if (evTime.after((Calendar.getInstance()).getTime())) {	
                 EventTimer t = new EventTimer(ev);
                 t.schedule(new NotifyTask(t), ev.getTime());                
                 _timers.add(t);
-                System.out.println("Timers size =" + _timers.size());
-                /*DEBUG*/System.out.println(ev.getTimeString());
+                ///*DEBUG*/System.out.println(ev.getTimeString());
             }
         }
         /*DEBUG*/System.out.println("----------");
