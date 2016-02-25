@@ -93,5 +93,19 @@ public class ContactList {
 		}
 		return false;
 	} 
+	
+	/**
+	  Method:	getKeys
+	  @param:	N/A
+	  @return: 	Returns array of contact names
 
+	  Description: Returns array of contact names
+	*/
+	public static ArrayList<String> getKeys() {
+		ArrayList<String> keys = new ArrayList<String>();
+		for (String key : contactList.keySet()) {
+		    keys.add(key);
+		}
+		return keys;
+	} 
 }

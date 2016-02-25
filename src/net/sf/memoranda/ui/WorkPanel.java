@@ -334,12 +334,18 @@ public class WorkPanel extends JPanel {
 		Context.put("CURRENT_PANEL", "FILES");
 	}
 	
-	// Email Button Functionality Added:  Ryan Schultz 2/23/2016
+	/**
+	  Method:	emailB_actionPerformed
+	  @param:	click event emailB
+	  @return: 	N/A
+
+	  Description: Opens PersonalEmailDialog
+	*/
 	public void emailB_actionPerformed(ActionEvent e){
-		PersonalEmailDialog eDlg = new PersonalEmailDialog(new JFrame());
-    	eDlg.pack();
-        eDlg.setLocationRelativeTo(this);
-        eDlg.setVisible(true);
+		PersonalEmailDialog peDlg = new PersonalEmailDialog(new JFrame());
+    	peDlg.pack();
+        peDlg.setLocationRelativeTo(this);
+        peDlg.setVisible(true);
 	}
 	
 	//CFroke 02/2016 added calculator function
