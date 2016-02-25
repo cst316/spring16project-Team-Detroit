@@ -238,7 +238,7 @@ public class EventsManager {
 	         
   	   if (!(getEventsForDate(checkForActiveEvents).size() == 0)) {
   	     result.addAll(getEventsForDate(checkForActiveEvents));
-  	     System.out.println(result.size());
+  	     //System.out.println(result.size());
   	   }
   	   
   	   nextThirtyDays.add(Calendar.DATE, 1);
@@ -364,8 +364,7 @@ public class EventsManager {
 		}
 
 		public int getValue() {
-			return new Integer(mElement.getAttribute("month").getValue())
-				;
+			return new Integer(mElement.getAttribute("month").getValue());
 		}
 
 		public Day getDay(int d) {
