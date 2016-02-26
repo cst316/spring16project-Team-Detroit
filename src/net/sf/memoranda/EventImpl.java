@@ -42,8 +42,8 @@ public class EventImpl implements Event, Comparable {
         result = Integer.parseInt(_elem.getAttribute("month").getValue());
       } catch (NullPointerException e) {
         //Update .events to newest version
-        System.out.println("Events created in previous version of "
-            + "Memoranda may not be assigned a month"); 
+        //System.out.println("Events created in previous version of "
+        //    + "Memoranda may not be assigned a month"); 
       }
       
       return result;
@@ -59,8 +59,8 @@ public class EventImpl implements Event, Comparable {
         result = Integer.parseInt(_elem.getAttribute("day").getValue());
       } catch (NullPointerException e) {
         //Update .events to newest version
-        System.out.println("Events created in previous version of "
-            + "Memoranda may not be assigned a day"); 
+        //System.out.println("Events created in previous version of "
+        //   + "Memoranda may not be assigned a day"); 
       }
       
       return result;
@@ -158,8 +158,19 @@ public class EventImpl implements Event, Comparable {
 		Date d = new Date(); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		Calendar calendar = new GregorianCalendar(Local.getCurrentLocale()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		calendar.setTime(d); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
-		calendar.set(Calendar.MONTH, getTheMonth());
-		calendar.set(Calendar.DAY_OF_MONTH, getTheDay());
+		if (!(getTheMonth() == -1))
+		  calendar.set(Calendar.MONTH, getTheMonth());
+		else {
+		  d.setTime(0);
+		  return d;
+		}
+		if (!(getTheDay() == -1)) {
+		  calendar.set(Calendar.DAY_OF_MONTH, getTheDay());
+		} else {
+		  d.setTime(0);
+		  return d;
+		}
+		
 		calendar.set(Calendar.HOUR_OF_DAY, getHour()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		calendar.set(Calendar.MINUTE, getMinute()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		calendar.set(Calendar.SECOND, 0); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00

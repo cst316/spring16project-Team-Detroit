@@ -42,6 +42,10 @@ public class EventsScheduler {
             Date evTime = ev.getTime();
             ///*DEBUG*/System.out.println(evTime.toString() + (Calendar.getInstance()).getTime());
             //  if (evTime.after(new Date())) {
+            if (evTime.getTime() == 0) {
+                EventTimer t = new EventTimer(ev);
+                _timers.add(t);
+            }
 	          if (evTime.after((Calendar.getInstance()).getTime())) {	
                 EventTimer t = new EventTimer(ev);
                 t.schedule(new NotifyTask(t), ev.getTime());                
@@ -81,6 +85,9 @@ public class EventsScheduler {
             Event ev = _timers.get(i).getEvent();
             if (ev.getTime().before(e1.getTime()))
                 e1 = ev;
+            if (ev.getTime().getTime() == 0) {
+              return ev;
+            }
         }
         return e1;
     }
@@ -150,6 +157,11 @@ public class EventsScheduler {
       if (ev == null) {
         //System.out.println("Could not find event in the next 30 days");
         return -1;
+      }
+      
+      if (ev.getTime().getTime() == 0) {
+        //System.out.println("Event needs to be updated using current version");
+        return -2;
       }
       
       long seconds = CalendarDate.getDateDiff(new Date(), 
