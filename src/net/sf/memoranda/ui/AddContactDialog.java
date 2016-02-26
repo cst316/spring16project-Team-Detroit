@@ -27,11 +27,12 @@ public class AddContactDialog extends JDialog {
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());
 	
-	JPanel inputPanel = new JPanel(new GridLayout(5,0));
+	JPanel inputPanel = new JPanel(new GridLayout(6,0));
 	JPanel nameInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JPanel emailInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JPanel phoneInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JPanel notesInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+	JPanel supervisorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
 	JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		
 	JLabel nameLabel = new JLabel();
@@ -41,7 +42,8 @@ public class AddContactDialog extends JDialog {
 	JLabel phoneLabel = new JLabel();
 	JTextField phoneTextField = new JTextField(20);
 	JLabel notesLabel = new JLabel();
-	JTextField notesTextField = new JTextField(20);
+	JTextField notesTextField = new JTextField(20);	
+	JCheckBox supervisorCheckBox = new JCheckBox();
 			
 	JButton okB = new JButton();
 	JButton cancelB = new JButton();
@@ -71,7 +73,9 @@ public class AddContactDialog extends JDialog {
 		nameLabel.setText(Local.getString("Name") + ":  ");
 		emailLabel.setText(Local.getString("Email") + ":  ");
 		phoneLabel.setText(Local.getString("Phone") + ":  ");
-		notesLabel.setText(Local.getString("Notes") + ":  ");		
+		notesLabel.setText(Local.getString("Notes") + ":  ");
+		supervisorCheckBox.setText("Supervisor");
+		
 		
 		okB.setMaximumSize(new Dimension(100, 26));
         okB.setMinimumSize(new Dimension(100, 26));
@@ -102,6 +106,7 @@ public class AddContactDialog extends JDialog {
 		phoneInputPanel.add(phoneTextField);
 		notesInputPanel.add(notesLabel);
 		notesInputPanel.add(notesTextField);
+		supervisorPanel.add(supervisorCheckBox);
 		buttonsPanel.add(okB);
         buttonsPanel.add(cancelB);
 		
@@ -109,6 +114,7 @@ public class AddContactDialog extends JDialog {
 		inputPanel.add(emailInputPanel);
 		inputPanel.add(phoneInputPanel);
 		inputPanel.add(notesInputPanel);
+		inputPanel.add(supervisorPanel);
 		inputPanel.add(buttonsPanel);
         		
         mainPanel.add(inputPanel, BorderLayout.NORTH);
@@ -133,11 +139,17 @@ public class AddContactDialog extends JDialog {
     			if (phone != null && !phone.isEmpty() && phone.matches("^-?\\d+$")) {
     				if (notes != null && !notes.isEmpty()) {
 				    	if (contact.validateEmail(email)) {
-				    		if (ContactList.getContact(name) == null) {
-				    			ContactListStorage.addContactToList(new EmailContact(name,email,phone,notes));
+				    		if (ContactList.getContact(name) == null && supervisorCheckBox.isSelected()) {
+				    			ContactListStorage.addContactToList(new EmailContact(name,email,phone,notes,"Supervisor"));
 				    			this.dispose();
 				    			JOptionPane.showMessageDialog(null, name + " " + Local.getString("added to contacts!"), 
 				    					"Successfully Added", JOptionPane.INFORMATION_MESSAGE);
+				    		}
+				    		else if (ContactList.getContact(name) == null && !supervisorCheckBox.isSelected()) {
+					    		ContactListStorage.addContactToList(new EmailContact(name,email,phone,notes));
+					    		this.dispose();
+					    		JOptionPane.showMessageDialog(null, name + " " + Local.getString("added to contacts!"), 
+					    				"Successfully Added", JOptionPane.INFORMATION_MESSAGE);
 				    		}
 				    		else {
 				    			JOptionPane.showMessageDialog(null, Local.getString("Contact already exists!"), 

@@ -38,7 +38,10 @@ import javax.swing.JCheckBox;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.util.ContactList;
 import net.sf.memoranda.util.Local;
+import net.sf.memoranda.util.TaskStatus;
+import net.sf.memoranda.util.TaskObserver;
 
 /*$Id: TaskDialog.java,v 1.25 2005/12/01 08:12:26 alexeya Exp $*/
 @SuppressWarnings("serial")
@@ -401,7 +404,16 @@ public class TaskDialog extends JDialog {
 	
     void okB_actionPerformed(ActionEvent e) {
 	CANCELLED = false;
-        this.dispose();
+		//  Sends completion email to all supervisors in contact list Added:  Ryan Schultz 2/25/16
+		if ((Integer)progress.getValue() == 100) {
+			TaskStatus tdd = new TaskStatus("");
+			TaskObserver watcher = new TaskObserver("");
+			tdd.addObserver(watcher);
+			tdd.complete(todoField.getText());			
+		}
+		if (ContactList.getContact("User") != null && ContactList.getSupervisors().size() != 0 && TaskStatus.getTask().equals("")) {
+			this.dispose();
+		}
     }
 
     void cancelB_actionPerformed(ActionEvent e) {
@@ -440,5 +452,4 @@ public class TaskDialog extends JDialog {
     	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
 			this.todoField.getText(), (Date)startDate.getModel().getValue(),(Date)endDate.getModel().getValue());
     }
-
 }

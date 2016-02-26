@@ -29,13 +29,19 @@ public class AdminEmail extends Emailer {
 	private static final String ADMIN_EMAIL_PWD = "cst316project";
 	private static final String SUBJECT = "Tomorrows Schedule";
 	
+	//  Creates daily event email
 	public AdminEmail() {
-		super(ADMIN_EMAIL, ADMIN_EMAIL_PWD, recipient(), SUBJECT, message());
+		super(ADMIN_EMAIL, ADMIN_EMAIL_PWD, recipient(), SUBJECT, eventMessage());
 	}
 	
 	//  Create test email for user profile set up
 	public AdminEmail(String email, String pwd, String recipient) {
 		super(email, pwd, recipient, "Test Email", "Testing email/password input");
+	}
+	
+	//  Create progress email to be sent to supervisor
+	public AdminEmail(String recipient, String task) {
+		super(ADMIN_EMAIL, ADMIN_EMAIL_PWD, recipient, "Progress Report", progressMessage(task));
 	}
 	
 	/**
@@ -71,7 +77,7 @@ public class AdminEmail extends Emailer {
 
 	  Description:
 	*/
-	private static String message() {
+	private static String eventMessage() {
 		CalendarDate c = new CalendarDate();
 		c = CalendarDate.tomorrow();				
 
@@ -102,5 +108,17 @@ public class AdminEmail extends Emailer {
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		Date tomorrow = calendar.getTime();
 		return tomorrow;		
+	}
+	
+	/**
+	  Method:	progressMessage
+	  @param:	N/A
+	  @return:	Formatted progress message to be sent to supervisors
+
+	  Description: Creates and returns formatted progress message to be sent to supervisors
+	*/
+	private static String progressMessage(String task) {				
+		String taskMessage = ContactList.getContact("User").getName() + " has completed the following task:  " + task;		                       
+		return taskMessage;
 	}
 }
