@@ -1,3 +1,11 @@
+/*
+  File:		LoginDialogBox.java
+  Author:	Casey Froke	
+  Date:		2/23/2016
+
+  Description: Login GUI at start of program for password protected program
+*/
+
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
@@ -20,6 +28,12 @@ import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.Local;
 
 @SuppressWarnings("serial")
+/**
+Class: LoginDialogBox
+
+Description: Dialog box that pops up at start of program if password is set
+*/
+
 public class LoginDialogBox extends JFrame {
 	  
 	  JPanel panel1 = new JPanel();
@@ -38,7 +52,7 @@ public class LoginDialogBox extends JFrame {
 	  
 
 	  public LoginDialogBox() {
-	    this.setTitle("New Password");
+	    this.setTitle("User Password");
 	    try {
 	      jbInit();
 	      pack();

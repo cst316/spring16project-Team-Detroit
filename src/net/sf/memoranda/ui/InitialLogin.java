@@ -1,3 +1,11 @@
+/*
+  File:		InitialLogin.java
+  Author:	Casey Froke	
+  Date:		2/23/2016
+
+  Description: Initial login GUI for password protected program
+*/
+
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
@@ -11,7 +19,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
@@ -20,6 +27,12 @@ import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.Local;
 
 @SuppressWarnings("serial")
+/*
+Class: InitialLogin
+
+Description: GUI for initial user login
+*/
+
 public class InitialLogin extends JFrame {
 	  
 	  JPanel panel1 = new JPanel();
@@ -35,9 +48,9 @@ public class InitialLogin extends JFrame {
 	  
 		
 	  Border border4;
-
+	  // initial password request dialog box
 	  public InitialLogin() {
-	    this.setTitle("User Password");
+	    this.setTitle("Hello User");
 	    try {
 	      jbInit();
 	      pack();
@@ -45,8 +58,8 @@ public class InitialLogin extends JFrame {
 	    catch(Exception ex) {
 	      new ExceptionDialog(ex);
 	    }
-	    textLabel.setText("<html>Hello, new user!<br><br>"
-	    		+ "Would you like to set a pssword?<br><br>");
+	    textLabel.setText("<html>Would you like to set a password?<br><br>" + 
+	    "Password can be set later under preferences<br><br>");
 	    this.setSize(300,150);
 	    this.setLocationRelativeTo(null);
 	    this.setVisible(true);    
@@ -54,7 +67,7 @@ public class InitialLogin extends JFrame {
 	    this.requestFocus();
 	    
 	  }
-
+	  	//GUI setup for dialog box
 	  void jbInit() throws Exception {
 	    this.setResizable(false);
 	    this.setIconImage(new ImageIcon(EventNotificationDialog.class.getResource("resources/icons/jnotes16.png")).getImage());
@@ -63,7 +76,7 @@ public class InitialLogin extends JFrame {
 	    border3 = BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(Color.white,new Color(142, 142, 142)),BorderFactory.createEmptyBorder(0,30,0,30));
 	    border4 = BorderFactory.createEmptyBorder(10,10,0,10);
 	    panel1.setLayout(borderLayout1);
-	    panel1.setBackground(new Color(251, 197, 63));
+	    panel1.setBackground(Color.LIGHT_GRAY);
 	    
 	    jButton1.setText(Local.getString("Yes"));
 	    jButton1.setBounds(150, 415, 95, 30);
@@ -103,12 +116,12 @@ public class InitialLogin extends JFrame {
 	  
 	    
 	  }
-
+	  // Yes button Action
 	  void jButton1_actionPerformed(ActionEvent e) {
 	       this.dispose();
-	       new InitialPasswordSet();
+	       new PasswordSet();
 	  }
-	  
+	  // No button Action
 	  void jButton2_actionPerformed(ActionEvent e) {
 	       this.dispose();
 	       Configuration.put("USER_PASSWORD", "none");

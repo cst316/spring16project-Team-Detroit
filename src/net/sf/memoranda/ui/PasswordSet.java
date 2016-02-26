@@ -1,3 +1,11 @@
+/*
+  File:		PasswordSet.java
+  Author:	Casey Froke	
+  Date:		2/23/2016
+
+  Description: Password GUI for password protected program
+*/
+
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
@@ -11,7 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
@@ -20,7 +28,12 @@ import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.Local;
 
 @SuppressWarnings("serial")
-public class InitialPasswordSet extends JFrame {
+/**
+Class: PasswordSet
+
+Description: settings for user Password
+*/
+public class PasswordSet extends JFrame {
 	  
 	  JPanel panel1 = new JPanel();
 	  BorderLayout borderLayout1 = new BorderLayout();
@@ -36,11 +49,11 @@ public class InitialPasswordSet extends JFrame {
 	  JLabel textLabel1 = new JLabel();
 	  JLabel textLabel2 = new JLabel();
 	  Border border4;
-	  JTextField password1 = new JTextField(10);
-	  JTextField password2 = new JTextField(10);
+	  JPasswordField password1 = new JPasswordField(10);
+	  JPasswordField password2 = new JPasswordField(10);
 	  
-
-	  public InitialPasswordSet() {
+	  // GUI header
+	  public PasswordSet() {
 	    this.setTitle("New Password");
 	    try {
 	      jbInit();
@@ -57,7 +70,7 @@ public class InitialPasswordSet extends JFrame {
 	    this.requestFocus();
 	    
 	  }
-
+	  // Main set password GUI
 	  void jbInit() throws Exception {
 	    this.setResizable(false);
 	    this.setIconImage(new ImageIcon(EventNotificationDialog.class.getResource("resources/icons/jnotes16.png")).getImage());
@@ -121,8 +134,9 @@ public class InitialPasswordSet extends JFrame {
 	    
 	  
 	  }
-
-	  void jButton1_actionPerformed(ActionEvent e) {
+	  
+	  @SuppressWarnings("deprecation")
+	void jButton1_actionPerformed(ActionEvent e) {
 	      if(password1.getText().equals(password2.getText()))
 	      {
 	    	  if(password1.getText().equals(""))

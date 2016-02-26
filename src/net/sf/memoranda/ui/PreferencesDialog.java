@@ -772,7 +772,7 @@ public class PreferencesDialog extends JDialog {
 	void passwordChange_actionPerformed(ActionEvent e){
 		apply();
 		this.dispose();
-		new InitialPasswordSet();
+		new PasswordSet();
 	}
 
 	void cancelB_actionPerformed(ActionEvent e) {
