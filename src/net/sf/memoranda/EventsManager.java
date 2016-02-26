@@ -321,8 +321,7 @@ public class EventsManager {
 		}
 
 		public int getValue() {
-			return new Integer(yearElement.getAttribute("year").getValue())
-				;
+			return new Integer(yearElement.getAttribute("year").getValue());
 		}
 
 		public Month getMonth(int m) {

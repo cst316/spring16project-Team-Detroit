@@ -596,6 +596,10 @@ public class DailyItemsPanel extends JPanel implements Observer {
 
   public String getCountdownLabelText(long arg) {
     String result = ""; 
+    if (arg == -2) {
+      return Local.getString("Update events for current Memoranda version");
+    }
+    
     if (arg == -1) {
       return Local.getString("No Future Events Scheduled Within One Month");
     }
