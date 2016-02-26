@@ -36,14 +36,34 @@ public class EventImpl implements Event, Comparable {
      * @see net.sf.memoranda.Event#getTheMonth()
      */
     public int getTheMonth() {
-        return Integer.parseInt(_elem.getAttribute("month").getValue());
+      int result = -1;
+      
+      try {
+        result = Integer.parseInt(_elem.getAttribute("month").getValue());
+      } catch (NullPointerException e) {
+        //Update .events to newest version
+        System.out.println("Events created in previous version of "
+            + "Memoranda may not be assigned a month"); 
+      }
+      
+      return result;
     }
 
     /**
      * @see net.sf.memoranda.Event#getTheDay()
      */
     public int getTheDay() {
-        return Integer.parseInt(_elem.getAttribute("day").getValue());
+      int result = -1;
+    
+      try {
+        result = Integer.parseInt(_elem.getAttribute("day").getValue());
+      } catch (NullPointerException e) {
+        //Update .events to newest version
+        System.out.println("Events created in previous version of "
+            + "Memoranda may not be assigned a day"); 
+      }
+      
+      return result;
     }
     
     /**
