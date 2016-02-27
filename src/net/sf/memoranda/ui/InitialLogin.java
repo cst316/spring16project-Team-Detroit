@@ -71,7 +71,7 @@ public class InitialLogin extends JFrame {
 	  void jbInit() throws Exception {
 	    this.setResizable(false);
 	    this.setIconImage(new ImageIcon(EventNotificationDialog.class.getResource("resources/icons/jnotes16.png")).getImage());
-	    this.getContentPane().setBackground(Color.white);
+	    this.getContentPane().setBackground(new Color(251, 197, 63));
 	    border2 = BorderFactory.createEmptyBorder(0,30,0,30);
 	    border3 = BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(Color.white,new Color(142, 142, 142)),BorderFactory.createEmptyBorder(0,30,0,30));
 	    border4 = BorderFactory.createEmptyBorder(10,10,0,10);
@@ -103,14 +103,14 @@ public class InitialLogin extends JFrame {
 	    
 	    
 	    panel1.setBorder(border4);
-	    panel1.setMinimumSize(new Dimension(300, 200));
-	    panel1.setPreferredSize(new Dimension(300, 200));
+	    panel1.setMinimumSize(new Dimension(200, 200));
+	    panel1.setPreferredSize(new Dimension(200, 200));
 	    textLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	    getContentPane().add(panel1);
 	    panel1.add(jPanel1,  BorderLayout.SOUTH);
 	    jPanel1.add(jButton1, null);
 	    jPanel1.add(jButton2, null);
-	    jPanel1.setBackground(new Color(251, 197, 63));
+	    jPanel1.setBackground(Color.LIGHT_GRAY);
 	    panel1.add(textLabel, BorderLayout.NORTH);   
 	    
 	  

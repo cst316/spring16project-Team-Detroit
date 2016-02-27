@@ -85,7 +85,7 @@ public class PasswordSet extends JFrame {
 	    jButton1.setBounds(150, 415, 95, 30);
 	    jButton1.setPreferredSize(new Dimension(95, 30));
 	    jButton1.setBackground(new Color(69, 125, 186));
-	    jButton1.setForeground(Color.white);
+	    //jButton1.setForeground(Color.white);
 	    jButton1.setDefaultCapable(true);
 	    jButton1.addActionListener(new java.awt.event.ActionListener() {
 	      public void actionPerformed(ActionEvent e) {
@@ -96,7 +96,7 @@ public class PasswordSet extends JFrame {
 	    jButton2.setBounds(150, 415, 95, 30);
 	    jButton2.setPreferredSize(new Dimension(95, 30));
 	    jButton2.setBackground(new Color(69, 125, 186));
-	    jButton2.setForeground(Color.white);
+	    //jButton2.setForeground(Color.white);
 	    jButton2.setDefaultCapable(true);
 	    jButton2.addActionListener(new java.awt.event.ActionListener() {
 	      public void actionPerformed(ActionEvent e) {
@@ -119,11 +119,11 @@ public class PasswordSet extends JFrame {
 	    panel1.add(panLeft, BorderLayout.WEST);
 	    panel1.add(panRight, BorderLayout.EAST);
 	   
-	    textLabel1.setText("Enter Password:");
+	    textLabel1.setText(" Enter Password:");
 	    panLeft.add(textLabel1,BorderLayout.NORTH);
 	    panLeft.add(password1, BorderLayout.SOUTH);
 	    
-	    textLabel2.setText("Confirm:");
+	    textLabel2.setText("  Confirm:");
 	    panRight.add(textLabel2,BorderLayout.NORTH);
 	    panRight.add(password2, BorderLayout.SOUTH);
 	    
