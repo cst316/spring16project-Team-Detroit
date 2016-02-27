@@ -18,29 +18,29 @@ public class UserProfileTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
-
-	/* Creating profile requires the user to enter valid email credentials
-	 * This is an email account set up as our admin email but we will use it for this test
-	 */
+	
 	@Before
 	public void setUp() throws Exception {
-		//new UserProfileSetUpDialog(new Frame());
 	}
-
-	// Console will show the an email was sent from the admin email to memorandasystem@gmail.com
+	
+	/* Creating profile requires the user to enter valid email credentials
+	 * This is an email account set up as our admin email but we will use it for this test
+	 * Console will show the an email was sent from the admin email to memorandasystem@gmail.com
+	 */
 	@Test
 	public void testCorrectProfileSetUp() {
+		new UserProfileSetUpDialog(new Frame());
 		assertTrue(AdminEmail.sendAE(new AdminEmail("memorandasystem@gmail.com", "cst316project", "memorandasystem@gmail.com")));
 		ContactListStorage.addUserToList(new EmailContact("TestName", "memorandasystem@gmail.com", "cst316project"));
 		assertTrue(ContactList.contains("User")); 
 	}
 	
-//	/* Input (formatted email, name entered, password entered) is validated in UserProfileSetUpDialog 
-//	 * but we will test incorrect credentials input of email/password input
-//	 * 
-//	 * Console displays error of incorrect email. Program would still operate with this error and
-//	 * ask for correct user input.
-//	 */
+	/* Input (formatted email, name entered, password entered) is validated in UserProfileSetUpDialog 
+	 * but we will test incorrect credentials input of email/password input
+	 * 
+	 * Console displays error of incorrect email. Program would still operate with this error and
+	 * ask for correct user input.
+	 */
 	@Test
 	public void testIncorrectProfileSetUp() {	
 		assertFalse(AdminEmail.sendAE(new AdminEmail("memorandasystem@gmail.com", "cst316project11", "memorandasystem@gmail.com")));
