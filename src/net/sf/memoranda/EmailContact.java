@@ -39,8 +39,7 @@ public class EmailContact implements Serializable {
 		this.password = password;
 		credentials = "User";
 		phone = "";
-		notes = "";	
-		
+		notes = "";			
 	}
 	
 	// Normal contact constructor
@@ -49,6 +48,16 @@ public class EmailContact implements Serializable {
 		this.email = email;
 		password = "";
 		credentials = "";
+		this.phone = phone;
+		this.notes = notes;
+	}
+	
+	// Supervisor contact constructor
+	public EmailContact(String name, String email, String phone, String notes, String credentials) {
+		this.name = name;
+		this.email = email;
+		password = "";
+		this.credentials = credentials;
 		this.phone = phone;
 		this.notes = notes;
 	}

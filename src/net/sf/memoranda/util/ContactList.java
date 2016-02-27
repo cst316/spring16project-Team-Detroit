@@ -20,7 +20,7 @@ Description:  Creates hash map out of contact list and manages the created hash 
 public class ContactList {
 	
 	static HashMap<String, EmailContact> contactList = new HashMap<String, EmailContact>();
-	
+		
 	public ContactList(ArrayList<EmailContact> cl) {
 		for (Iterator<EmailContact> it = cl.iterator(); it.hasNext(); ) {		    
 			EmailContact ec = it.next();
@@ -107,5 +107,22 @@ public class ContactList {
 		    keys.add(key);
 		}
 		return keys;
+	}
+	
+	/**
+	  Method:	getSupervisors
+	  @param:	N/A
+	  @return: 	Returns array of supervisor contacts
+
+	  Description: Returns array of contact names
+	*/
+	public static ArrayList<EmailContact> getSupervisors() {
+		ArrayList<EmailContact> supervisorList = new ArrayList<EmailContact>();
+		for (EmailContact ec : contactList.values()) {
+		    if (ec.getCredentials().equals("Supervisor")) {
+		    	supervisorList.add(ec);
+		    }
+		}
+		return supervisorList;		
 	} 
 }
