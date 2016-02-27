@@ -41,11 +41,11 @@ public class UserProfileTest {
 //	 * Console displays error of incorrect email. Program would still operate with this error and
 //	 * ask for correct user input.
 //	 */
-//	@Test
-//	public void testIncorrectProfileSetUp() {
-//		
-//		assertFalse(AdminEmail.sendAE(new AdminEmail("memorandasystem@gmail.com", "cst316project11", "memorandasystem@gmail.com")));
-//	}
+	@Test
+	public void testIncorrectProfileSetUp() {
+		
+		assertFalse(AdminEmail.sendAE(new AdminEmail("memorandasystem@gmail.com", "cst316project11", "memorandasystem@gmail.com")));
+	}
 	
 	/* Originally user name is set as "TestName" when profile set up. This will edit the profile
 	 * and test it's function.
