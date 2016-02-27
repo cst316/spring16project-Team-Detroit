@@ -8,13 +8,10 @@
 
 package net.sf.memoranda;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import net.sf.memoranda.date.CalendarDate;
-import net.sf.memoranda.ui.AppFrame;
 import net.sf.memoranda.util.ContactList;
 
 /**
@@ -45,18 +42,14 @@ public class AdminEmail extends Emailer {
 	}
 	
 	/**
-	  Method:	N/A
+	  Method:	send
 	  @param:	N/A
 	  @return: 	N/A
 
-	  Description: Calls method to send email when program is closed
+	  Description: Calls method to daily send email when program is closed
 	*/
-	static {
-    	AppFrame.addExitListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	sendEmail();
-            }
-        });
+	public static boolean sendAE(AdminEmail ae) {
+		return ae.sendEmail();
 	}
 	
 	/**
@@ -71,27 +64,27 @@ public class AdminEmail extends Emailer {
 	}
 	
 	/**
-	  Method:	message
+	  Method:	eventMessage
 	  @param:	N/A
 	  @return:	Formatted daily events email to be sent to user
 
-	  Description:
+	  Description: Creates formatted daily email
 	*/
 	private static String eventMessage() {
-		CalendarDate c = new CalendarDate();
-		c = CalendarDate.tomorrow();				
+		CalendarDate c = CalendarDate.tomorrow();
+		StringBuffer buf = new StringBuffer();
 
-		String evlist = "Dear " + ContactList.getContact("User").getName() + ",\n\n" + "Here is your schedule for tomorrow:\n\n"
-		                        + new SimpleDateFormat("EEEE, MMMM, dd yyyy").format(tomorrow()) + "\n";
+		buf.append("Dear " + ContactList.getContact("User").getName() + ",\n\n" + "Here is your schedule for tomorrow:\n\n"
+		                        + new SimpleDateFormat("EEEE, MMMM, dd yyyy").format(tomorrow()) + "\n");
 		                        
 
 		for (Iterator<Event> it = EventsManager.getEventsForDate(c).iterator(); it.hasNext();) {
 			net.sf.memoranda.Event ev = (net.sf.memoranda.Event)it.next();   
-		    evlist += ev.getTimeString()+" - "+ev.getText()+"\n";
+		    buf.append(ev.getTimeString()+" - "+ev.getText()+"\n");
 		}
 		
-		evlist += "\nFrom your friendly Memoranda Admin";
-		return evlist;
+		buf.append("\nFrom your friendly Memoranda Admin");
+		return buf.toString();
 	}
 	
 	/**
@@ -102,9 +95,7 @@ public class AdminEmail extends Emailer {
 	  Description:  Returns tomorrows date to be used to get tomorrows events for email
 	*/
 	private static Date tomorrow() {
-		Calendar calendar = Calendar.getInstance();
-		@SuppressWarnings("unused")
-		Date today = calendar.getTime();
+		Calendar calendar = Calendar.getInstance();		
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		Date tomorrow = calendar.getTime();
 		return tomorrow;		

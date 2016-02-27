@@ -8,13 +8,10 @@
 
 package net.sf.memoranda.util;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
 
 import net.sf.memoranda.EmailContact;
-import net.sf.memoranda.ui.AppFrame;
 import net.sf.memoranda.ui.ExceptionDialog;
 
 /**
@@ -100,29 +97,18 @@ public class ContactListStorage implements Serializable {
 	               loads the file, if not creates the file
 	*/
 	static {
-    	AppFrame.addExitListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	saveList();
-            }
-        });
 	    try {
 	    	boolean check = new File(Util.getEnvDir() + "contacts" + File.separator, "contactsList.txt").exists();
 	    	if (check) {
 	    		contactList = SerializationUtil.deserializeList();
 		    	System.out.println("Loaded from: " + getContactPath());
-		    	@SuppressWarnings("unused")
-				ContactList cl = new ContactList(contactList);
+				new ContactList(contactList);
 	    	}
 	    	else {
 	    		File f = new File(getContactPath());
-		    	new File(f.getParent()).mkdirs();      
-		    	/*DEBUG*/System.out.println("New contact list created: "+getContactPath());
-		    	try {
-		    		saveList();      
-		    	}
-		    	catch (Exception e2) {
-		    		new ExceptionDialog(e2, "Failed to load default configuration from resources.", "");
-		    	}
+		    	if (new File(f.getParent()).mkdirs()) {
+		    		/*DEBUG*/System.out.println("New contact list created: " + getContactPath());
+		    	}		    	
 	    	}	    	
 	    }
 	    catch (Exception e) {      

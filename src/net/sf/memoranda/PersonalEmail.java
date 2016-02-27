@@ -16,6 +16,10 @@ Description:  Calls super to create email and to send it
 public class PersonalEmail extends Emailer {
 	public PersonalEmail(String senderEmail, String senderPwd, String recipient, String subject, String message) {
 		super(senderEmail, senderPwd, recipient, subject, message);
-		Emailer.sendEmail();
+	}
+	
+	public static void sendPE(PersonalEmail pe) {
+		pe.sendEmail();
 	}
 }
+

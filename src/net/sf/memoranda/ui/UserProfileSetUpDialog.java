@@ -119,10 +119,9 @@ public class UserProfileSetUpDialog extends JDialog {
     	EmailContact user = new EmailContact();
     	if (name != null && !name.isEmpty()) {
     		if (user.validateEmail(email) && email != null && !email.isEmpty()) { 
-    			if (password != null && !name.isEmpty()) {
-    				@SuppressWarnings("unused")
+    			if (!password.isEmpty()) {
 					AdminEmail testEmail = new AdminEmail(email, password, email);
-    				boolean testSend = AdminEmail.sendEmail();   				
+    				boolean testSend = AdminEmail.sendAE(testEmail);   				
 			    		if (testSend && ContactList.getContact("User") == null) {
 			    			ContactListStorage.addUserToList(new EmailContact(name, email, password));
 			    			this.dispose();
@@ -143,8 +142,8 @@ public class UserProfileSetUpDialog extends JDialog {
 			    		}
     			}
 		    	else {
-		    		JOptionPane.showMessageDialog(null, Local.getString("Please enter a name!"), 
-		    				"Name Not Entered", JOptionPane.INFORMATION_MESSAGE);
+		    		JOptionPane.showMessageDialog(null, Local.getString("Please enter a password!"), 
+		    				"Password Not Entered", JOptionPane.INFORMATION_MESSAGE);
 		    		this.setVisible(true);
 		    		cancelB.transferFocus();			
 		    	}
