@@ -11,6 +11,7 @@ package net.sf.memoranda;
 import java.util.Collection;
 import java.util.Random;
 import java.util.Vector;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import net.sf.memoranda.date.CalendarDate;
@@ -352,8 +353,7 @@ public class TaskImpl implements Task, Comparable<Object> {
 	 }
 	 
 	 public int hashCode() {
-		 int result = new Random().nextInt();
-	     return result;
+	   return Arrays.hashCode(new Object[]{_element, _tl});
 	 }
 	 
 	/* 

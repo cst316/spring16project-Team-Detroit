@@ -2380,7 +2380,7 @@ public class HTMLEditor extends JPanel {
 		 * System.out.println(tag.toString()+" -> "+parentTag.toString());
 		 */
 
-		HTML.Tag tag = null;
+		HTML.Tag tag = new HTML.Tag();
 
 		switch (sel) {
 			case T_P :

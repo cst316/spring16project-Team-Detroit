@@ -25,8 +25,7 @@ Description:  Creates Email GUI and gathers information to create email
 public class PersonalEmailDialog extends JDialog {
   private static final long serialVersionUID = -1313533403570455677L;
 
-  public static JTextField toTextField = new JTextField(20);
-  public static boolean userSetUp;
+  static JTextField toTextField = new JTextField(20);
   
   JPanel mainPanel = new JPanel(new BorderLayout());
 	JPanel toSubjectWrapPanel = new JPanel(new GridLayout(2,0));
