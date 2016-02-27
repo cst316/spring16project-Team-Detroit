@@ -45,16 +45,16 @@ public class UserProfileTest {
 	public void testIncorrectProfileSetUp() {	
 		assertFalse(AdminEmail.sendAE(new AdminEmail("memorandasystem@gmail.com", "cst316project11", "memorandasystem@gmail.com")));
 	}
-//	
-//	/* Originally user name is set as "TestName" when profile set up. This will edit the profile
-//	 * and test it's function.
-//	 */
-//	@Test
-//	public void testEditProfile() {
-//		ContactListStorage.addUserToList(new EmailContact("TestName", "memorandasystem@gmail.com", "cst316project"));
-//		assertTrue(AdminEmail.sendAE(new AdminEmail("memorandasystem@gmail.com", "cst316project", "memorandasystem@gmail.com")));
-//		ContactListStorage.removeUser();
-//		ContactListStorage.addUserToList(new EmailContact("TestNameEdit", "memorandasystem@gmail.com", "cst316project"));
-//		assertEquals("TestNameEdit", ContactList.getContact("User").getName());		
-//	}
+	
+	/* Originally user name is set as "TestName" when profile set up. This will edit the profile
+	 * and test it's function.
+	 */
+	@Test
+	public void testEditProfile() {
+		ContactListStorage.addUserToList(new EmailContact("TestName", "memorandasystem@gmail.com", "cst316project"));
+		assertTrue(AdminEmail.sendAE(new AdminEmail("memorandasystem@gmail.com", "cst316project", "memorandasystem@gmail.com")));
+		ContactListStorage.removeUser();
+		ContactListStorage.addUserToList(new EmailContact("TestNameEdit", "memorandasystem@gmail.com", "cst316project"));
+		assertEquals("TestNameEdit", ContactList.getContact("User").getName());		
+	}
 }
