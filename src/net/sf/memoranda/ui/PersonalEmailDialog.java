@@ -26,6 +26,7 @@ public class PersonalEmailDialog extends JDialog {
 	private static final long serialVersionUID = -1313533403570455677L;
 	
 	public static JTextField toTextField = new JTextField(20);
+	public static boolean userSetUp;
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());
 	JPanel toSubjectWrapPanel = new JPanel(new GridLayout(2,0));
@@ -44,17 +45,10 @@ public class PersonalEmailDialog extends JDialog {
 	JButton cancelB = new JButton();
 		
 	public PersonalEmailDialog(Frame frame) {
-		super(frame, Local.getString("Email"), true);
-		if (ContactList.getContact("User") == null) {
-			JOptionPane.showMessageDialog(null, "You must set up user email first!", "Error", JOptionPane.INFORMATION_MESSAGE); 
-			UserProfileSetUpDialog dlg = new UserProfileSetUpDialog(new Frame());
-			dlg.pack();
-	        dlg.setLocationRelativeTo(this);
-	        dlg.setVisible(true);
-		}		
+		super(frame, Local.getString("Email"), true);	
 		try {
-			jbInit();
-	        pack();
+				jbInit();
+		        pack();				
 	    }
 	    catch (Exception ex) {
 	        new ExceptionDialog(ex);
@@ -192,4 +186,18 @@ public class PersonalEmailDialog extends JDialog {
     void cancelB_actionPerformed(ActionEvent e) {
         this.dispose();
     }
+    
+    /**
+	  Method:	userProfileSetUp
+	  @param:	N/A
+	  @return: 	true if user profile set up
+
+	  Description: tests if user set up their profile
+	*/
+  public static boolean userProfileSetUp() {
+	  if (ContactList.getContact("User") != null) {
+		  return true;
+	  }
+      return false;
+  }
 }

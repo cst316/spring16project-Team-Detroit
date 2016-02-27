@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
@@ -11,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -18,6 +20,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 import net.sf.memoranda.Calculator;
+import net.sf.memoranda.util.ContactList;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
 
@@ -342,10 +345,25 @@ public class WorkPanel extends JPanel {
 	  Description: Opens PersonalEmailDialog
 	*/
 	public void emailB_actionPerformed(ActionEvent e){
-		PersonalEmailDialog peDlg = new PersonalEmailDialog(new JFrame());
-    	peDlg.pack();
-        peDlg.setLocationRelativeTo(this);
-        peDlg.setVisible(true);
+		if (ContactList.getContact("User") != null) {
+			PersonalEmailDialog peDlg = new PersonalEmailDialog(new JFrame());
+	    	peDlg.pack();
+	        peDlg.setLocationRelativeTo(this);
+	        peDlg.setVisible(true);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "You must set up user email first!", "Error", JOptionPane.INFORMATION_MESSAGE); 
+			UserProfileSetUpDialog dlg = new UserProfileSetUpDialog(new Frame());
+			dlg.pack();
+	        dlg.setLocationRelativeTo(null);
+	        dlg.setVisible(true);
+	        if (PersonalEmailDialog.userProfileSetUp()) {
+	        	PersonalEmailDialog peDlg = new PersonalEmailDialog(new JFrame());
+		    	peDlg.pack();
+		        peDlg.setLocationRelativeTo(null);
+		        peDlg.setVisible(true);	        	
+	        }
+		}
 	}
 	
 	//CFroke 02/2016 added calculator function
