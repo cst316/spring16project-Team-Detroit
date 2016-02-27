@@ -5,6 +5,7 @@
 
   Description: Creates contacts
 */
+
 package net.sf.memoranda;
 
 import java.io.Serializable;

@@ -22,8 +22,9 @@ Class:	UserProfileSetUpDialog
 
 Description:  Creates User Profile Set Up dialog box and handles action events to set up/edit user profile or cancel
 */
-@SuppressWarnings("serial")
+
 public class UserProfileSetUpDialog extends JDialog {
+	private static final long serialVersionUID = 1L;
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());
 	JPanel inputPanel = new JPanel(new GridLayout(3,0));
@@ -35,7 +36,7 @@ public class UserProfileSetUpDialog extends JDialog {
 	JLabel emailLabel = new JLabel();
 	JTextField emailTextField = new JTextField(20);
 	JLabel passwordLabel = new JLabel();
-	JTextField passwordTextField = new JTextField(20);
+	JPasswordField passwordField = new JPasswordField(20);
 		
 	JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 	JButton okB = new JButton();
@@ -63,7 +64,7 @@ public class UserProfileSetUpDialog extends JDialog {
 		this.setResizable(false);
 		nameLabel.setText(Local.getString("Name") + ":  ");
 		emailLabel.setText(Local.getString("Email (Gmail Only)") + ":  ");
-		passwordLabel.setText(Local.getString("Password") +":  ");
+		passwordLabel.setText(Local.getString("Email Password") +":  ");
 		
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		namePanel.add(nameLabel);
@@ -71,7 +72,7 @@ public class UserProfileSetUpDialog extends JDialog {
 		emailPanel.add(emailLabel);
 		emailPanel.add(emailTextField);
 		passwordPanel.add(passwordLabel);
-		passwordPanel.add(passwordTextField);
+		passwordPanel.add(passwordField);
 		
 		inputPanel.add(namePanel);
 		inputPanel.add(emailPanel);
@@ -114,12 +115,13 @@ public class UserProfileSetUpDialog extends JDialog {
     void okB_actionPerformed(ActionEvent e) {		    	
     	String name = nameTextField.getText();
     	String email = emailTextField.getText();
-    	String password = passwordTextField.getText();
-    	EmailContact user = new EmailContact();// = new EmailContact(email);
+    	String password = new String (passwordField.getPassword());
+    	EmailContact user = new EmailContact();
     	if (name != null && !name.isEmpty()) {
     		if (user.validateEmail(email) && email != null && !email.isEmpty()) { 
     			if (password != null && !name.isEmpty()) {
-    				AdminEmail testEmail = new AdminEmail(email, password, email);
+    				@SuppressWarnings("unused")
+					AdminEmail testEmail = new AdminEmail(email, password, email);
     				boolean testSend = AdminEmail.sendEmail();   				
 			    		if (testSend && ContactList.getContact("User") == null) {
 			    			ContactListStorage.addUserToList(new EmailContact(name, email, password));
@@ -137,7 +139,6 @@ public class UserProfileSetUpDialog extends JDialog {
 			    		else {
 			    	    	JOptionPane.showMessageDialog(null, "You entered an invalid email and or/password!" + "\n" + "Example:  abcd@gmail.com", "Invalid Email" + "\nEmail has to use Gmail servers", JOptionPane.INFORMATION_MESSAGE);
 			    	    	this.setVisible(true);
-			    	    	//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 			    	    	nameTextField.transferFocus();
 			    		}
     			}
@@ -145,7 +146,6 @@ public class UserProfileSetUpDialog extends JDialog {
 		    		JOptionPane.showMessageDialog(null, Local.getString("Please enter a name!"), 
 		    				"Name Not Entered", JOptionPane.INFORMATION_MESSAGE);
 		    		this.setVisible(true);
-		    		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 		    		cancelB.transferFocus();			
 		    	}
     		}
@@ -154,7 +154,6 @@ public class UserProfileSetUpDialog extends JDialog {
 	    				"\n" + Local.getString("Example") + ":  abcd@gmail.com", 
 	    				"Invalid Email", JOptionPane.INFORMATION_MESSAGE);
 	    		this.setVisible(true);
-	    		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 	    		nameTextField.transferFocus();
 	    	}
     	}
@@ -162,7 +161,6 @@ public class UserProfileSetUpDialog extends JDialog {
 			JOptionPane.showMessageDialog(null, Local.getString("Please enter a name!"), 
 					"Name Not Entered", JOptionPane.INFORMATION_MESSAGE);
 			this.setVisible(true);
-			//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 			cancelB.transferFocus();			
 		}
     }
