@@ -620,10 +620,6 @@ public class DailyItemsPanel extends JPanel implements Observer {
 	  result += hours + "h:";
 	  result += minutes +"m:";
 	  result += secondsRemaining + "s";
-	  
-	  //String.valueOf((24 * 3600) - (int) arg);
-	  
-    //System.out.println(ev.getTimeString() + " - " + ev.getText());
     
     return result;
 	}
