@@ -131,7 +131,7 @@ public class AddContactDialog extends JDialog {
     			if (phone != null && !phone.isEmpty() && phone.matches("^-?\\d+$")) {
     				if (notes != null && !notes.isEmpty()) {
 				    	if (contact.validateEmail(email)) {
-				    		if (ContactList.getContact(name.toUpperCase(Local.getCurrentLocale())) == null) {
+				    		if (ContactList.getContact(name) == null) {
 				    			ContactListStorage.addContactToList(new EmailContact(name,email,phone,notes));
 				    			this.dispose();
 				    			JOptionPane.showMessageDialog(null, name + " " + Local.getString("added to contacts!"), 

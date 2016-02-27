@@ -30,7 +30,7 @@ public class ContactListStorageTest {
 
 	@Before
 	public void setUp() throws Exception {
-		userTest = new EmailContact("user", "testuserclstorage@gmail.com");
+		userTest = new EmailContact("user", "testuserclstorage@gmail.com", "password");
 		contactTest = new EmailContact("clTestName", "testconclstorage@gmail.com", "1111111111", "notes contact list test");	
 	}
 

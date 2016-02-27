@@ -22,7 +22,7 @@ public class EmailContactTest {
 	public void setUp() throws Exception {
 		testContact1 = new EmailContact("NameTest1", "EmailTest1", "1111111111", "NotesTest1");
 		testContact2 = new EmailContact();
-		testContact3 = new EmailContact("NameTest3","testemail@gmail.com");
+		testContact3 = new EmailContact("NameTest3","testemail@gmail.com", "password");
 	}
 
 	@Test

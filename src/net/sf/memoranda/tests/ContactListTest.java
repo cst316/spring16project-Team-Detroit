@@ -24,7 +24,7 @@ public class ContactListTest {
 	@Before
 	public void setUp() throws Exception {		
 		listTest = new ArrayList<EmailContact>();
-		userTest = new EmailContact("user", "testusercontactlist@gmail.com");
+		userTest = new EmailContact("user", "testusercontactlist@gmail.com", "password");
 		contactTest = new EmailContact("clTestName", "testconcontactlist@gmail.com", "1111111111", "notes contact list test");
 		ContactListStorage.addUserToList(userTest);
 		ContactListStorage.addContactToList(contactTest);
@@ -33,8 +33,8 @@ public class ContactListTest {
 	
 	@Test
 	public void testGetContact() {		
-		assertEquals(userTest, ContactList.getContact("USER"));
-		assertEquals("testusercontactlist@gmail.com", ContactList.getContact("USER").getEmail());
+		assertEquals(userTest, ContactList.getContact("User"));
+		assertEquals("testusercontactlist@gmail.com", ContactList.getContact("User").getEmail());
 		assertEquals(null, ContactList.getContact("tester"));
 	}
 
