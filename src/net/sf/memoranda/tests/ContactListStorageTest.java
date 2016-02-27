@@ -21,8 +21,8 @@ import net.sf.memoranda.util.Util;
 
 public class ContactListStorageTest {
 	
-	private static EmailContact userTest = null;
-	private static EmailContact contactTest = null;
+	private EmailContact userTest = null;
+	private EmailContact contactTest = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -50,29 +50,33 @@ public class ContactListStorageTest {
 	}
 	
 	@Test
-	public void testCreateFileAndSaveList() {
-		deleteContactList();
-				
-		ContactListStorage.saveList();
-		
-		File newContactFile = new File(Util.getEnvDir() + "contacts" + File.separator + "contactsList.txt");
-		
+	public void testCreateFile() {
+		deleteContactList();				
+		ContactListStorage.saveList();		
+		File newContactFile = new File(Util.getEnvDir() + "contacts" + File.separator + "contactsList.txt");		
 		assertTrue(newContactFile.exists());
+	}
+	
+	@Test
+	public void testRemoveUser() {	
+		ContactListStorage.removeUser();
+		assertFalse(ContactList.contains("User"));
 	}
 	
 	/*TEST LOAD FILE BY COMMENTING OUT testCreateFile test and UNCOMMENTING testLoadFile test
 	 * Only one test can run at a time as class only loads once to call functionality
+	 * Also to test 
 	 */
 	
 //	@Test
 //	public void testLoadFile() {
-//		System.out.println("Load");
-//		//deleteContactList();
-//		ContactListStorage cls2 = new ContactListStorage();
+//		System.out.println("Load");		
+//		new ContactListStorage();
+//		ContactListStorage.saveList();
 //		File newContactFile = new File(Util.getEnvDir() + "contacts" + File.separator + "contactsList.txt");		
 //		assertTrue(newContactFile.exists());
 //	}
-//	
+	
 	static void deleteContactList() {
 		Path path = Paths.get(Util.getEnvDir() + "contacts" + File.separator + "contactsList.txt");
 		try {

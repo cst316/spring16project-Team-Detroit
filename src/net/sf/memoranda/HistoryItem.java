@@ -8,6 +8,7 @@
  */
 package net.sf.memoranda;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import net.sf.memoranda.date.CalendarDate;
@@ -51,7 +52,6 @@ public class HistoryItem {
     } 
     
     public int hashCode() {
-    	int result = new Random().nextInt();
-    	return result;
+    	return Arrays.hashCode(new Object[]{_date, _project});
     }
 }

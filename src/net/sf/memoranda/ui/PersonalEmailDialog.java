@@ -23,12 +23,11 @@ Class:	PersonalEmailDialog
 Description:  Creates Email GUI and gathers information to create email
 */
 public class PersonalEmailDialog extends JDialog {
-	private static final long serialVersionUID = -1313533403570455677L;
-	
-	public static JTextField toTextField = new JTextField(20);
-	public static boolean userSetUp;
-	
-	JPanel mainPanel = new JPanel(new BorderLayout());
+  private static final long serialVersionUID = -1313533403570455677L;
+
+  static JTextField toTextField = new JTextField(20);
+  
+  JPanel mainPanel = new JPanel(new BorderLayout());
 	JPanel toSubjectWrapPanel = new JPanel(new GridLayout(2,0));
 	JPanel messageWrapPanel = new JPanel(new GridLayout(1,0));
 	JPanel toPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
@@ -136,8 +135,7 @@ public class PersonalEmailDialog extends JDialog {
     			if (message == null || message.isEmpty()) {
     				message = "From: " + ContactList.getContact("User").getName();
     			}
-    			@SuppressWarnings("unused")
-				PersonalEmail pe = new PersonalEmail(ContactList.getContact("User").getEmail(),ContactList.getContact("User").getPassword(), recipient, subject, message);
+    			PersonalEmail.sendPE(new PersonalEmail(ContactList.getContact("User").getEmail(),ContactList.getContact("User").getPassword(), recipient, subject, message));
     			this.dispose();
     		}
     		else {
@@ -146,8 +144,7 @@ public class PersonalEmailDialog extends JDialog {
     				if (message == null || message.isEmpty()) {
         				message = "From: " + ContactList.getContact("User").getName();
         			}
-    				@SuppressWarnings("unused")
-					PersonalEmail pe = new PersonalEmail(ContactList.getContact("User").getEmail(),ContactList.getContact("User").getPassword(), recipient, subject, message);
+    				PersonalEmail.sendPE(new PersonalEmail(ContactList.getContact("User").getEmail(),ContactList.getContact("User").getPassword(), recipient, subject, message));
     				this.dispose();
     			}
     			else {

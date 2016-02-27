@@ -9,6 +9,7 @@
 package net.sf.memoranda.date;
 
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -141,8 +142,8 @@ public class CalendarDate {
     }
     
     public int hashCode() {
-    	int result = new Random().nextInt();
-    	return result;
+    	return Arrays.hashCode(new Object[]
+    	    {new Integer(_year), new Integer(_month), new Integer(_day)});
     }
 
     public boolean equals(CalendarDate date) {

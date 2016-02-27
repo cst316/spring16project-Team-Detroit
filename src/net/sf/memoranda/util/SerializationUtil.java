@@ -28,9 +28,11 @@ public class SerializationUtil {
 	  Description: Serializes contact list ArrayList and writes file
 	*/
 	public static boolean serilaizeList(ArrayList<EmailContact> cl) {
+		FileOutputStream fileOut = null;
+        ObjectOutputStream out = null;
 		try {
-			FileOutputStream fileOut = new FileOutputStream(getContactPath());
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			fileOut = new FileOutputStream(getContactPath());
+            out = new ObjectOutputStream(fileOut);
             out.writeObject(cl);
             out.close();
             fileOut.close();
@@ -44,6 +46,24 @@ public class SerializationUtil {
             e.printStackTrace();
             return false;
 		}
+		finally {
+			if (out != null) {
+				try {
+					out.close();
+				} 
+				catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+			if (fileOut != null) {
+				try {
+					fileOut.close();
+				} 
+				catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+		}
     }
 	
 	/**
@@ -55,9 +75,11 @@ public class SerializationUtil {
 	*/
 	@SuppressWarnings("unchecked")
 	public static ArrayList<EmailContact> deserializeList() {
+		FileInputStream fileIn = null;
+        ObjectInputStream in = null;
 		try {
-            FileInputStream fileIn = new FileInputStream(getContactPath());
-            ObjectInputStream in = new ObjectInputStream(fileIn);
+            fileIn = new FileInputStream(getContactPath());
+            in = new ObjectInputStream(fileIn);
             ArrayList<EmailContact> cl = (ArrayList<EmailContact>) in.readObject(); 
             in.close();
             fileIn.close();
@@ -71,7 +93,25 @@ public class SerializationUtil {
         } 
 		catch (IOException e) {
             e.printStackTrace();
-        } 
+        }
+		finally {
+			if (in != null) {
+				try {
+					in.close();
+				} 
+				catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+			if (fileIn != null) {
+				try {
+					fileIn.close();
+				} 
+				catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+		}
 		return null;
 	}
 	

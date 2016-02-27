@@ -20,19 +20,19 @@ Description:  Parent class to DailyEmail, sends email to recipient
 */
 public class Emailer {
 	
-	private static String senderEmail;
-	private static String senderPwd;
-	private static String recipient;
-	private static String subject;
-	private static String message;
+	private String senderEmail;
+	private String senderPassword;
+	private String recipient;
+	private String subject;
+	private String message;
 	
 	
-	public Emailer (String senderEmail, String senderPwd, String recipient, String subject, String message) {
-		Emailer.senderEmail = senderEmail;
-		Emailer.senderPwd = senderPwd;
-		Emailer.recipient = recipient;
-		Emailer.subject = subject;
-		Emailer.message = message;
+	public Emailer (String senderEm, String senderPwd, String rcpt, String sub, String msg) {
+		senderEmail = senderEm;
+		senderPassword = senderPwd;
+		recipient = rcpt;
+		subject = sub;
+		message = msg;
 	}
 	
 	/**
@@ -42,11 +42,11 @@ public class Emailer {
 
 	  Description: Sends email to recipient
 	*/
-	public static boolean sendEmail() {
+	public boolean sendEmail() {
 		Email email = new SimpleEmail();
 		email.setHostName("smtp.googlemail.com");
 		email.setSmtpPort(465);
-		email.setAuthenticator(new DefaultAuthenticator(senderEmail, senderPwd));
+		email.setAuthenticator(new DefaultAuthenticator(senderEmail, senderPassword));
 		email.setSSLOnConnect(true);
 		try {
 			email.setFrom(senderEmail);

@@ -10,6 +10,9 @@ package net.sf.memoranda;
 
 import java.awt.print.*;
 import java.util.*;
+
+import net.sf.memoranda.Event;
+
 import java.awt.*;
 import java.text.*;
 
@@ -31,12 +34,14 @@ public class Print implements Printable {
 	  Description: Formats and prints the events
 	*/
 	public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
-		String evlist = new SimpleDateFormat("EEEE, MMMM, dd yyyy").format(new Date()) + "\n";
+		StringBuffer buf = new StringBuffer();
+		buf.append(new SimpleDateFormat("EEEE, MMMM, dd yyyy").format(new Date()) + "\n");
         for (Iterator<Event> it = EventsScheduler.getScheduledEvents().iterator(); it.hasNext();) {
             net.sf.memoranda.Event ev = (net.sf.memoranda.Event)it.next();   
-            evlist += ev.getTimeString()+" - "+ev.getText()+"\n";
+            buf.append(ev.getTimeString()+" - "+ev.getText()+"\n");
         }
-
+        
+        String evlist = buf.toString();
         String[] lines = evlist.split("\r?\n|\r");
         
 		if (page > 0) { /* We have only one page, and 'page' is zero-based */
@@ -73,7 +78,7 @@ public class Print implements Printable {
             try {
                  job.print();
             } catch (PrinterException ex) {
-            	ex.getStackTrace();
+            	System.out.println(ex);
             }
         }
 	}

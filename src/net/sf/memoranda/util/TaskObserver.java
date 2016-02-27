@@ -23,11 +23,11 @@ Class:	TaskObserver
 Description:  Observes Task completion status. Create progress email to be sent to supervisors, calls for email send
 */
 public class TaskObserver implements Observer {
-	@SuppressWarnings("unused")
-	private String task = null;
+	private String task;
+	private boolean sent;	
 
-	public TaskObserver(String task) {
-		this.task = task;
+	public TaskObserver(String t) {
+		task = t;
 	}
 	
 	/**
@@ -39,16 +39,13 @@ public class TaskObserver implements Observer {
 	*/
 	@Override
 	public void update(Observable o, Object arg) {		
-		String taskEmail = TaskStatus.getTask();
-		System.out.println("This " + taskEmail);
 		ArrayList<EmailContact> supervisorList = ContactList.getSupervisors();
 		if (ContactList.getContact("User") != null && supervisorList.size() != 0) {
 			for (Iterator<EmailContact> it = supervisorList.iterator(); it.hasNext(); ) {
 				EmailContact ec = it.next();
-				@SuppressWarnings("unused")
-				AdminEmail progressEmail = new AdminEmail(ec.getEmail(),taskEmail);
-				AdminEmail.sendEmail();
-				TaskStatus.setTask("");
+				AdminEmail progressEmail = new AdminEmail(ec.getEmail(),task);
+				AdminEmail.sendAE(progressEmail);
+				sent = true;
 			}			
 		}
 		else {
@@ -63,7 +60,7 @@ public class TaskObserver implements Observer {
 			        
 			    AddContactDialog cdlg = new AddContactDialog(new Frame());
 			    cdlg.setLocationRelativeTo(null);
-			    cdlg.setVisible(true);				
+			    cdlg.setVisible(true);
 			}
 			else if (ContactList.getContact("User") != null && supervisorList.size() == 0) {
 				JOptionPane.showMessageDialog(null,Local.getString("To send progress emails to your supervisor(s)\n"
@@ -72,7 +69,7 @@ public class TaskObserver implements Observer {
 			        
 			    AddContactDialog cdlg = new AddContactDialog(new Frame());
 			    cdlg.setLocationRelativeTo(null);
-			    cdlg.setVisible(true);				
+			    cdlg.setVisible(true);	
 			}
 			else {
 				JOptionPane.showMessageDialog(null,Local.getString("To send progress emails to your supervisor(s)\n"
@@ -82,6 +79,11 @@ public class TaskObserver implements Observer {
 		        dlg.setLocationRelativeTo(null);
 		        dlg.setVisible(true);
 			}
+			
 		} 		
-	}	
+	}
+	
+	public boolean getSentStatus() {
+		return sent;
+	}
 }
