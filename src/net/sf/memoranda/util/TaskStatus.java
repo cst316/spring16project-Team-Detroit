@@ -16,18 +16,18 @@ Class:	TaskStatus
 Description:  Task object to be observed
 */
 public class TaskStatus extends Observable {
-	private static String task;
+	private String task;
 
 	public TaskStatus(String task) {
-		TaskStatus.task = task;
+		this.task = task;
 	}
 	
-	public static void setTask(String task) {
-		TaskStatus.task = task;
+	public void setTask(String t) {
+		task = t;
 	}
 	
-	public static String getTask() {
-		return TaskStatus.task;
+	public String getTask() {
+		return task;
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class TaskStatus extends Observable {
 	  Description: notifies observer of task completion
 	*/
 	public void complete(String task) {
-		if(!task.equals(TaskStatus.task)) {
+		if(!task.equals(this.task)) {
 			setTask(task);
 			setChanged();
 			notifyObservers();

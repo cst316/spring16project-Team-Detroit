@@ -45,6 +45,7 @@ import javax.swing.text.html.HTMLDocument;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.EmailContact;
+import net.sf.memoranda.Emailer;
 import net.sf.memoranda.AdminEmail;
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
@@ -321,8 +322,7 @@ public class AppFrame extends JFrame {
     private void jbInit() throws Exception {
         updateThisLanguage();
     	// Initialize contact list upon loading of frame Added: Ryan Schultz 2/12/2016
-    	@SuppressWarnings("unused")
-		ContactListStorage cls = new ContactListStorage();
+		new ContactListStorage();
        	
         this.setIconImage(new ImageIcon(AppFrame.class.getResource(
                 "resources/icons/jnotes16.png"))
@@ -739,10 +739,10 @@ public class AppFrame extends JFrame {
         Context.put("FRAME_YPOS", new Integer(this.getLocation().y));
         //  Upon exit checks if user set up email, if so sets up daily events email Edited:  Ryan Schultz 2/23/2016
         if (ContactList.contains("User")) {
-        	@SuppressWarnings("unused")
-			AdminEmail de = new AdminEmail();
-        	
+        	AdminEmail.sendAE(new AdminEmail());       	       	
         }
+        //  Upon exit saves contact list Added:  Ryan Schultz 2/26/2016
+        ContactListStorage.saveList();
         exitNotify();
         System.exit(0);
     }
