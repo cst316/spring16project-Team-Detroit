@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
@@ -17,6 +20,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 import net.sf.memoranda.Calculator;
+import net.sf.memoranda.util.ContactList;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
 
@@ -39,6 +43,8 @@ public class WorkPanel extends JPanel {
 	public JButton tasksB = new JButton();
 	public JButton eventsB = new JButton();
 	public JButton filesB = new JButton();
+	// Email Button Added:  Ryan Schultz 2/23/2016
+	public JButton emailB = new JButton();
 	public JButton calcB = new JButton();
 	JButton currentB = null;
 	Border border1;
@@ -198,6 +204,34 @@ public class WorkPanel extends JPanel {
 		filesB.setOpaque(false);
 		filesB.setMaximumSize(new Dimension(60, 80));
 		filesB.setBackground(Color.white);
+		
+		// Email Button Set Up Added:  Ryan Schultz 2/23/2016
+		emailB.setFont(new java.awt.Font("Dialog", 1, 10));
+		emailB.setBackground(Color.white);
+		emailB.setBorder(null);
+		emailB.setMaximumSize(new Dimension(60, 80));
+		emailB.setMinimumSize(new Dimension(30, 30));
+		emailB.setOpaque(false);
+		emailB.setPreferredSize(new Dimension(60, 50));
+		emailB.setBorderPainted(false);
+		emailB.setContentAreaFilled(false);
+		emailB.setFocusPainted(false);
+		emailB.setHorizontalTextPosition(SwingConstants.CENTER);
+		emailB.setText(Local.getString("Email"));
+		emailB.setVerticalAlignment(SwingConstants.TOP);
+		emailB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		emailB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				emailB_actionPerformed(e);
+			}
+		});
+		emailB.setIcon(
+			new ImageIcon(
+				net.sf.memoranda.ui.AppFrame.class.getResource(
+					"resources/icons/email.png")));
+		emailB.setMargin(new Insets(0, 0, 0, 0));
+		emailB.setSelected(true);
+		
 		//CFroke Add calculator Button
 		calcB.setFont(new java.awt.Font("Dialog", 1, 10));
 		calcB.setBackground(Color.white);
@@ -236,6 +270,8 @@ public class WorkPanel extends JPanel {
 		toolBar.add(tasksB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
+		// Email Button Add to Toolbar Added:  Ryan Schultz 2/23/2016
+		toolBar.add(emailB, null);
 		//CFroke Add new Calculator button
 		toolBar.add(calcB, null);
 		currentB = agendaB;
@@ -258,6 +294,9 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
+			// Email Button Action Added:  Ryan Schultz 2/23/2016
+			else if (pan.equals("EMAIL"))
+				emailB_actionPerformed(null);
 			else if (pan.equals("CALCULATOR"))
 				calcB_actionPerformed(null);
 		}
@@ -298,6 +337,35 @@ public class WorkPanel extends JPanel {
 		Context.put("CURRENT_PANEL", "FILES");
 	}
 	
+	/**
+	  Method:	emailB_actionPerformed
+	  @param:	click event emailB
+	  @return: 	N/A
+
+	  Description: Opens PersonalEmailDialog
+	*/
+	public void emailB_actionPerformed(ActionEvent e){
+		if (ContactList.getContact("User") != null) {
+			PersonalEmailDialog peDlg = new PersonalEmailDialog(new JFrame());
+	    	peDlg.pack();
+	        peDlg.setLocationRelativeTo(this);
+	        peDlg.setVisible(true);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "You must set up user email first!", "Error", JOptionPane.INFORMATION_MESSAGE); 
+			UserProfileSetUpDialog dlg = new UserProfileSetUpDialog(new Frame());
+			dlg.pack();
+	        dlg.setLocationRelativeTo(null);
+	        dlg.setVisible(true);
+	        if (PersonalEmailDialog.userProfileSetUp()) {
+	        	PersonalEmailDialog peDlg = new PersonalEmailDialog(new JFrame());
+		    	peDlg.pack();
+		        peDlg.setLocationRelativeTo(null);
+		        peDlg.setVisible(true);	        	
+	        }
+		}
+	}
+	
 	//CFroke 02/2016 added calculator function
 	public void calcB_actionPerformed(ActionEvent e){
 		Calculator.openCalc();
@@ -318,6 +386,8 @@ public class WorkPanel extends JPanel {
 		tasksB.setText(Local.getString("Tasks"));
 		notesB.setText(Local.getString("Notes"));
 		filesB.setText(Local.getString("Resources"));
+		// Email Button Language Update Added:  Ryan Schultz 2/23/2016
+		emailB.setText(Local.getString("Email"));
 		calcB.setText(Local.getString("Calculator"));
 		
 		dailyItemsPanel.updateLanguage();

@@ -22,8 +22,7 @@ Class:	ContactListStorage
 
 Description:  Creates hash map out of contact list and manages the created hash map
 */
-public class ContactListStorage implements Serializable {
-	
+public class ContactListStorage implements Serializable {	
 	private static final long serialVersionUID = 8363682447274136375L;
 	
 	static ArrayList<EmailContact> contactList = new ArrayList<EmailContact>();

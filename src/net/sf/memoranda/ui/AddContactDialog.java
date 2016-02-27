@@ -27,11 +27,12 @@ public class AddContactDialog extends JDialog {
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());
 	
-	JPanel inputPanel = new JPanel(new GridLayout(4,0));
-	JPanel inputPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-	JPanel inputPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-	JPanel inputPanel3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-	JPanel inputPanel4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+	JPanel inputPanel = new JPanel(new GridLayout(5,0));
+	JPanel nameInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+	JPanel emailInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+	JPanel phoneInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+	JPanel notesInputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+	JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		
 	JLabel nameLabel = new JLabel();
 	JTextField nameTextField = new JTextField(20);
@@ -41,20 +42,19 @@ public class AddContactDialog extends JDialog {
 	JTextField phoneTextField = new JTextField(20);
 	JLabel notesLabel = new JLabel();
 	JTextField notesTextField = new JTextField(20);
-		
-	JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+			
 	JButton okB = new JButton();
 	JButton cancelB = new JButton();
 		
 	public AddContactDialog(Frame frame) {
 		super(frame, Local.getString("Add Contact"), true);
 		try {
-	           jbInit();
-	           pack();
-	       }
-	       catch (Exception ex) {
-	           new ExceptionDialog(ex);
-	       }
+			jbInit();
+	        pack();
+	    }
+	    catch (Exception ex) {
+	        new ExceptionDialog(ex);
+	    }
 	}
 	
 	/**
@@ -66,25 +66,12 @@ public class AddContactDialog extends JDialog {
 	*/
 	void jbInit() throws Exception {
 		this.setResizable(false);
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		
 		nameLabel.setText(Local.getString("Name") + ":  ");
 		emailLabel.setText(Local.getString("Email") + ":  ");
 		phoneLabel.setText(Local.getString("Phone") + ":  ");
-		notesLabel.setText(Local.getString("Notes") + ":  ");
-		
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		inputPanel1.add(nameLabel);
-		inputPanel1.add(nameTextField);
-		inputPanel2.add(emailLabel);
-		inputPanel2.add(emailTextField);
-		inputPanel3.add(phoneLabel);
-		inputPanel3.add(phoneTextField);
-		inputPanel4.add(notesLabel);
-		inputPanel4.add(notesTextField);
-		
-		inputPanel.add(inputPanel1);
-		inputPanel.add(inputPanel2);
-		inputPanel.add(inputPanel3);
-		inputPanel.add(inputPanel4);
+		notesLabel.setText(Local.getString("Notes") + ":  ");		
 		
 		okB.setMaximumSize(new Dimension(100, 26));
         okB.setMinimumSize(new Dimension(100, 26));
@@ -96,20 +83,35 @@ public class AddContactDialog extends JDialog {
             }
         });
         this.getRootPane().setDefaultButton(okB);
+        
+        cancelB.setText(Local.getString("Cancel"));
+        cancelB.setPreferredSize(new Dimension(100, 26));
+        cancelB.setMinimumSize(new Dimension(100, 26));
+        cancelB.setMaximumSize(new Dimension(100, 26));
         cancelB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancelB_actionPerformed(e);
             }
         });
-        cancelB.setText(Local.getString("Cancel"));
-        cancelB.setPreferredSize(new Dimension(100, 26));
-        cancelB.setMinimumSize(new Dimension(100, 26));
-        cancelB.setMaximumSize(new Dimension(100, 26));
-        buttonsPanel.add(okB);
+        
+        nameInputPanel.add(nameLabel);
+		nameInputPanel.add(nameTextField);
+		emailInputPanel.add(emailLabel);
+		emailInputPanel.add(emailTextField);
+		phoneInputPanel.add(phoneLabel);
+		phoneInputPanel.add(phoneTextField);
+		notesInputPanel.add(notesLabel);
+		notesInputPanel.add(notesTextField);
+		buttonsPanel.add(okB);
         buttonsPanel.add(cancelB);
 		
+		inputPanel.add(nameInputPanel);
+		inputPanel.add(emailInputPanel);
+		inputPanel.add(phoneInputPanel);
+		inputPanel.add(notesInputPanel);
+		inputPanel.add(buttonsPanel);
+        		
         mainPanel.add(inputPanel, BorderLayout.NORTH);
-        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 		this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 	}
 	
@@ -125,7 +127,7 @@ public class AddContactDialog extends JDialog {
     	String email = emailTextField.getText();
     	String phone = phoneTextField.getText();
     	String notes = notesTextField.getText();
-    	EmailContact contact = new EmailContact();// = new EmailContact(email);
+    	EmailContact contact = new EmailContact();
     	if (name != null && !name.isEmpty()) {
     		if (email != null && !name.isEmpty()) {
     			if (phone != null && !phone.isEmpty() && phone.matches("^-?\\d+$")) {
@@ -140,21 +142,18 @@ public class AddContactDialog extends JDialog {
 				    		else {
 				    			JOptionPane.showMessageDialog(null, Local.getString("Contact already exists!"), 
 				    					"Invalid Contact", JOptionPane.INFORMATION_MESSAGE);
-				    			//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 				    			cancelB.transferFocus();
 				    		}
 				    	}
 				    	else {
 				    		JOptionPane.showMessageDialog(null, Local.getString("You entered an invalid email!") + 
 				    				"\n" + "Example:  abcd@gmail.com", "Invalid Email", JOptionPane.INFORMATION_MESSAGE);
-				    		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
 				    		nameTextField.transferFocus();
 				    	}
     				}
     				else {
                 		JOptionPane.showMessageDialog(null, Local.getString("You left Notes Blank!"), 
                 				"Blank Notes Input", JOptionPane.INFORMATION_MESSAGE);
-                		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
                 		phoneTextField.transferFocus();
                 		
                 	}
@@ -162,21 +161,18 @@ public class AddContactDialog extends JDialog {
     			else {
             		JOptionPane.showMessageDialog(null, Local.getString("You entered an invalid phone number!") + "\n" +
             				Local.getString("Please only enter numbers"), "Invalid Phone Input", JOptionPane.INFORMATION_MESSAGE);
-            		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
             		emailTextField.transferFocus();
             	}
     		}
     		else {
         		JOptionPane.showMessageDialog(null, Local.getString("You left Email Blank!"), 
         				"Blank Email Input", JOptionPane.INFORMATION_MESSAGE);
-        		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
         		nameTextField.transferFocus();
         	}
     	}
     	else {
     		JOptionPane.showMessageDialog(null, Local.getString("You left Name Blank!"), 
     				"Blank Name Input", JOptionPane.INFORMATION_MESSAGE);
-    		//  Not best way to set focus - WindowListener and requestFocus and requestFocusInWindow not working
     		cancelB.transferFocus();
     	}
     }
