@@ -22,7 +22,7 @@ public class ContactListStorageTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		deleteContactList();
+		//deleteContactList();
 	}
 	
 
