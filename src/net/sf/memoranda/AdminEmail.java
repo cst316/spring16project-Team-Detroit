@@ -6,7 +6,7 @@
   Description: Creates the daily email sent to the user showing their schedule of events for the next day.
 */
 
-package net.sf.memoranda;
+package net.sf.memoranda; 
 
 import java.text.SimpleDateFormat;
 import java.util.*;
