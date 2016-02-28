@@ -27,8 +27,8 @@ public class ContactListStorageTest {
 	
 	@Test
 	public void testGetSize() {	
-		//  It would normally be 2 but to pass travis I had to comment out deletContactList above
-		assertEquals(3, ContactListStorage.getSize());
+		//  It won't pass in eclipse unless you uncomment deleteContactList above
+		assertEquals(2, ContactListStorage.getSize());
 	}
 	
 	@Test
