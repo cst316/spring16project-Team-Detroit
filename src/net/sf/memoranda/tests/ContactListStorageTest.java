@@ -32,7 +32,7 @@ public class ContactListStorageTest {
 	}
 	
 	@Test
-	public void testAddContactToListAndAddUserToList() {
+	public void testAddContactToListAndAddUserToList() { 
 		ContactListStorage.addUserToList(new EmailContact("User", "testuserclstorage@gmail.com", "password"));
 		ContactListStorage.addContactToList(new EmailContact("clTestName", "testconclstorage@gmail.com", "1111111111", "notes contact list test")); 
 		assertEquals("testuserclstorage@gmail.com", ContactList.getEmail(ContactList.getContact("User")));
