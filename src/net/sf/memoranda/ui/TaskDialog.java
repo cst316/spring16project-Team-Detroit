@@ -405,14 +405,12 @@ public class TaskDialog extends JDialog {
     void okB_actionPerformed(ActionEvent e) {
     	CANCELLED = false;	
 		//  Sends completion email to all supervisors in contact list Added:  Ryan Schultz 2/25/16
-		if ((Integer)progress.getValue() == 100) {
-			TaskStatus tdd = new TaskStatus("");
-			TaskObserver watcher = new TaskObserver(todoField.getText());
-			tdd.addObserver(watcher);
-			tdd.complete(todoField.getText());
-			if (watcher.getSentStatus()) {
-				this.dispose();
-			}
+		TaskStatus tdd = new TaskStatus(todoField.getText());
+		TaskObserver watcher = new TaskObserver(todoField.getText());
+		tdd.addObserver(watcher);
+		tdd.updatePercentage((Integer)progress.getValue());
+		if (watcher.getSentStatus()) {
+			this.dispose();
 		}
 		if ((Integer)progress.getValue() != 100) {
 			this.dispose();

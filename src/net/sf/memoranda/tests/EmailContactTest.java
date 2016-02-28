@@ -10,9 +10,9 @@ import net.sf.memoranda.EmailContact;
 
 
 public class EmailContactTest {
-	private static EmailContact testContact1 = null;
-	private static EmailContact testContact2 = null;
-	private static EmailContact testContact3 = null;
+	private EmailContact testContact1 = null;
+	private EmailContact testContact2 = null;
+	private EmailContact testContact3 = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -55,5 +55,18 @@ public class EmailContactTest {
 		testContact3.setEmail("testemail");
 		assertFalse(testContact3.validateEmail(testContact3.getEmail()));	
 	}
-
+	
+	@org.junit.Test
+	public void testSetGetCredentials() {
+		EmailContact ec = new EmailContact();
+		ec.setCredentials("Supervisor");
+		assertEquals("Supervisor", ec.getCredentials());
+	}
+	
+	@org.junit.Test
+	public void testSetGetPassword() {
+		EmailContact ec = new EmailContact();
+		ec.setPassword("Password");
+		assertEquals("Password", ec.getPassword());
+	}
 }

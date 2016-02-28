@@ -78,8 +78,7 @@ public class TaskObserver implements Observer {
 				UserProfileSetUpDialog dlg = new UserProfileSetUpDialog(new Frame());
 		        dlg.setLocationRelativeTo(null);
 		        dlg.setVisible(true);
-			}
-			
+			}			
 		} 		
 	}
 	

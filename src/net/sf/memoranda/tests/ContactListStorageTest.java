@@ -10,7 +10,6 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,38 +19,28 @@ import net.sf.memoranda.util.ContactListStorage;
 import net.sf.memoranda.util.Util;
 
 public class ContactListStorageTest {
-	
-	private EmailContact userTest = null;
-	private EmailContact contactTest = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		//deleteContactList();
 	}
-
-	@Before
-	public void setUp() throws Exception {
-		userTest = new EmailContact("user", "testuserclstorage@gmail.com", "password");
-		contactTest = new EmailContact("clTestName", "testconclstorage@gmail.com", "1111111111", "notes contact list test");	
-	}
-
+	
 	@Test
-	public void testGetSize() {		
-		deleteContactList();
-		ContactListStorage.addUserToList(userTest);
-		ContactListStorage.addContactToList(contactTest);
+	public void testGetSize() {	
+		//  It won't pass in eclipse unless you uncomment deleteContactList above
 		assertEquals(2, ContactListStorage.getSize());
 	}
 	
 	@Test
 	public void testAddContactToListAndAddUserToList() {
-		//  Two contacts already added from testGetSize test 
-		assertEquals("testuserclstorage@gmail.com", ContactList.getEmail(userTest));
-		assertEquals("testconclstorage@gmail.com", ContactList.getEmail(contactTest));		
+		ContactListStorage.addUserToList(new EmailContact("User", "testuserclstorage@gmail.com", "password"));
+		ContactListStorage.addContactToList(new EmailContact("clTestName", "testconclstorage@gmail.com", "1111111111", "notes contact list test")); 
+		assertEquals("testuserclstorage@gmail.com", ContactList.getEmail(ContactList.getContact("User")));
+		assertEquals("testconclstorage@gmail.com", ContactList.getEmail(ContactList.getContact("clTestName")));		
 	}
 	
 	@Test
-	public void testCreateFile() {
-		deleteContactList();				
+	public void testCreateFileAndSaveList() {				
 		ContactListStorage.saveList();		
 		File newContactFile = new File(Util.getEnvDir() + "contacts" + File.separator + "contactsList.txt");		
 		assertTrue(newContactFile.exists());
@@ -62,25 +51,32 @@ public class ContactListStorageTest {
 		ContactListStorage.removeUser();
 		assertFalse(ContactList.contains("User"));
 	}
+
 	
 	/*TEST LOAD FILE BY COMMENTING OUT testCreateFile test and UNCOMMENTING testLoadFile test
+	 * Also need to create contacts.txt file in correct path and comment out deleteContactList 
+	 * in before class
 	 * Only one test can run at a time as class only loads once to call functionality
-	 * Also to test 
-	 */
-	
+	 */	
 //	@Test
 //	public void testLoadFile() {
-//		System.out.println("Load");		
 //		new ContactListStorage();
-//		ContactListStorage.saveList();
 //		File newContactFile = new File(Util.getEnvDir() + "contacts" + File.separator + "contactsList.txt");		
 //		assertTrue(newContactFile.exists());
 //	}
 	
 	static void deleteContactList() {
+		String folder = Util.getEnvDir() + "contacts";
+		File directory = new File(folder);
 		Path path = Paths.get(Util.getEnvDir() + "contacts" + File.separator + "contactsList.txt");
 		try {
 			Files.deleteIfExists(path);
+			if (directory.isDirectory()) {
+				boolean delete = directory.delete();
+				if(!delete) {
+					System.out.println("List failed to delete");
+				};
+			}
 		} 
 		catch (NoSuchFileException e) {
 			e.printStackTrace();
