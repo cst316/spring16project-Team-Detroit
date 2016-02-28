@@ -152,8 +152,7 @@ public class EventsManager {
 		el.addAttribute(new Attribute("hour", String.valueOf(hh)));
 		el.addAttribute(new Attribute("min", String.valueOf(mm)));
 		el.addAttribute(new Attribute("startDate", startDate.toString()));
-		if (endDate != null)
-			el.addAttribute(new Attribute("endDate", endDate.toString()));
+		el.addAttribute(new Attribute("endDate", endDate.toString()));
 		el.addAttribute(new Attribute("period", String.valueOf(period)));
 		// new attribute for wrkin days - ivanrise
 		el.addAttribute(new Attribute("workingDays",String.valueOf(workDays)));
@@ -254,9 +253,9 @@ public class EventsManager {
 		Elements els = d.getElement().getChildElements("event");
 		for (int i = 0; i < els.size(); i++) {
 			Element el = els.get(i);
-			if ((Integer.valueOf(el.getAttribute("hour").getValue())
+			if ((Integer.parseInt(el.getAttribute("hour").getValue())
 				== hh)
-				&& (Integer.valueOf(el.getAttribute("min").getValue())
+				&& (Integer.parseInt(el.getAttribute("min").getValue())
 					== mm))
 				return new EventImpl(el);
 		}
@@ -288,14 +287,14 @@ public class EventsManager {
 
 	private static Year createYear(int y) {
 		Element el = new Element("year");
-		el.addAttribute(new Attribute("year", new Integer(y).toString()));
+		el.addAttribute(new Attribute("year", Integer.toString(y)));
 		_root.appendChild(el);
 		return new Year(el);
 	}
 
 	private static Year getYear(int y) {
 		Elements yrs = _root.getChildElements("year");
-		String yy = new Integer(y).toString();
+		String yy = Integer.toString(y);
 		for (int i = 0; i < yrs.size(); i++)
 			if (yrs.get(i).getAttribute("year").getValue().equals(yy))
 				return new Year(yrs.get(i));
@@ -321,12 +320,12 @@ public class EventsManager {
 		}
 
 		public int getValue() {
-			return new Integer(yearElement.getAttribute("year").getValue());
+			return Integer.parseInt(yearElement.getAttribute("year").getValue());
 		}
 
 		public Month getMonth(int m) {
 			Elements ms = yearElement.getChildElements("month");
-			String mm = Integer.valueOf(m).toString();
+			String mm = Integer.toString(m);
 			for (int i = 0; i < ms.size(); i++)
 				if (ms.get(i).getAttribute("month").getValue().equals(mm))
 					return new Month(ms.get(i));
@@ -336,7 +335,7 @@ public class EventsManager {
 
 		private Month createMonth(int m) {
 			Element el = new Element("month");
-			el.addAttribute(new Attribute("month", Integer.valueOf(m).toString()));
+			el.addAttribute(new Attribute("month", Integer.toString(m)));
 			yearElement.appendChild(el);
 			return new Month(el);
 		}
@@ -363,14 +362,14 @@ public class EventsManager {
 		}
 
 		public int getValue() {
-			return new Integer(mElement.getAttribute("month").getValue());
+			return Integer.parseInt(mElement.getAttribute("month").getValue());
 		}
 
 		public Day getDay(int d) {
 			if (mElement == null)
 				return null;
 			Elements ds = mElement.getChildElements("day");
-			String dd = Integer.valueOf(d).toString();
+			String dd = Integer.toString(d);
 			for (int i = 0; i < ds.size(); i++)
 				if (ds.get(i).getAttribute("day").getValue().equals(dd))
 					return new Day(ds.get(i));
@@ -380,14 +379,14 @@ public class EventsManager {
 
 		private Day createDay(int d) {
 			Element el = new Element("day");
-			el.addAttribute(new Attribute("day", Integer.valueOf(d).toString()));
+			el.addAttribute(new Attribute("day", Integer.toString(d)));
 			el.addAttribute(
 				new Attribute(
 					"date",
 					new CalendarDate(
 						d,
 						getValue(),
-						new Integer(
+						Integer.parseInt(
 							((Element) mElement.getParent())
 								.getAttribute("year")
 								.getValue())
@@ -422,7 +421,7 @@ public class EventsManager {
 		}
 
 		public int getValue() {
-			return Integer.valueOf(dEl.getAttribute("day").getValue());
+			return Integer.parseInt(dEl.getAttribute("day").getValue());
 		}
 
 		/*

@@ -138,37 +138,41 @@ public class ProjectPackager {
     {
        File[] theFiles = theDirectory.listFiles();
        File stDirectory = new File(startingDirectory);
-	   System.out.println("Path="+stDirectory.getPath()+";length="+stDirectory
-			   .getPath().length() + "==>"+theFiles[0]);
-       
-       
-       int j = stDirectory.getPath().length();
-       for ( int i=0 ; i<theFiles.length ; i++ )
-       {
-          String sRelPath = theFiles[i].getPath().substring(j);
-          if ( theFiles[i].isDirectory() )
-          {
-             // create a directory entry.
-             // directory entries must be terminated by a slash!
-             ZipEntry theEntry = new ZipEntry("."+sRelPath+"/" );
-             theZIPStream.putNextEntry(theEntry);
-             theZIPStream.closeEntry();
-
-             // recurse down
-             PackDirectory( startingDirectory, theFiles[i], theZIPStream );
-          }
-          else // regular file
-          { 
-            File f = theFiles[i];
-            ZipEntry ze = new ZipEntry("."+sRelPath);
-            FileInputStream in = new FileInputStream(f);
-            byte[] data = new byte[(int) f.length()];
-            in.read(data);
-            in.close();
-            theZIPStream.putNextEntry(ze);
-            theZIPStream.write(data);
-            theZIPStream.closeEntry();           
-          }
+       try {
+		   System.out.println("Path="+stDirectory.getPath()+";length="+stDirectory
+				   .getPath().length() + "==>"+theFiles[0]);
+             
+	       int j = stDirectory.getPath().length();
+	       for ( int i=0 ; i<theFiles.length ; i++ )
+	       {
+	          String sRelPath = theFiles[i].getPath().substring(j);
+	          if ( theFiles[i].isDirectory() )
+	          {
+	             // create a directory entry.
+	             // directory entries must be terminated by a slash!
+	             ZipEntry theEntry = new ZipEntry("."+sRelPath+"/" );
+	             theZIPStream.putNextEntry(theEntry);
+	             theZIPStream.closeEntry();
+	
+	             // recurse down
+	             PackDirectory( startingDirectory, theFiles[i], theZIPStream );
+	          }
+	          else // regular file
+	          { 
+	            File f = theFiles[i];
+	            ZipEntry ze = new ZipEntry("."+sRelPath);
+	            FileInputStream in = new FileInputStream(f);
+	            byte[] data = new byte[(int) f.length()];
+	            in.read(data);
+	            in.close();
+	            theZIPStream.putNextEntry(ze);
+	            theZIPStream.write(data);
+	            theZIPStream.closeEntry();           
+	          }
+	       }
+       }
+       catch (NullPointerException e) {
+           System.out.println("Files not loaded properly");
        }
     }
 

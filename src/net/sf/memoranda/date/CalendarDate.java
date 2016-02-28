@@ -124,32 +124,30 @@ public class CalendarDate {
     }
 
     public boolean equals(Object object) {
-    	if (object == null) {
-    		return false;
-    	}
-    	else if (object instanceof CalendarDate) {
-            CalendarDate d2 = (CalendarDate) object;
-            return ((d2.getDay() == getDay()) && (d2.getMonth() == getMonth()) && (d2.getYear() == getYear()));
-        }
-        else if (object instanceof Calendar) {
-            Calendar cal = (Calendar) object;
-            return this.equals(new CalendarDate(cal));
-        }
-        else if (object instanceof Date) {
-            Date d = (Date) object;
-            return this.equals(new CalendarDate(d));
-        }
+       	if (object == null) {
+       		return false;
+       	}
         return super.equals(object);
+    }
+
+    public boolean equals(CalendarDate date) {
+    	if (date == null) return false;
+           return ((date.getDay() == getDay()) && (date.getMonth() == getMonth()) && (date.getYear() == getYear()));
+       	}
+       
+    public boolean equals(Calendar date) {
+    	if (date == null) return false;
+       	return this.equals(new CalendarDate(date));
+    }
+       
+    public boolean equals(Date date) {
+    	if (date == null) return false;
+        return this.equals(new CalendarDate(date));
     }
     
     public int hashCode() {
     	return Arrays.hashCode(new Object[]
     	    {new Integer(_year), new Integer(_month), new Integer(_day)});
-    }
-
-    public boolean equals(CalendarDate date) {
-        if (date == null) return false;
-        return ((date.getDay() == getDay()) && (date.getMonth() == getMonth()) && (date.getYear() == getYear()));
     }
 
     public boolean before(CalendarDate date) {

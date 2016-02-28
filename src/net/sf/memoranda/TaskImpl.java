@@ -68,8 +68,11 @@ public class TaskImpl implements Task, Comparable<Object> {
 		if (date == null) {
 			setAttr("endDate", "");
 		}
+		else {
+			setAttr("endDate", date.toString());
+		}
 		
-		setAttr("endDate", date.toString());
+		
     }
 
     public long getEffort() {
@@ -265,14 +268,14 @@ public class TaskImpl implements Task, Comparable<Object> {
      * @see net.sf.memoranda.Task#getProgress()
      */
     public int getProgress() {
-        return new Integer(_element.getAttribute("progress").getValue());
+    	return Integer.parseInt(_element.getAttribute("progress").getValue());
     }
     /**
      * @see net.sf.memoranda.Task#setProgress(int)
      */
     public void setProgress(int p) {
-        if ((p >= 0) && (p <= 100))
-            setAttr("progress", Integer.valueOf(p).toString());
+        if ((p >= 0) && (p <= 100))        	
+            setAttr("progress", Integer.toString(p));
     }
     /**
      * @see net.sf.memoranda.Task#getPriority()
@@ -281,7 +284,7 @@ public class TaskImpl implements Task, Comparable<Object> {
         Attribute pa = _element.getAttribute("priority");
         if (pa == null)
             return Task.PRIORITY_NORMAL;
-        return Integer.valueOf(pa.getValue());
+        return Integer.parseInt(pa.getValue());
     }
     /**
      * @see net.sf.memoranda.Task#setPriority(int)

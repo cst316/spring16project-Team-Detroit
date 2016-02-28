@@ -1207,92 +1207,97 @@ public class HTMLEditor extends JPanel {
 				document
 					.getCharacterElement(editor.getCaretPosition())
 					.getAttributes();
-
-		boolean containsAttribute = charattrs
-			.containsAttribute(StyleConstants.Bold, new Boolean(true));
-		if (containsAttribute) {
-			boldActionB.setBorder(border2);
-			bold = true;
-		} else if (bold) {
-			boldActionB.setBorder(border1);
-			bold = false;
-		}
-		boldActionB.setBorderPainted(bold);
-		if (charattrs
-			.containsAttribute(StyleConstants.Italic, new Boolean(true))) {
-			italicActionB.setBorder(border2);
-			italic = true;
-		} else if (italic) {
-			italicActionB.setBorder(border1);
-			italic = false;
-		}
-		italicActionB.setBorderPainted(italic);
-		if (charattrs
-			.containsAttribute(StyleConstants.Underline, new Boolean(true))) {
-			underActionB.setBorder(border2);
-			under = true;
-		} else if (under) {
-			underActionB.setBorder(border1);
-			under = false;
-		}
-		underActionB.setBorderPainted(under);
-		/*
-		 * String iName = document
-		 * .getCharacterElement(editor.getCaretPosition()) .getAttributes()
-		 * .getAttribute(StyleConstants.NameAttribute) .toString()
-		 */
-		inlineCBEventsLock = true;
-		inlineCB.setEnabled(!charattrs.isDefined(HTML.Tag.A));
-		if (charattrs.isDefined(HTML.Tag.EM))
-			inlineCB.setSelectedIndex(I_EM);
-		else if (charattrs.isDefined(HTML.Tag.STRONG))
-			inlineCB.setSelectedIndex(I_STRONG);
-		else if (
-			(charattrs.isDefined(HTML.Tag.CODE))
-				|| (charattrs.isDefined(HTML.Tag.SAMP)))
-			inlineCB.setSelectedIndex(I_CODE);
-		else if (charattrs.isDefined(HTML.Tag.SUP))
-			inlineCB.setSelectedIndex(I_SUPERSCRIPT);
-		else if (charattrs.isDefined(HTML.Tag.SUB))
-			inlineCB.setSelectedIndex(I_SUBSCRIPT);
-		else if (charattrs.isDefined(HTML.Tag.CITE))
-			inlineCB.setSelectedIndex(I_CITE);
-		else if (charattrs.isDefined(HTML.Tag.FONT))
-			inlineCB.setSelectedIndex(I_CUSTOM);
-		else
-			inlineCB.setSelectedIndex(I_NORMAL);
-		inlineCBEventsLock = false;
-
-		Element pEl = document.getParagraphElement(editor.getCaretPosition());
-		String pName = pEl.getName().toUpperCase(net.sf.memoranda.util.Local.getCurrentLocale());
-		blockCBEventsLock = true;
-		if (pName.equals("P-IMPLIED"))
-			pName = pEl.getParentElement().getName().toUpperCase(Locale.forLanguageTag("en"));
-
-		if (pName.equals("P"))
-			blockCB.setSelectedIndex(T_P);
-		else if (pName.equals("H1"))
-			blockCB.setSelectedIndex(T_H1);
-		else if (pName.equals("H2"))
-			blockCB.setSelectedIndex(T_H2);
-		else if (pName.equals("H3"))
-			blockCB.setSelectedIndex(T_H3);
-		else if (pName.equals("H4"))
-			blockCB.setSelectedIndex(T_H4);
-		else if (pName.equals("H5"))
-			blockCB.setSelectedIndex(T_H5);
-		else if (pName.equals("H6"))
-			blockCB.setSelectedIndex(T_H6);
-		else if (pName.equals("PRE"))
-			blockCB.setSelectedIndex(T_PRE);
-		/*
-		 * else if (pName.equals("ADDRESS"))
-		 */
-		else if (pName.equals("BLOCKQUOTE"))
-			blockCB.setSelectedIndex(T_BLOCKQ);
-		blockCBEventsLock = false;
-		this.insertTableCellAction.update();
-		this.insertTableRowAction.update();
+		try {
+			boolean containsAttribute = charattrs
+					.containsAttribute(StyleConstants.Bold, new Boolean(true));
+				if (containsAttribute) {
+					boldActionB.setBorder(border2);
+					bold = true;
+				} else if (bold) {
+					boldActionB.setBorder(border1);
+					bold = false;
+				}		
+		
+			boldActionB.setBorderPainted(bold);
+			if (charattrs
+				.containsAttribute(StyleConstants.Italic, new Boolean(true))) {
+				italicActionB.setBorder(border2);
+				italic = true;
+			} else if (italic) {
+				italicActionB.setBorder(border1);
+				italic = false;
+			}
+			italicActionB.setBorderPainted(italic);
+			if (charattrs
+				.containsAttribute(StyleConstants.Underline, new Boolean(true))) {
+				underActionB.setBorder(border2);
+				under = true;
+			} else if (under) {
+				underActionB.setBorder(border1);
+				under = false;
+			}
+			underActionB.setBorderPainted(under);
+			/*
+			 * String iName = document
+			 * .getCharacterElement(editor.getCaretPosition()) .getAttributes()
+			 * .getAttribute(StyleConstants.NameAttribute) .toString()
+			 */
+			inlineCBEventsLock = true;
+			inlineCB.setEnabled(!charattrs.isDefined(HTML.Tag.A));
+			if (charattrs.isDefined(HTML.Tag.EM))
+				inlineCB.setSelectedIndex(I_EM);
+			else if (charattrs.isDefined(HTML.Tag.STRONG))
+				inlineCB.setSelectedIndex(I_STRONG);
+			else if (
+				(charattrs.isDefined(HTML.Tag.CODE))
+					|| (charattrs.isDefined(HTML.Tag.SAMP)))
+				inlineCB.setSelectedIndex(I_CODE);
+			else if (charattrs.isDefined(HTML.Tag.SUP))
+				inlineCB.setSelectedIndex(I_SUPERSCRIPT);
+			else if (charattrs.isDefined(HTML.Tag.SUB))
+				inlineCB.setSelectedIndex(I_SUBSCRIPT);
+			else if (charattrs.isDefined(HTML.Tag.CITE))
+				inlineCB.setSelectedIndex(I_CITE);
+			else if (charattrs.isDefined(HTML.Tag.FONT))
+				inlineCB.setSelectedIndex(I_CUSTOM);
+			else
+				inlineCB.setSelectedIndex(I_NORMAL);
+			inlineCBEventsLock = false;
+	
+			Element pEl = document.getParagraphElement(editor.getCaretPosition());
+			String pName = pEl.getName().toUpperCase(net.sf.memoranda.util.Local.getCurrentLocale());
+			blockCBEventsLock = true;
+			if (pName.equals("P-IMPLIED"))
+				pName = pEl.getParentElement().getName().toUpperCase(Locale.forLanguageTag("en"));
+	
+			if (pName.equals("P"))
+				blockCB.setSelectedIndex(T_P);
+			else if (pName.equals("H1"))
+				blockCB.setSelectedIndex(T_H1);
+			else if (pName.equals("H2"))
+				blockCB.setSelectedIndex(T_H2);
+			else if (pName.equals("H3"))
+				blockCB.setSelectedIndex(T_H3);
+			else if (pName.equals("H4"))
+				blockCB.setSelectedIndex(T_H4);
+			else if (pName.equals("H5"))
+				blockCB.setSelectedIndex(T_H5);
+			else if (pName.equals("H6"))
+				blockCB.setSelectedIndex(T_H6);
+			else if (pName.equals("PRE"))
+				blockCB.setSelectedIndex(T_PRE);
+			/*
+			 * else if (pName.equals("ADDRESS"))
+			 */
+			else if (pName.equals("BLOCKQUOTE"))
+				blockCB.setSelectedIndex(T_BLOCKQ);
+			blockCBEventsLock = false;
+			this.insertTableCellAction.update();
+			this.insertTableRowAction.update();
+			}
+		catch (NullPointerException ex) {
+			System.out.println("Files not loaded properly");
+	    }
 		/*
 		 * String ppName =
 		 * document.getParagraphElement(editor.getCaretPosition()).getParentElement().getName().toUpperCase(Locale.forLanguageTag("en"));

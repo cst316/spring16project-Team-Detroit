@@ -391,7 +391,7 @@ public class EventsPanel extends JPanel {
 	int rtype;
         int period;
         CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        CalendarDate ed = null;
+        CalendarDate ed = new CalendarDate();
         if (dlg.enableEndDateCB.isSelected())
             ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
         if (dlg.dailyRepeatRB.isSelected()) {
