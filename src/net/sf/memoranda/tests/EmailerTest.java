@@ -9,8 +9,7 @@ import net.sf.memoranda.Emailer;
 
 public class EmailerTest {
 	
-	@SuppressWarnings("unused")
-	private static Emailer emailerTest = null;
+	private Emailer emailerTest = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -18,19 +17,18 @@ public class EmailerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		emailerTest = new Emailer("memorandasystem@gmail.com", "cst316project", "emailerUnitTest@gmail.com", "Test Subject", "Test Message");
-		
+		emailerTest = new Emailer("memorandasystem@gmail.com", "cst316project", "emailerUnitTest@gmail.com", "Test Subject", "Test Message");		
 	}
 
 	@Test
 	public void testSendEmailPass() {
-		//assertTrue(Emailer.sendEmail());
+		assertTrue(emailerTest.sendEmail());
 	}
 	
 	@Test
 	public void testSendEmailFail() {
 		emailerTest = new Emailer("memorandasystem", "cst316project", "emailerUnitTest@gmail.com@gmail.com", "Test Subject", "Test Message");
-		//assertFalse(Emailer.sendEmail());
+		assertFalse(emailerTest.sendEmail());
 	}
 
 }

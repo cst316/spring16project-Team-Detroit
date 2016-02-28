@@ -37,8 +37,8 @@ public class TaskStatus extends Observable {
 
 	  Description: notifies observer of task completion
 	*/
-	public void complete(String task) {
-		if(!task.equals(this.task)) {
+	public void updatePercentage(int percent) {
+		if(percent == 100) {
 			setTask(task);
 			setChanged();
 			notifyObservers();

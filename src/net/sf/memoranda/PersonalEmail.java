@@ -18,8 +18,11 @@ public class PersonalEmail extends Emailer {
 		super(senderEmail, senderPwd, recipient, subject, message);
 	}
 	
-	public static void sendPE(PersonalEmail pe) {
-		pe.sendEmail();
+	public static boolean sendPE(PersonalEmail pe) {
+		if(pe.sendEmail()) {
+			return true;
+		}
+		return false;
 	}
 }
 

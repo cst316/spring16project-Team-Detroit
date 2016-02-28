@@ -2,15 +2,12 @@ package net.sf.memoranda.tests;
 
 import static org.junit.Assert.*;
 
-import java.awt.Frame;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import net.sf.memoranda.AdminEmail;
 import net.sf.memoranda.EmailContact;
-import net.sf.memoranda.ui.UserProfileSetUpDialog;
 import net.sf.memoranda.util.ContactList;
 import net.sf.memoranda.util.ContactListStorage;
 
@@ -29,7 +26,6 @@ public class UserProfileTest {
 	 */
 	@Test
 	public void testCorrectProfileSetUp() {
-		new UserProfileSetUpDialog(new Frame());
 		assertTrue(AdminEmail.sendAE(new AdminEmail("memorandasystem@gmail.com", "cst316project", "memorandasystem@gmail.com")));
 		ContactListStorage.addUserToList(new EmailContact("TestName", "memorandasystem@gmail.com", "cst316project"));
 		assertTrue(ContactList.contains("User")); 

@@ -31,7 +31,7 @@ public class SerializationUtilTest {
 	
 	@Test
 	public void testDerializeList () {
-		ArrayList<EmailContact> alTest1 = new ArrayList<EmailContact>();
+		ArrayList<EmailContact> alTest1 = SerializationUtil.deserializeList();
 		assertEquals(alTest, alTest1);
 		//assertTrue(SerializationUtil.serilaizeList(new ArrayList<EmailContact>()));
 	}

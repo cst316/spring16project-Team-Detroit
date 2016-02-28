@@ -14,20 +14,14 @@ import net.sf.memoranda.util.ContactList;
 import net.sf.memoranda.util.ContactListStorage;
 
 public class DailyEmailTest {
-
-	private static EmailContact userEmailTest = null;
-	@SuppressWarnings("unused")
-	private static AdminEmail testEmail = null;
-
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		userEmailTest = new EmailContact("user", "dailyEmailUnitTest@gmail.com", "password");
-		ContactListStorage.addUserToList(userEmailTest);
-		testEmail = new AdminEmail();
+		ContactListStorage.addUserToList(new EmailContact("user", "dailyEmailUnitTest@gmail.com", "password"));
+		new AdminEmail();
 	}
 
 	@Test
