@@ -315,7 +315,10 @@ public class AltHTMLWriter extends AbstractWriter {
         closeOutUnwantedEmbeddedTags(attr);
         writeEmbeddedTags(attr);
 
-        if (matchNameAttribute(attr, HTML.Tag.CONTENT)) {
+        if (attr == null) {
+        	System.out.println("Tag attribute not found");
+        }
+        else if (matchNameAttribute(attr, HTML.Tag.CONTENT)) {
             inContent = true;
             text(elem);
         }
@@ -328,9 +331,8 @@ public class AltHTMLWriter extends AbstractWriter {
                 writeLineSeparator();
                 indent();
             }
-
-            Object nameTag = (attr != null) ? attr.getAttribute(StyleConstants.NameAttribute) : null;
-            Object endTag = (attr != null) ? attr.getAttribute(HTML.Attribute.ENDTAG) : null;
+            Object nameTag = attr.getAttribute(StyleConstants.NameAttribute);
+            Object endTag = attr.getAttribute(HTML.Attribute.ENDTAG);
 
             boolean outputEndTag = false;
             // If an instance of an UNKNOWN Tag, or an instance of a

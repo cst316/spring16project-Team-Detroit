@@ -125,7 +125,9 @@ public class EventImpl implements Event, Comparable {
      */
     public int getPeriod() {
         Attribute a = _elem.getAttribute("period");
-        if (a != null) return new Integer(a.getValue());
+        if (a != null) {        	
+        	return Integer.parseInt(a.getValue());
+        }
         return 0;
     }
     /**
@@ -133,7 +135,9 @@ public class EventImpl implements Event, Comparable {
      */
     public String getId() {
         Attribute a = _elem.getAttribute("id");
-        if (a != null) return a.getValue();
+        if (a != null) {
+        	return a.getValue();
+        }
         return null;
     }
     /**
@@ -141,7 +145,9 @@ public class EventImpl implements Event, Comparable {
      */
     public int getRepeat() {
         Attribute a = _elem.getAttribute("repeat-type");
-        if (a != null) return new Integer(a.getValue());
+        if (a != null) {
+        	return Integer.parseInt(a.getValue());
+        }
         return 0;
     }
     /**

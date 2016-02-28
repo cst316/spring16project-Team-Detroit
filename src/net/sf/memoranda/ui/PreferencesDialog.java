@@ -950,13 +950,17 @@ public class PreferencesDialog extends JDialog {
 		File[] files = new File("./src/net/sf/memoranda/util/localmessages").listFiles();
 		Vector<String> languageTag = new Vector<String>();
 		Vector<String> displayLanguage = new Vector<String>();
-		
-		for (File file : files) {
-			if (file != null && file.getName().substring(11, 12).equals(".")) {
-				languageTag.add(file.getName().substring(9, 11));
-				displayLanguage.add(Locale.forLanguageTag(file.getName().substring(9, 11)).
-						getDisplayLanguage(Local.getCurrentLocale()));
+		try {
+			for (File file : files) {
+				if (file != null && file.getName().substring(11, 12).equals(".")) {
+					languageTag.add(file.getName().substring(9, 11));
+					displayLanguage.add(Locale.forLanguageTag(file.getName().substring(9, 11)).
+							getDisplayLanguage(Local.getCurrentLocale()));
+				}
 			}
+		}
+		catch (NullPointerException e) {
+			 System.out.println("Files failed to load");
 		}
 		
 		languages.add(languageTag);
