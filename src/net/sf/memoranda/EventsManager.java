@@ -118,6 +118,8 @@ public class EventsManager {
 		String text) {
 		Element el = new Element("event");
 		el.addAttribute(new Attribute("id", Util.generateId()));
+		el.addAttribute(new Attribute("month", String.valueOf(date.getMonth())));
+		el.addAttribute(new Attribute("day", String.valueOf(date.getDay())));
 		el.addAttribute(new Attribute("hour", String.valueOf(hh)));
 		el.addAttribute(new Attribute("min", String.valueOf(mm)));
 		el.appendChild(text);
@@ -145,6 +147,8 @@ public class EventsManager {
 		}
 		el.addAttribute(new Attribute("repeat-type", String.valueOf(type)));
 		el.addAttribute(new Attribute("id", Util.generateId()));
+		el.addAttribute(new Attribute("month", String.valueOf(endDate.getMonth())));
+		el.addAttribute(new Attribute("day", String.valueOf(endDate.getDay())));
 		el.addAttribute(new Attribute("hour", String.valueOf(hh)));
 		el.addAttribute(new Attribute("min", String.valueOf(mm)));
 		el.addAttribute(new Attribute("startDate", startDate.toString()));
@@ -219,10 +223,30 @@ public class EventsManager {
 		return v;
 	}
 
-	public static Collection<Event> getActiveEvents() {
+	public static Collection<Event> getTodaysActiveEvents() {
 		return getEventsForDate(CalendarDate.today());
 	}
 
+	 public static Collection<Event> getNextActiveEventWithinThirtyDays() {
+	   Calendar nextThirtyDays = Calendar.getInstance();
+	   CalendarDate checkForActiveEvents;
+	   
+	   Vector<Event> result = new Vector<Event>();
+	   
+	   for (int i = 0; i < 30; i++) {
+	     checkForActiveEvents = new CalendarDate(nextThirtyDays);
+	         
+  	   if (!(getEventsForDate(checkForActiveEvents).size() == 0)) {
+  	     result.addAll(getEventsForDate(checkForActiveEvents));
+  	     //System.out.println(result.size());
+  	   }
+  	   
+  	   nextThirtyDays.add(Calendar.DATE, 1);
+	   }
+	 
+	   return result;
+	  }
+	
 	public static Event getEvent(CalendarDate date, int hh, int mm) {
 		Day d = getDay(date);
 		if (d == null)
@@ -230,9 +254,9 @@ public class EventsManager {
 		Elements els = d.getElement().getChildElements("event");
 		for (int i = 0; i < els.size(); i++) {
 			Element el = els.get(i);
-			if ((new Integer(el.getAttribute("hour").getValue())
+			if ((Integer.valueOf(el.getAttribute("hour").getValue())
 				== hh)
-				&& (new Integer(el.getAttribute("min").getValue())
+				&& (Integer.valueOf(el.getAttribute("min").getValue())
 					== mm))
 				return new EventImpl(el);
 		}
@@ -297,8 +321,7 @@ public class EventsManager {
 		}
 
 		public int getValue() {
-			return new Integer(yearElement.getAttribute("year").getValue())
-				;
+			return new Integer(yearElement.getAttribute("year").getValue());
 		}
 
 		public Month getMonth(int m) {
@@ -340,8 +363,7 @@ public class EventsManager {
 		}
 
 		public int getValue() {
-			return new Integer(mElement.getAttribute("month").getValue())
-				;
+			return new Integer(mElement.getAttribute("month").getValue());
 		}
 
 		public Day getDay(int d) {

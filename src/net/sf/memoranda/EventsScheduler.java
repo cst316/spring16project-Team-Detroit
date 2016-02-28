@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
+
+import net.sf.memoranda.date.CalendarDate;
 
 /**
  *
@@ -31,19 +34,23 @@ public class EventsScheduler {
     public static void init() {
         cancelAll();
         //changeDateTimer.cancel();
-        Vector<Event> events = (Vector<Event>)EventsManager.getActiveEvents();
+        Vector<Event> events = (Vector<Event>)EventsManager.getNextActiveEventWithinThirtyDays();
         _timers = new Vector<EventTimer>();
         /*DEBUG*/System.out.println("----------");
         for (int i = 0; i < events.size(); i++) {
             Event ev = (Event)events.get(i);
             Date evTime = ev.getTime();
-        /*DEBUG*/System.out.println((Calendar.getInstance()).getTime());
-          //  if (evTime.after(new Date())) {
-	      if (evTime.after((Calendar.getInstance()).getTime())) {	
+            ///*DEBUG*/System.out.println(evTime.toString() + (Calendar.getInstance()).getTime());
+            //  if (evTime.after(new Date())) {
+            if (evTime.getTime() == 0) {
+                EventTimer t = new EventTimer(ev);
+                _timers.add(t);
+            }
+	          if (evTime.after((Calendar.getInstance()).getTime())) {	
                 EventTimer t = new EventTimer(ev);
                 t.schedule(new NotifyTask(t), ev.getTime());                
                 _timers.add(t);
-                /*DEBUG*/System.out.println(ev.getTimeString());
+                ///*DEBUG*/System.out.println(ev.getTimeString());
             }
         }
         /*DEBUG*/System.out.println("----------");
@@ -78,6 +85,9 @@ public class EventsScheduler {
             Event ev = _timers.get(i).getEvent();
             if (ev.getTime().before(e1.getTime()))
                 e1 = ev;
+            if (ev.getTime().getTime() == 0) {
+              return ev;
+            }
         }
         return e1;
     }
@@ -141,5 +151,23 @@ public class EventsScheduler {
         }
     }
 
+    public static long getTimeToNextEventInSeconds() {
+      Event ev = getFirstScheduledEvent();
+      
+      if (ev == null) {
+        //System.out.println("Could not find event in the next 30 days");
+        return -1;
+      }
+      
+      if (ev.getTime().getTime() == 0) {
+        //System.out.println("Event needs to be updated using current version");
+        return -2;
+      }
+      
+      long seconds = CalendarDate.getDateDiff(new Date(), 
+          ev.getTime(), TimeUnit.SECONDS);
+      
+      return seconds;
+    }
 
 }

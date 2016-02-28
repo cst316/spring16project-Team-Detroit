@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
 import java.util.Observable;
-
 import javax.swing.Timer;
+
+import net.sf.memoranda.EventsScheduler;
 
 //Source code obtained and modified from GitHub user luizfonesca - Clock.java
 public class ClockObservable extends Observable implements ActionListener{
@@ -19,6 +20,8 @@ public class ClockObservable extends Observable implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		setChanged();
 		notifyObservers(this.getTime());
+		setChanged();
+		notifyObservers(EventsScheduler.getTimeToNextEventInSeconds());
 	}
 	
 	public static String getTime(int hour, int minute, int second, boolean isMilitaryTime) {
