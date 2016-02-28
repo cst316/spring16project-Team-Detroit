@@ -175,7 +175,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(jLabel1, gbc);
 		minGroup.add(minTaskbarRB);
 		minTaskbarRB.setSelected(true);
-		minTaskbarRB.setText(Local.getString("Minimize to taskbar"));
+		minTaskbarRB.setText(Local.getString("Minimize to system tray"));
 		minTaskbarRB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				minTaskbarRB_actionPerformed(e);
@@ -251,19 +251,34 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 
+		lfGroup.add(lfSystemRB);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 5;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+		lfSystemRB.setText(Local.getString("System"));
+    lfSystemRB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        lfSystemRB_actionPerformed(e);
+      }
+    });
 		GeneralPanel.add(lfSystemRB, gbc);
 
+		lfGroup.add(lfJavaRB);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 6;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+		lfJavaRB.setText(Local.getString("Java"));
+    lfJavaRB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        lfJavaRB_actionPerformed(e);
+      }
+    });
 		GeneralPanel.add(lfJavaRB, gbc);
+		
 		lfGroup.add(lfCustomRB);
 		lfCustomRB.setText(Local.getString("Custom"));
 		lfCustomRB.addActionListener(new java.awt.event.ActionListener() {
@@ -277,6 +292,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(lfCustomRB, gbc);
+		
 		classNameLabel.setEnabled(false);
 		classNameLabel.setText(Local.getString("L&F class name:"));
 		gbc = new GridBagConstraints();
@@ -285,6 +301,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 20, 0, 10);
 		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(classNameLabel, gbc);
+		
 		lfClassName.setEnabled(false);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
@@ -769,11 +786,11 @@ public class PreferencesDialog extends JDialog {
 	}
 
 	void lfSystemRB_actionPerformed(ActionEvent e) {
-		this.enableCustomLF(false);
+	  this.enableCustomLF(false);
 	}
 
 	void lfJavaRB_actionPerformed(ActionEvent e) {
-		this.enableCustomLF(false);
+	  this.enableCustomLF(false);
 	}
 
 	void lfCustomRB_actionPerformed(ActionEvent e) {

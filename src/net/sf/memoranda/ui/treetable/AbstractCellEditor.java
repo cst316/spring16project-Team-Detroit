@@ -32,7 +32,7 @@ public class AbstractCellEditor implements CellEditor {
 	Object[] listeners = listenerList.getListenerList();
 	// Process the listeners last to first, notifying
 	// those that are interested in this event
-	for (int i = listeners.length-2; i>=0; i-=2) {
+	for (int i = listeners.length-2; i >= 0; i -= 2) {
 	    if (listeners[i]==CellEditorListener.class) {
 		((CellEditorListener)listeners[i+1]).editingStopped(new ChangeEvent(this));
 	    }	       

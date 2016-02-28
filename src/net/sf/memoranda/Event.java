@@ -22,6 +22,10 @@ public interface Event {
     
     //CalendarDate getDate();
     
+    int getTheMonth();
+    
+    int getTheDay();
+    
     int getHour();
     
     int getMinute();
@@ -42,6 +46,6 @@ public interface Event {
     Date getTime();
     String getTimeString();
     
-	boolean getWorkingDays();
+    boolean getWorkingDays();
     
 }

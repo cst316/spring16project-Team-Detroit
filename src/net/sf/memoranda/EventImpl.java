@@ -31,20 +31,53 @@ public class EventImpl implements Event, Comparable {
     public EventImpl(Element elem) {
         _elem = elem;
     }
+    
+    /**
+     * @see net.sf.memoranda.Event#getTheMonth()
+     */
+    public int getTheMonth() {
+      int result = -1;
+      
+      try {
+        result = Integer.parseInt(_elem.getAttribute("month").getValue());
+      } catch (NullPointerException e) {
+        //Update .events to newest version
+        //System.out.println("Events created in previous version of "
+        //    + "Memoranda may not be assigned a month"); 
+      }
+      
+      return result;
+    }
 
-   
+    /**
+     * @see net.sf.memoranda.Event#getTheDay()
+     */
+    public int getTheDay() {
+      int result = -1;
+    
+      try {
+        result = Integer.parseInt(_elem.getAttribute("day").getValue());
+      } catch (NullPointerException e) {
+        //Update .events to newest version
+        //System.out.println("Events created in previous version of "
+        //   + "Memoranda may not be assigned a day"); 
+      }
+      
+      return result;
+    }
+    
     /**
      * @see net.sf.memoranda.Event#getHour()
      */
     public int getHour() {
-        return Integer.valueOf(_elem.getAttribute("hour").getValue());
+        return Integer.parseInt(_elem.getAttribute("hour").getValue());
     }
 
     /**
      * @see net.sf.memoranda.Event#getMinute()
      */
     public int getMinute() {
-        return Integer.valueOf(_elem.getAttribute("min").getValue());
+        return Integer.parseInt(_elem.getAttribute("min").getValue());
     }
     
     public String getTimeString() {
@@ -125,13 +158,26 @@ public class EventImpl implements Event, Comparable {
 		Date d = new Date(); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		Calendar calendar = new GregorianCalendar(Local.getCurrentLocale()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		calendar.setTime(d); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
+		if (!(getTheMonth() == -1))
+		  calendar.set(Calendar.MONTH, getTheMonth());
+		else {
+		  d.setTime(0);
+		  return d;
+		}
+		if (!(getTheDay() == -1)) {
+		  calendar.set(Calendar.DAY_OF_MONTH, getTheDay());
+		} else {
+		  d.setTime(0);
+		  return d;
+		}
+		
 		calendar.set(Calendar.HOUR_OF_DAY, getHour()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		calendar.set(Calendar.MINUTE, getMinute()); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		calendar.set(Calendar.SECOND, 0); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
 		d = calendar.getTime(); //Revision to fix deprecated methods (jcscoobyrs) 12-NOV-2003 14:26:00
         return d;
     }
-	
+    
 	/**
      * @see net.sf.memoranda.Event#getWorkinDays()
      */
