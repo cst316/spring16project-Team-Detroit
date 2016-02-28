@@ -20,7 +20,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -44,8 +43,6 @@ import javax.swing.UIManager;
 import javax.swing.text.html.HTMLDocument;
 
 import net.sf.memoranda.CurrentProject;
-import net.sf.memoranda.EmailContact;
-import net.sf.memoranda.Emailer;
 import net.sf.memoranda.AdminEmail;
 import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
@@ -763,25 +760,26 @@ public class AppFrame extends JFrame {
     	PopupMenu popup = new PopupMenu();
     	final TrayIcon trayIcon = new TrayIcon(image, "Memoranda", popup);
 
-        MenuItem defaultItem = new MenuItem("Exit");
-        defaultItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                doExit();
-            }
-        });
-        popup.add(defaultItem);
-        
-        defaultItem = new MenuItem("Open");
-        defaultItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setVisible(true);
-                tray.remove(trayIcon);
-                setExtendedState(JFrame.MAXIMIZED_BOTH);
-            }
-        });
-        popup.add(defaultItem);
-        
-        trayIcon.setImageAutoSize(true);     
+      MenuItem defaultItem = new MenuItem("Exit");
+      defaultItem.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+              tray.remove(trayIcon);
+              doExit();
+          }
+      });
+      popup.add(defaultItem);
+      
+      defaultItem = new MenuItem("Open");
+      defaultItem.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+              setVisible(true);
+              tray.remove(trayIcon);
+              setExtendedState(JFrame.MAXIMIZED_BOTH);
+          }
+      });
+      popup.add(defaultItem);
+      
+      trayIcon.setImageAutoSize(true);
     	try {
     	    tray.add(trayIcon);
     	} catch (AWTException e) {

@@ -9,8 +9,6 @@
 package net.sf.memoranda;
 
 import java.util.Arrays;
-import java.util.Random;
-
 import net.sf.memoranda.date.CalendarDate;
 
 /**
