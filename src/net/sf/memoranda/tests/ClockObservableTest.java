@@ -4,22 +4,22 @@ import static org.junit.Assert.*;
 
 import java.util.Observable;
 import java.util.Observer;
-//import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CountDownLatch;
 
-//import org.junit.Before;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import net.sf.memoranda.util.ClockObservable;
-//import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.MultiThreadedRunner;
 
 @RunWith(MultiThreadedRunner.class)
 public class ClockObservableTest implements Observer {
-	/*private ClockObservable clock_one = null;
+	private ClockObservable clock_one = null;
 	private ClockObservable clock_two = null;
 	private ClockObservable clock_three = null;
-	
+
 	private static final CountDownLatch latch = new CountDownLatch(3);
 	
 	@Before
@@ -59,6 +59,8 @@ public class ClockObservableTest implements Observer {
 		int firstValue = parseTime(firstString);
 		int secondValue = parseTime(secondString);
 		
+		System.out.println(firstValue + " " + secondValue);
+		
 		if (secondValue > 1) {
 			assertTrue(secondValue == firstValue + 2);
 		} else {
@@ -68,7 +70,7 @@ public class ClockObservableTest implements Observer {
 				assertTrue(firstValue == 12 * 3600 - secondValue);
 			}
 		}
-	}*/
+	}
 	
 	@Test //(timeout = 2500)
 	public void testMilitaryMorning() {
@@ -90,8 +92,10 @@ public class ClockObservableTest implements Observer {
 		assertTrue(ClockObservable.getTime(13, 59, 59, false).equals("1:59:59 pm"));
 	}
 	
-	/*public static int parseTime(String aTime) {
+	public static int parseTime(String aTime) {
 		int result = 0;
+		
+		//System.out.println(aTime);
 		
 		boolean militaryTime = Configuration.get("MILITARY_TIME").equals("yes");
 		
@@ -99,7 +103,7 @@ public class ClockObservableTest implements Observer {
 			result += Integer.parseInt(aTime.substring(0, 2)) * 3600;
 			result += Integer.parseInt(aTime.substring(3, 5)) * 60;
 			result += Integer.parseInt(aTime.substring(6, 8));
-		} else if (!(aTime.substring(1)).equals(":")) {
+		} else if (!(aTime.charAt(1) == ':')) {
 			result += Integer.parseInt(aTime.substring(0, 2)) * 3600;
 			result += Integer.parseInt(aTime.substring(3, 5)) * 60;
 			result += Integer.parseInt(aTime.substring(6, 8));
@@ -112,13 +116,13 @@ public class ClockObservableTest implements Observer {
 		//System.out.println(result);
 		
 		return result;
-	}*/
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//if (clock_one == o) {
-		//	latch.countDown();
-		//}
+		if (clock_one == o) {
+			latch.countDown();
+		}
 		
 		/*System.out.println(latch.getCount() + " " + arg +
 				" " + clock_one.getTime() + " 2-" + 
