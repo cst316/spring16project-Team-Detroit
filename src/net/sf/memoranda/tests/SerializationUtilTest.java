@@ -24,6 +24,7 @@ public class SerializationUtilTest {
 		alTest = new ArrayList<EmailContact>();
 	}
 
+	// Tests can't be run in Travis for some reason. Run locally
 	@Test
 	public void testSerializeList () {
 		assertTrue(SerializationUtil.serilaizeList(alTest));
