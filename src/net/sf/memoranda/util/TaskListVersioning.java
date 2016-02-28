@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import net.sf.memoranda.Project;
+import net.sf.memoranda.ProjectImpl;
 import net.sf.memoranda.ProjectManager;
 import nu.xom.Attribute;
 import nu.xom.DocType;
@@ -59,10 +60,10 @@ public class TaskListVersioning {
         }
         else {
             // get all projects
-            Vector<?> projects = ProjectManager.getAllProjects();
+            Vector<ProjectImpl> projects = ProjectManager.getAllProjects();
             String[] projectIds = new String[projects.size()];
             int c = 0;
-            for (Iterator<?> iter = projects.iterator(); iter.hasNext();) {
+            for (Iterator<ProjectImpl> iter = projects.iterator(); iter.hasNext();) {
                 Project prj = (Project) iter.next();
                 projectIds[c++] = prj.getID();
             }

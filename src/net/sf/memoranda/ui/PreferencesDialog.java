@@ -72,6 +72,8 @@ public class PreferencesDialog extends JDialog {
 	JPanel jPanel1 = new JPanel();
 	JRadioButton soundBeepRB = new JRadioButton();
 	JLabel jLabel6 = new JLabel();
+	JLabel passwordLbl = new JLabel();
+	JButton passwordChange = new JButton();
 	JTextField soundFile = new JTextField();
 	JRadioButton soundDefaultRB = new JRadioButton();
 	BorderLayout borderLayout3 = new BorderLayout();
@@ -175,7 +177,7 @@ public class PreferencesDialog extends JDialog {
 		GeneralPanel.add(jLabel1, gbc);
 		minGroup.add(minTaskbarRB);
 		minTaskbarRB.setSelected(true);
-		minTaskbarRB.setText(Local.getString("Minimize to taskbar"));
+		minTaskbarRB.setText(Local.getString("Minimize to system tray"));
 		minTaskbarRB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				minTaskbarRB_actionPerformed(e);
@@ -251,19 +253,34 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 
+		lfGroup.add(lfSystemRB);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 5;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+		lfSystemRB.setText(Local.getString("System"));
+    lfSystemRB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        lfSystemRB_actionPerformed(e);
+      }
+    });
 		GeneralPanel.add(lfSystemRB, gbc);
 
+		lfGroup.add(lfJavaRB);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
 		gbc.gridy = 6;
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
+		lfJavaRB.setText(Local.getString("Java"));
+    lfJavaRB.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        lfJavaRB_actionPerformed(e);
+      }
+    });
 		GeneralPanel.add(lfJavaRB, gbc);
+		
 		lfGroup.add(lfCustomRB);
 		lfCustomRB.setText(Local.getString("Custom"));
 		lfCustomRB.addActionListener(new java.awt.event.ActionListener() {
@@ -277,6 +294,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 0, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(lfCustomRB, gbc);
+		
 		classNameLabel.setEnabled(false);
 		classNameLabel.setText(Local.getString("L&F class name:"));
 		gbc = new GridBagConstraints();
@@ -285,6 +303,7 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 20, 0, 10);
 		gbc.anchor = GridBagConstraints.EAST;
 		GeneralPanel.add(classNameLabel, gbc);
+		
 		lfClassName.setEnabled(false);
 		gbc = new GridBagConstraints();
 		gbc.gridx = 1;
@@ -390,6 +409,29 @@ public class PreferencesDialog extends JDialog {
 		gbc.insets = new Insets(2, 0, 10, 10);
 		gbc.anchor = GridBagConstraints.WEST;
 		GeneralPanel.add(askConfirmChB, gbc);
+		
+		passwordLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		passwordLbl.setText(Local.getString("Change or set password:"));
+		gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 17;
+		gbc.insets = new Insets(2, 10, 10, 15);
+		gbc.anchor = GridBagConstraints.EAST;
+		GeneralPanel.add(passwordLbl, gbc);
+		
+		passwordChange.setMaximumSize(new Dimension(100, 25));
+		passwordChange.setPreferredSize(new Dimension(100, 25));
+		passwordChange.setText(Local.getString("Password"));
+		passwordChange.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				passwordChange_actionPerformed(e);
+			}
+		});
+		gbc.gridx = 1;
+		gbc.gridy = 17;
+		gbc.insets = new Insets(0,0,5,10);
+		gbc.anchor = GridBagConstraints.WEST;
+		GeneralPanel.add(passwordChange, gbc);
 
 		// Build Tab2
 		rstPanelBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -743,6 +785,12 @@ public class PreferencesDialog extends JDialog {
 		apply();
 		this.dispose();
 	}
+	
+	void passwordChange_actionPerformed(ActionEvent e){
+		apply();
+		this.dispose();
+		new PasswordSet();
+	}
 
 	void cancelB_actionPerformed(ActionEvent e) {
 		this.dispose();
@@ -769,11 +817,11 @@ public class PreferencesDialog extends JDialog {
 	}
 
 	void lfSystemRB_actionPerformed(ActionEvent e) {
-		this.enableCustomLF(false);
+	  this.enableCustomLF(false);
 	}
 
 	void lfJavaRB_actionPerformed(ActionEvent e) {
-		this.enableCustomLF(false);
+	  this.enableCustomLF(false);
 	}
 
 	void lfCustomRB_actionPerformed(ActionEvent e) {
