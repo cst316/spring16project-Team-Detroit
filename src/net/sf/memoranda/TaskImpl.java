@@ -9,7 +9,6 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
-import java.util.Random;
 import java.util.Vector;
 import java.util.Arrays;
 import java.util.Calendar;

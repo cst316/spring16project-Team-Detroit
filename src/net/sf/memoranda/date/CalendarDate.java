@@ -12,7 +12,6 @@ import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import net.sf.memoranda.util.Local;

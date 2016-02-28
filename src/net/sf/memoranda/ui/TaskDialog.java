@@ -38,7 +38,6 @@ import javax.swing.JCheckBox;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.date.CalendarDate;
-import net.sf.memoranda.util.ContactList;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.TaskStatus;
 import net.sf.memoranda.util.TaskObserver;
