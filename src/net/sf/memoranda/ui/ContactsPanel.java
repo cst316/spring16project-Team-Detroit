@@ -52,6 +52,8 @@ public class ContactsPanel extends JPanel {
     JMenuItem ppRemoveContact = new JMenuItem();
     JMenuItem ppNewContact = new JMenuItem();
     DailyItemsPanel parentPanel = null;
+    
+    boolean isActive = false;
 
     public ContactsPanel(DailyItemsPanel _parentPanel) {
         try {
@@ -186,6 +188,10 @@ public class ContactsPanel extends JPanel {
 			public void keyTyped(KeyEvent e){} 
 		});
     }
+    
+	public void setActive(boolean isa) {
+		isActive = isa;
+	}
 
     void editContactB_actionPerformed(ActionEvent e) {
         ContactDialog dlg = new ContactDialog(App.getFrame());
