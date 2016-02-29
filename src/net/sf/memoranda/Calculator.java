@@ -82,10 +82,10 @@ public class Calculator extends JFrame implements ActionListener {
 		jbButtons[19] = new JButton("1/x");
 
 		// Function Buttons
-		jbButtons[20] = new JButton("");
-		jbButtons[21] = new JButton("");
-		jbButtons[22] = new JButton("");
-		jbButtons[23] = new JButton("");
+		jbButtons[20] = new JButton("CM");
+		jbButtons[21] = new JButton("RM");
+		jbButtons[22] = new JButton("MS");
+		jbButtons[23] = new JButton("M+");
 		jbButtons[24] = new JButton(Local.getString("Backspace"));
 		jbButtons[25] = new JButton("CE");
 		jbButtons[26] = new JButton("C");
@@ -170,154 +170,80 @@ public class Calculator extends JFrame implements ActionListener {
 	*/
 	public void actionPerformed(ActionEvent e) {
 		double result = 0;
-
-		// Search for entered key
-		for (int i = 0; i < jbButtons.length; i++) {
-			if (e.getSource() == jbButtons[i]) {
-				switch (i) {
-				case 0:
-					addDigitToDisplay(i);
-					break;
-
-				case 1:
-					addDigitToDisplay(i);
-					break;
-
-				case 2:
-					addDigitToDisplay(i);
-					break;
-
-				case 3:
-					addDigitToDisplay(i);
-					break;
-
-				case 4:
-					addDigitToDisplay(i);
-					break;
-
-				case 5:
-					addDigitToDisplay(i);
-					break;
-
-				case 6:
-					addDigitToDisplay(i);
-					break;
-
-				case 7:
-					addDigitToDisplay(i);
-					break;
-
-				case 8:
-					addDigitToDisplay(i);
-					break;
-
-				case 9:
-					addDigitToDisplay(i);
-					break;
-
-				case 10:
-					processSignChange();
-					break;
-
-				case 11:
-					addDecimalPoint();
-					break;
-
-				case 12:
-					processEquals();
-					break;
-
-				case 13:
-					processOperator("/");
-					break;
-
-				case 14:
-					processOperator("*");
-					break;
-
-				case 15:
-					processOperator("-");
-					break;
-
-				case 16:
-					processOperator("+");
-					break;
-
-				case 17:
-					if (displayMode != ERROR_MODE) {
-						try {
-							if (getDisplayString().indexOf("-") == 0)
-								displayError("Invalid input for function.");
-
-							result = Math.sqrt(getNumberInDisplay());
-							displayResult(result);
-						} catch (Exception ex) {
-							displayError("Invalid input for function.");
-							displayMode = ERROR_MODE;
-						}
-					}
-					break;
-
-				case 18:
-					if (displayMode != ERROR_MODE) {
-						try {
-							result = getNumberInDisplay() / 100;
-							displayResult(result);
-						} catch (Exception ex) {
-							displayError("Invalid input for function.");
-							displayMode = ERROR_MODE;
-						}
-					}
-					break;
-
-				case 19:
-					if (displayMode != ERROR_MODE) {
-						try {
-							if (getNumberInDisplay() == 0)
-								displayError("Cannot divide by zero.");
-							result = 1 / getNumberInDisplay();
-							displayResult(result);
-						} catch (Exception ex) {
-							displayError("Cannot divide by zero.");
-							displayMode = ERROR_MODE;
-						}
-					}
-					break;
-
-				case 20:
-					clearMemory();
-					break;
-
-				case 21:
-					recallMemory();
-					break;
-
-				case 22:
-					storeInMemory();
-					break;
-
-				case 23:
-					addToMemory();
-					break;
-
-				case 24:
-					if (displayMode != ERROR_MODE) {
-						setDisplayString(getDisplayString().substring(0, getDisplayString().length() - 1));
-						if (getDisplayString().length() < 1)
-							setDisplayString("0");
-					}
-					break;
-
-				case 25:
-					clearExisting();
-					break;
-
-				case 26:
-					clearAll();
-					break;
-				}
-			}
+		String buttonText = ((JButton) e.getSource()).getText();
+		int numberButton = 11;
+		
+		try {
+		  numberButton = Integer.valueOf(buttonText);
+		} catch (NumberFormatException ex) {
+		  //Non-number caught, do nothing
 		}
+		
+		if (numberButton < 10){
+		  addDigitToDisplay(Integer.valueOf(buttonText));
+		  return;
+		} else if (buttonText.equals("±")) {
+		  processSignChange();
+		} else if (buttonText.equals(".")) {
+		  addDecimalPoint();
+		} else if (buttonText.equals("=")) {
+		  processEquals();
+    } else if (buttonText.equals("√")) {
+      if (displayMode != ERROR_MODE) {
+        try {
+          if (getDisplayString().indexOf("-") == 0)
+            displayError("Invalid input for function.");
+
+          result = Math.sqrt(getNumberInDisplay());
+          displayResult(result);
+        } catch (Exception ex) {
+          displayError("Invalid input for function.");
+          displayMode = ERROR_MODE;
+        }
+      }
+    } else if (buttonText.equals("%")) {
+      if (displayMode != ERROR_MODE) {
+        try {
+          result = getNumberInDisplay() / 100;
+          displayResult(result);
+        } catch (Exception ex) {
+          displayError("Invalid input for function.");
+          displayMode = ERROR_MODE;
+        }
+      }
+    } else if (buttonText.equals("1/x")) {
+      if (displayMode != ERROR_MODE) {
+        try {
+          if (getNumberInDisplay() == 0)
+            displayError("Cannot divide by zero.");
+          result = 1 / getNumberInDisplay();
+          displayResult(result);
+        } catch (Exception ex) {
+          displayError("Cannot divide by zero.");
+          displayMode = ERROR_MODE;
+        }
+      }
+    } /*else if (buttonText.equals("CM")) {
+      clearMemory();
+    } else if (buttonText.equals("RM")) {
+      recallMemory();
+    } else if (buttonText.equals("MS")) {
+      storeInMemory();
+    } else if (buttonText.equals("M+")) {
+      addToMemory();
+    }*/ else if (buttonText.equals(Local.getString("Backspace"))) {
+      if (displayMode != ERROR_MODE) {
+        setDisplayString(getDisplayString().substring(0, getDisplayString().length() - 1));
+        if (getDisplayString().length() < 1)
+          setDisplayString("0");
+      }
+    } else if (buttonText.equals("CE")) {
+      clearExisting();
+    } else if (buttonText.equals("C")) {
+      clearAll();
+    } else {
+      processOperator(buttonText);
+    }
 	}
 // All memory functions will be added in a future release
 	private void addToMemory() {
