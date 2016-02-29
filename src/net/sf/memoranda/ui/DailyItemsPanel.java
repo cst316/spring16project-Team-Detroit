@@ -77,10 +77,13 @@ public class DailyItemsPanel extends JPanel implements Observer {
   JLabel clockLabel = new JLabel();
   JLabel eventCountdownLabel = new JLabel();
   GridBagConstraints statusPanelGBC;
+  
   public TaskPanel tasksPanel = new TaskPanel(this);
   public EventsPanel eventsPanel = new EventsPanel(this);
   AgendaPanel agendaPanel = new AgendaPanel(this);
   ResourcesPanel filesPanel = new ResourcesPanel();
+  ContactsPanel contactPanel = new ContactsPanel(this);
+  
   ImageIcon expIcon = new ImageIcon(
       net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/exp_right.png"));
   ImageIcon collIcon = new ImageIcon(
@@ -116,6 +119,7 @@ public class DailyItemsPanel extends JPanel implements Observer {
   JTabbedPane eventsTabbedPane = new JTabbedPane();
   JTabbedPane agendaTabbedPane = new JTabbedPane();
   JTabbedPane resourcesTabbedPane = new JTabbedPane();
+  JTabbedPane contactsTabbedPane = new JTabbedPane();
 
   Border border2;
 
@@ -281,6 +285,7 @@ public class DailyItemsPanel extends JPanel implements Observer {
     editorsPanel.add(tasksPanel, "TASKS");
     editorsPanel.add(editorPanel, "NOTES");
     editorsPanel.add(filesPanel, "FILES");
+    editorsPanel.add(contactPanel, "CONTACTS");
 
     // function on the right, control (calendar) panel to the left.
     splitPane.add(splitPaneVert, JSplitPane.RIGHT);
@@ -392,6 +397,7 @@ public class DailyItemsPanel extends JPanel implements Observer {
     mainTabsPanel.add(notesControlPane, "NOTESTAB");
     mainTabsPanel.add(agendaTabbedPane, "AGENDATAB");
     mainTabsPanel.add(resourcesTabbedPane, "AGENDATAB");
+    mainTabsPanel.add(contactsTabbedPane, "CONTACTSTAB");
     updateIndicators(CurrentDate.get(), CurrentProject.getTaskList());
     mainPanel.setBorder(null);
   }

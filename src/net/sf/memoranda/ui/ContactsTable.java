@@ -94,14 +94,15 @@ public class ContactsTable extends JTable {
 			return i;
         }
 
-        public Object getValueAt(int row, int col) {
-           EmailContact c = (EmailContact)contacts.get(row);
-           if (col == 0)
-                return c.getName();
-           else if (col == 1)
-                return c.getEmail();
-           else return c;
-        }
+      @Override
+      public Object getValueAt(int row, int col) {
+         EmailContact c = (EmailContact)contacts.get(row);
+         if (col == 0)
+              return c.getName();
+         else if (col == 1)
+              return c.getEmail();
+         else return c;
+      }
 
         public String getColumnName(int col) {
         	columnNames[0] = Local.getString("Name");

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 import net.sf.memoranda.AdminEmail;
 import net.sf.memoranda.EmailContact;
-import net.sf.memoranda.ui.AddContactDialog;
+import net.sf.memoranda.ui.ContactDialog;
 import net.sf.memoranda.ui.UserProfileSetUpDialog;
 
 /**
@@ -58,7 +58,7 @@ public class TaskObserver implements Observer {
 			    dlg.setLocationRelativeTo(null);
 			    dlg.setVisible(true);
 			        
-			    AddContactDialog cdlg = new AddContactDialog(new Frame());
+			    ContactDialog cdlg = new ContactDialog(new Frame());
 			    cdlg.setLocationRelativeTo(null);
 			    cdlg.setVisible(true);
 			}
@@ -67,7 +67,7 @@ public class TaskObserver implements Observer {
 						+ "you must add a supervisor"), 
 						"Progress Emails", JOptionPane.INFORMATION_MESSAGE);
 			        
-			    AddContactDialog cdlg = new AddContactDialog(new Frame());
+			    ContactDialog cdlg = new ContactDialog(new Frame());
 			    cdlg.setLocationRelativeTo(null);
 			    cdlg.setVisible(true);	
 			}
