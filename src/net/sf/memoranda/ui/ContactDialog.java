@@ -23,7 +23,7 @@ Class:	AddContactDialog
 Description:  Creates Add Contact dialog box and handles action events to add contact or cancel
 */
 @SuppressWarnings("serial")
-public class AddContactDialog extends JDialog {
+public class ContactDialog extends JDialog {
 	
 	JPanel mainPanel = new JPanel(new BorderLayout());
 	
@@ -48,7 +48,7 @@ public class AddContactDialog extends JDialog {
 	JButton okB = new JButton();
 	JButton cancelB = new JButton();
 		
-	public AddContactDialog(Frame frame) {
+	public ContactDialog(Frame frame) {
 		super(frame, Local.getString("Add Contact"), true);
 		try {
 			jbInit();

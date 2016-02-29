@@ -939,7 +939,7 @@ public class AppFrame extends JFrame {
 	  Description: Displays dialog box to add contact
 	*/
     public void showAddContact() {
-    	AddContactDialog acDlg = new AddContactDialog(this);
+    	ContactDialog acDlg = new ContactDialog(this);
     	acDlg.pack();
     	acDlg.setLocationRelativeTo(this);
     	acDlg.setVisible(true);

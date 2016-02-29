@@ -45,6 +45,8 @@ public class WorkPanel extends JPanel {
 	public JButton filesB = new JButton();
 	// Email Button Added:  Ryan Schultz 2/23/2016
 	public JButton emailB = new JButton();
+	// masperbe Contacts Button
+	public JButton contactsB = new JButton();
 	public JButton calcB = new JButton();
 	JButton currentB = null;
 	Border border1;
@@ -206,7 +208,7 @@ public class WorkPanel extends JPanel {
 		filesB.setBackground(Color.white);
 		
 		// Email Button Set Up Added:  Ryan Schultz 2/23/2016
-		emailB.setFont(new java.awt.Font("Dialog", 1, 10));
+		contactsB.setFont(new java.awt.Font("Dialog", 1, 10));
 		emailB.setBackground(Color.white);
 		emailB.setBorder(null);
 		emailB.setMaximumSize(new Dimension(60, 80));
@@ -231,6 +233,33 @@ public class WorkPanel extends JPanel {
 					"resources/icons/email.png")));
 		emailB.setMargin(new Insets(0, 0, 0, 0));
 		emailB.setSelected(true);
+		
+		// masperbe Contacts Button Properties
+		contactsB.setFont(new java.awt.Font("Dialog", 1, 10));
+		contactsB.setBackground(Color.white);
+		contactsB.setBorder(null);
+		contactsB.setMaximumSize(new Dimension(60, 80));
+		contactsB.setMinimumSize(new Dimension(30, 30));
+		contactsB.setOpaque(false);
+		contactsB.setPreferredSize(new Dimension(60, 50));
+		contactsB.setBorderPainted(false);
+		contactsB.setContentAreaFilled(false);
+		contactsB.setFocusPainted(false);
+		contactsB.setHorizontalTextPosition(SwingConstants.CENTER);
+		contactsB.setText(Local.getString("Contacts"));
+		contactsB.setVerticalAlignment(SwingConstants.TOP);
+		contactsB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		contactsB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contactsB_actionPerformed(e);
+			}
+		});
+		contactsB.setIcon(
+			new ImageIcon(
+				net.sf.memoranda.ui.AppFrame.class.getResource(
+					"resources/icons/contacts.png")));
+		contactsB.setMargin(new Insets(0, 0, 0, 0));
+		contactsB.setSelected(true);
 		
 		//CFroke Add calculator Button
 		calcB.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -272,6 +301,8 @@ public class WorkPanel extends JPanel {
 		toolBar.add(filesB, null);
 		// Email Button Add to Toolbar Added:  Ryan Schultz 2/23/2016
 		toolBar.add(emailB, null);
+		// masperbe: Contacts Button
+		toolBar.add(contactsB, null);
 		//CFroke Add new Calculator button
 		toolBar.add(calcB, null);
 		currentB = agendaB;
@@ -297,6 +328,8 @@ public class WorkPanel extends JPanel {
 			// Email Button Action Added:  Ryan Schultz 2/23/2016
 			else if (pan.equals("EMAIL"))
 				emailB_actionPerformed(null);
+			else if (pan.equals("CONTACTS"))
+				contactsB_actionPerformed(null);
 			else if (pan.equals("CALCULATOR"))
 				calcB_actionPerformed(null);
 		}
@@ -364,6 +397,17 @@ public class WorkPanel extends JPanel {
 		        peDlg.setVisible(true);	        	
 	        }
 		}
+	}
+	
+	/**
+	  Method:	contactsB_actionPerformed
+	  Description: Opens ContactsDialog
+	*/
+	public void contactsB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("CONTACTS");
+		setCurrentButton(contactsB);
+		Context.put("CURRENT_PANEL", "CONTACTS");
 	}
 	
 	//CFroke 02/2016 added calculator function

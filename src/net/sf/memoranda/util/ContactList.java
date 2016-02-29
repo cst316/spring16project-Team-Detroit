@@ -43,6 +43,22 @@ public class ContactList {
 		return null;
 	}
 	
+	// masperbe : converts hashmap to vector containing all contacts
+	public static Vector<EmailContact> getContacts() {
+		Vector<EmailContact> v = null;
+		Iterator i = contactList.values().iterator();
+		while (i.hasNext()) {
+			v = (Vector) i.next();
+		}
+		
+		return v;
+	}
+	
+	// masperbe : removes contact
+	public static void removeContact(EmailContact c){
+		contactList.remove(c.getName());
+	}
+	
 	public static String getEmail(EmailContact ec) {
 		return ec.getEmail();		
 	}
