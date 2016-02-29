@@ -81,6 +81,7 @@ public class DailyItemsPanel extends JPanel implements Observer {
   public TaskPanel tasksPanel = new TaskPanel(this);
   public EventsPanel eventsPanel = new EventsPanel(this);
   AgendaPanel agendaPanel = new AgendaPanel(this);
+  ContactsPanel contactsPanel = new ContactsPanel(this);
   ResourcesPanel filesPanel = new ResourcesPanel();
   ContactsPanel contactPanel = new ContactsPanel(this);
   
@@ -543,6 +544,9 @@ public class DailyItemsPanel extends JPanel implements Observer {
     if (calendar.jnCalendar.renderer.getTask() != null) {
       calendar.jnCalendar.renderer.setTask(null);
       // calendar.jnCalendar.updateUI();
+    }
+    if (pan.equals("CONTACTS")) {
+    	contactsPanel.setActive(true);
     }
     if (pan.equals("TASKS") && (tasksPanel.taskTable.getSelectedRow() > -1)) {
       Task t = CurrentProject.getTaskList().getTask(tasksPanel.taskTable.getModel()
